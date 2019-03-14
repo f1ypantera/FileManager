@@ -1,4 +1,7 @@
-﻿namespace FileManagerAPI.Models
+﻿using MongoDB.Driver;
+using System.Collections.Generic;
+
+namespace FileManagerAPI.Models
 {
     public class Owner
     {
@@ -7,12 +10,12 @@
         public string Password { get; set; }
         public int RoleId { get; set; }
         public Role Role { get; set; }
-        //dasdsad
-        //SqlServer + MongoDb??
-        //public IMongoCollection<Component> Components { get; set; }
-        ////public Owner()
-        ////{
-        ////    Components = new Collection<Component>();
-        ////}
+        public ICollection<Component> Components { get; set; }
+        public Owner()
+        {
+            Components = new List<Component>();
+        }
+
+
     }
 }

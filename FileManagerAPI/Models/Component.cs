@@ -11,8 +11,8 @@ namespace FileManagerAPI.Models
         public string Id { get; set; }
         public string Name { get; set; }
         public double Size { get; set; }
-        // public int OwnerId { get; set; }    
-        public string Owner { get; set; }
+        public int OwnerId { get; set; }    
+        //public Owner Owner { get; set; }
         public DateTime Created { get; set; } = DateTime.Now;
         public DateTime Modified { get; set; } = DateTime.Now;
         [BsonRepresentation(BsonType.ObjectId)]

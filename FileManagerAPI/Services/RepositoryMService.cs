@@ -19,6 +19,8 @@ namespace FileManagerAPI.Services
         {
             this.context = context;
         }
+
+
         public async Task<List<Component>> GetAll()
         {
             var result = await context.Components.FindAsync(c => true);
@@ -82,7 +84,7 @@ namespace FileManagerAPI.Services
                 Id = fileStoreId.ToString(),
                 Name = fileName,
                 Size = fileStream.Length,
-                Owner = "Admin",
+                OwnerId = 1,
                 fileId = fileStoreId.ToString(),
             };
             await context.Components.InsertOneAsync(component);

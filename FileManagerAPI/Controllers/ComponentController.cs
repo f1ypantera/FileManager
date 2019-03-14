@@ -5,11 +5,14 @@ using Microsoft.AspNetCore.Mvc;
 using FileManagerAPI.Models;
 using FileManagerAPI.Interfaces;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FileManagerAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize(Roles ="admin")]
+    
     public class ComponentController : ControllerBase
     {
         private readonly IRepositoryMService repository;
@@ -17,9 +20,10 @@ namespace FileManagerAPI.Controllers
         {
             this.repository = repository;
         }
-        [HttpGet]
+        [HttpGet]    
         public async Task<ActionResult<List<Component>>> Get()
         {
+         
             return await repository.GetAll();
         }
         [HttpGet("{id}")]
