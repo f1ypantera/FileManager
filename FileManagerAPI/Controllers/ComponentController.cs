@@ -40,7 +40,6 @@ namespace FileManagerAPI.Controllers
             }
             return Ok(component);
         }
-
         [HttpGet]
         [Route("GetIds")]
         public async Task<ActionResult<Component>> GetIds(string ids)
