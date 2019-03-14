@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MongoDB.Driver.GridFS;
+﻿using MongoDB.Driver.GridFS;
 using Microsoft.Extensions.Options;
 using FileManagerAPI.Interfaces;
 using FileManagerAPI.Models;
 using MongoDB.Driver;
-using MongoDB.Driver.GridFS;
-
-
 namespace FileManagerAPI.Context
 {
     public class FileManagerMContext : IFileManagerMContext

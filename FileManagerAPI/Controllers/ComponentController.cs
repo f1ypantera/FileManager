@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using FileManagerAPI.Models;
-using FileManagerAPI.Services;
-using FileManagerAPI.Controllers;
 using FileManagerAPI.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using System.IO;
-using System.Web;
-using System.Net.Http;
-using System.Net.Http.Headers;
-
 namespace FileManagerAPI.Controllers
 {
     [Route("api/[controller]")]
