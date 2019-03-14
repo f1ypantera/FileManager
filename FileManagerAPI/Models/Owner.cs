@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MongoDB.Driver;
-
-namespace FileManagerAPI.Models
+﻿namespace FileManagerAPI.Models
 {
     public class Owner
     {

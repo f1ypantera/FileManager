@@ -4,17 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver.Linq;
-using MongoDB.Driver.GridFS;
 using System.IO;
 using System.IO.Compression;
-using System.Web;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 using FileManagerAPI.Models;
 using FileManagerAPI.Interfaces;
-using FileManagerAPI.Services;
 
 namespace FileManagerAPI.Services
 {

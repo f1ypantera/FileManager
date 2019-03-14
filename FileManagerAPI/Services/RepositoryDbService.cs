@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using FileManagerAPI.Context;
 using FileManagerAPI.Interfaces;
-using FileManagerAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace FileManagerAPI.Services
