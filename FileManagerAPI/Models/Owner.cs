@@ -13,7 +13,7 @@ namespace FileManagerAPI.Models
         public string Password { get; set; }
         public int RoleId { get; set; }
         public Role Role { get; set; }
-
+        //dasdsad
         //SqlServer + MongoDb??
         //public IMongoCollection<Component> Components { get; set; }
         ////public Owner()
