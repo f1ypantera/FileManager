@@ -15,5 +15,7 @@ namespace FileManagerAPI.Interfaces
         Task<(byte[], string)> Getfile(string id);
         Task<byte[]> GetFileArchive(string[] id);
         Task StoreFile(Stream fileStream, string fileName);
+
+        Task<List<UserListComponents>> GetListComponents();
     }
 }

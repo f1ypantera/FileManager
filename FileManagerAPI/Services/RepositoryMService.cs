@@ -19,8 +19,11 @@ namespace FileManagerAPI.Services
         {
             this.context = context;
         }
-
-
+        public async Task<List<UserListComponents>> GetListComponents()
+        {
+            var result = await context.collectionComponents.FindAsync(c => true);
+            return await result.ToListAsync();
+        }
         public async Task<List<Component>> GetAll()
         {
             var result = await context.Components.FindAsync(c => true);
@@ -75,6 +78,14 @@ namespace FileManagerAPI.Services
             }
             return fileBytesZip;
         }
+
+
+        public async Task InputChunks(ChunksOfFiles chunksOfFiles)
+        {
+
+        }
+
+
         public async Task StoreFile(Stream fileStream, string fileName)
         {
             ObjectId fileStoreId = await context.Bucket.UploadFromStreamAsync(fileName, fileStream);
@@ -84,7 +95,12 @@ namespace FileManagerAPI.Services
                 Id = fileStoreId.ToString(),
                 Name = fileName,
                 Size = fileStream.Length,
-                OwnerId = 1,
+                Owner = "Admin",
+                //UserListComponents = new UserListComponents
+                //{
+                //    OwnerId = 1,
+                    
+                //},
                 fileId = fileStoreId.ToString(),
             };
             await context.Components.InsertOneAsync(component);

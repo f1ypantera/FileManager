@@ -23,9 +23,15 @@ namespace FileManagerAPI.Controllers
         [HttpGet]    
         public async Task<ActionResult<List<Component>>> Get()
         {
-         
             return await repository.GetAll();
         }
+        [HttpGet]
+        [Route("GetAllUserCollection")]
+        public async Task<ActionResult<List<UserListComponents>>> GetAllUserCollection()
+        {
+            return await repository.GetListComponents();
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Component>> GetId(string id)
         {
@@ -71,14 +77,21 @@ namespace FileManagerAPI.Controllers
 
             return Ok("Update");
         }
+
+
+        [HttpPost]
+        [Route("InputChunks")]
+        public async Task<ActionResult> InputChunks(ChunksOfFiles chunksOfFiles)
+        {
+            return Ok("Chunks getting");
+        } 
+
+
         [HttpPost]
         [Route("UploadFile")]
         public async Task<ActionResult> UploadFile(IFormFile uploadedFile)
-        {
-            if (uploadedFile != null)
-            {
-                await repository.StoreFile(uploadedFile.OpenReadStream(), uploadedFile.FileName);
-            }
+        {        
+            await repository.StoreFile(uploadedFile.OpenReadStream(), uploadedFile.FileName);        
             return Ok("Ok");
         }
 
