@@ -80,9 +80,9 @@ namespace FileManagerAPI.Services
         }
 
 
-        public async Task InputChunks(ChunksOfFiles chunksOfFiles)
+        public async Task InputChunks(IEnumerable<ChunksOfFiles> chunksOfFiles)
         {
-
+            await context.ChunksOfFiles.InsertManyAsync(chunksOfFiles);
         }
 
 

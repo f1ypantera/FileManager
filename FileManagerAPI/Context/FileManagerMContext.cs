@@ -23,6 +23,7 @@ namespace FileManagerAPI.Context
             bucket = new GridFSBucket(mongoDatabase, gridFSBucketOptions);
         }
         public IMongoCollection<Component> Components => mongoDatabase.GetCollection<Component>("Components");
+        public IMongoCollection<ChunksOfFiles> ChunksOfFiles => mongoDatabase.GetCollection<ChunksOfFiles>("ChunksOfFiles");
         public IMongoCollection<UserListComponents> collectionComponents => mongoDatabase.GetCollection<UserListComponents>("UserListComponents");
 
         public IGridFSBucket Bucket => bucket;

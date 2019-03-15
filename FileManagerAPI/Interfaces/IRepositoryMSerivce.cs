@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.IO;
 using FileManagerAPI.Models;
+using MongoDB.Driver;
 
 namespace FileManagerAPI.Interfaces
 {
@@ -15,7 +16,7 @@ namespace FileManagerAPI.Interfaces
         Task<(byte[], string)> Getfile(string id);
         Task<byte[]> GetFileArchive(string[] id);
         Task StoreFile(Stream fileStream, string fileName);
-
         Task<List<UserListComponents>> GetListComponents();
+        Task InputChunks(IEnumerable<ChunksOfFiles> chunksOfFiles);
     }
 }

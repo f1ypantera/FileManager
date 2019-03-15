@@ -6,6 +6,7 @@ using FileManagerAPI.Models;
 using FileManagerAPI.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
+using MongoDB.Driver;
 
 namespace FileManagerAPI.Controllers
 {
@@ -81,9 +82,10 @@ namespace FileManagerAPI.Controllers
 
         [HttpPost]
         [Route("InputChunks")]
-        public async Task<ActionResult> InputChunks(ChunksOfFiles chunksOfFiles)
+        public async Task<ActionResult> InputChunks(IEnumerable<ChunksOfFiles> chunksOfFiles)
         {
-            return Ok("Chunks getting");
+            await repository.InputChunks(chunksOfFiles);
+            return  Ok("Chunks getting");
         } 
 
 
