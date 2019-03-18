@@ -16,7 +16,7 @@ namespace FileManagerAPI.Models
         public string FileName { get; set; }             
         public int n { get; set; }
         public int TotalCounts { get; set; }
-        public Byte[] ChunksData { get; set; }
+        public string ChunksData { get; set; }
         
 
 
