@@ -10,6 +10,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using FileManagerAPI.Context;
+using FileManagerAPI.Infrastructure;
 
 namespace FileManagerAPI
 {
@@ -43,6 +44,7 @@ namespace FileManagerAPI
 
             services.AddTransient<IFileManagerMContext, FileManagerMContext>();
             services.AddTransient<IRepositoryMService, RepositoryMService>();
+            services.AddTransient<IFileManager, FileManager>();
             services.AddTransient<IRepositoryDbService<Owner>, RepositoryDbService<Owner>>();
 
             services.AddSwaggerGen(c =>
