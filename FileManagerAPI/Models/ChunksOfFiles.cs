@@ -17,8 +17,5 @@ namespace FileManagerAPI.Models
         public int n { get; set; }
         public int TotalCounts { get; set; }
         public string ChunksData { get; set; }
-        
-
-
     }
 }
