@@ -78,10 +78,7 @@ namespace FileManagerAPI.Services
             }
             return fileBytesZip;
         }
-        public async Task InputChunks(IEnumerable<ChunksOfFiles> chunksOfFiles)
-        {
-            await context.ChunksOfFiles.InsertManyAsync(chunksOfFiles);
-        }
+       
         public async Task StoreFile(Stream fileStream, string fileName)
         {
             ObjectId fileStoreId = await context.Bucket.UploadFromStreamAsync(fileName, fileStream);

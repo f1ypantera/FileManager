@@ -79,16 +79,6 @@ namespace FileManagerAPI.Controllers
             return Ok("Update");
         }
 
-
-        [HttpPost]
-        [Route("InputChunks")]
-        public async Task<ActionResult> InputChunks(IEnumerable<ChunksOfFiles> chunksOfFiles)
-        {
-            await repository.InputChunks(chunksOfFiles);
-            return  Ok("Chunks getting");
-        } 
-
-
         [HttpPost]
         [Route("UploadFile")]
         public async Task<ActionResult> UploadFile(IFormFile uploadedFile)

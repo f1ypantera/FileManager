@@ -17,6 +17,6 @@ namespace FileManagerAPI.Interfaces
         Task<byte[]> GetFileArchive(string[] id);
         Task StoreFile(Stream fileStream, string fileName);
         Task<List<UserListComponents>> GetListComponents();
-        Task InputChunks(IEnumerable<ChunksOfFiles> chunksOfFiles);
+       
     }
 }
