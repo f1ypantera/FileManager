@@ -13,7 +13,7 @@ namespace FileManagerAPI.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string FileId { get; set; }
         public string FileName { get; set; }
-        public string ChunkData { get; set; }
+        public Byte[] ChunkData { get; set; }
         public DateTime dateTimeSave { get; set; }
 
     }

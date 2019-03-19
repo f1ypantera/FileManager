@@ -26,7 +26,7 @@ namespace FileManagerAPI.Context
         public IMongoCollection<Component> Components => mongoDatabase.GetCollection<Component>("Components");
         public IMongoCollection<ChunksOfFiles> ChunksOfFiles => mongoDatabase.GetCollection<ChunksOfFiles>("ChunksOfFiles");
         public IMongoCollection<DownoloadFile> DownoloadFile => mongoDatabase.GetCollection<DownoloadFile>("DownoloadFile");
-        public IMongoCollection<StoredFile> StoredFile => mongoDatabase.GetCollection<StoredFile>("StoredFile");
+        public IMongoCollection<StoredFile> StoredFiles => mongoDatabase.GetCollection<StoredFile>("StoredFiles");
         public IMongoCollection<UserListComponents> collectionComponents => mongoDatabase.GetCollection<UserListComponents>("UserListComponents");
 
         public IGridFSBucket Bucket => bucket;
