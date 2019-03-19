@@ -9,6 +9,7 @@ namespace FileManagerAPI.Interfaces
         IMongoCollection<Component> Components { get; }
         IMongoCollection<UserListComponents> collectionComponents { get; }
         IMongoCollection<ChunksOfFiles> ChunksOfFiles { get; }
+        IMongoCollection<DownoloadFile> df { get; }
         IGridFSBucket Bucket { get; }
     }
 }

@@ -44,7 +44,7 @@ namespace FileManagerAPI
 
             services.AddTransient<IFileManagerMContext, FileManagerMContext>();
             services.AddTransient<IRepositoryMService, RepositoryMService>();
-            services.AddTransient<IFileManager, FileManager>();
+            services.AddSingleton<IFileManager, FileManager>();
             services.AddTransient<IRepositoryDbService<Owner>, RepositoryDbService<Owner>>();
 
             services.AddSwaggerGen(c =>

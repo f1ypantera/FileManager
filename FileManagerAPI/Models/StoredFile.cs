@@ -13,9 +13,7 @@ namespace FileManagerAPI.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string FileId { get; set; }
         public string FileName { get; set; }
-        public int Length { get; set; }
-        public int ChunkSize { get; set; }
-       
+        public string ChunkData { get; set; }
 
     }
 }

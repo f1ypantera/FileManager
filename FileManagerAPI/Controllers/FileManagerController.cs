@@ -20,7 +20,7 @@ namespace FileManagerAPI.Controllers
 
         [HttpPost]
         [Route("InputChunksNew")]
-        public async Task<ActionResult> InputChunksNew(IEnumerable<ChunksOfFiles> chunksOfFiles)
+        public async Task<ActionResult> InputChunksNew(ChunksOfFiles chunksOfFiles)
         {
             await fileManager.InputChunks(chunksOfFiles);
             return Ok("Chunks getting");

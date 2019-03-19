@@ -8,6 +8,6 @@ namespace FileManagerAPI.Interfaces
 {
     public interface IFileManager
     {
-        Task InputChunks(IEnumerable<ChunksOfFiles> chunksOfFiles);
+        Task InputChunks(ChunksOfFiles chunksOfFiles);
     }
 }

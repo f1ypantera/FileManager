@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using FileManagerAPI.Interfaces;
 using FileManagerAPI.Models;
 using MongoDB.Driver;
+using FileManagerAPI.Infrastructure;
 
 namespace FileManagerAPI.Context
 {
@@ -24,6 +25,7 @@ namespace FileManagerAPI.Context
         }
         public IMongoCollection<Component> Components => mongoDatabase.GetCollection<Component>("Components");
         public IMongoCollection<ChunksOfFiles> ChunksOfFiles => mongoDatabase.GetCollection<ChunksOfFiles>("ChunksOfFiles");
+        public IMongoCollection<DownoloadFile> df => mongoDatabase.GetCollection<DownoloadFile>("DownoloadFiles");
         public IMongoCollection<UserListComponents> collectionComponents => mongoDatabase.GetCollection<UserListComponents>("UserListComponents");
 
         public IGridFSBucket Bucket => bucket;

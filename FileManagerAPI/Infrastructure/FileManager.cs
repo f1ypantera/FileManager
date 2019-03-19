@@ -7,19 +7,31 @@ using System.Threading.Tasks;
 
 namespace FileManagerAPI.Infrastructure
 {
-    public class FileManager: IFileManager
+    public class FileManager:IFileManager
     {
-        private readonly IFileManagerMContext context;
-
-
+      private readonly IFileManagerMContext context;
+     
         public FileManager(IFileManagerMContext context)
         {
             this.context = context;
         }
 
-        public async Task InputChunks(IEnumerable<ChunksOfFiles> chunksOfFiles)
+        public async Task InputChunks(ChunksOfFiles chunksOfFiles)
         {
-            await context.ChunksOfFiles.InsertManyAsync(chunksOfFiles);
+            List<ChunksOfFiles> inputChunks = new List<ChunksOfFiles> { chunksOfFiles };
+          
+
+
+
+            var file = new DownoloadFile()
+            {
+                FileId = chunksOfFiles.FileId,
+                chunks = inputChunks,
+                LastDownoloadTime = DateTime.Now,                             
+            };
+
+
+            await context.df.InsertOneAsync(file);
         }
     }
 }
