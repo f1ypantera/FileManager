@@ -25,6 +25,10 @@ namespace FileManagerAPI.Controllers
             await fileManager.InputChunks(chunksOfFiles);
             return Ok("Chunks getting");
         }
-
+        [HttpGet]
+        public async Task<ActionResult<List<StoredFile>>> Get()
+        {
+            return await fileManager.GetAll();
+        }
     }
 }

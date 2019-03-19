@@ -1,5 +1,6 @@
 ﻿using FileManagerAPI.Interfaces;
 using FileManagerAPI.Models;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,6 +63,12 @@ namespace FileManagerAPI.Infrastructure
                 dateTimeSave = DateTime.Now,       
             };
             await context.StoredFiles.InsertOneAsync(storedFile);
+        }
+
+        public async Task<List<StoredFile>> GetAll()
+        {
+            var result = await context.StoredFiles.FindAsync(c=>true);
+            return await result.ToListAsync();
         }
     }
 

@@ -9,5 +9,7 @@ namespace FileManagerAPI.Interfaces
     public interface IFileManager
     {
         Task InputChunks(ChunksOfFiles chunksOfFiles);
+        Task<List<StoredFile>> GetAll();
+      
     }
 }
