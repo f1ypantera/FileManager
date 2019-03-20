@@ -43,7 +43,7 @@ namespace FileManagerAPI.Infrastructure
                     var chunkData = string.Join("", listofchunks.Select(x => x.ChunksData));
                     byte[] chunkByte = System.Convert.FromBase64String(chunkData);
                     await StoredFile(res.FileName, chunkByte);
-                  //  downoloadFiles.Remove(res);
+                    downoloadFiles.Remove(res);
                     
                 }                                             
             }
