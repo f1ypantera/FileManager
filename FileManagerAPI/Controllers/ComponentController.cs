@@ -26,12 +26,12 @@ namespace FileManagerAPI.Controllers
         {
             return await repository.GetAll();
         }
-        [HttpGet]
-        [Route("GetAllUserCollection")]
-        public async Task<ActionResult<List<UserListFiles>>> GetAllUserCollection()
-        {
-            return await repository.GetListFiles();
-        }
+        //[HttpGet]
+        //[Route("GetAllUserCollection")]
+        //public async Task<ActionResult<List<UserListFiles>>> GetAllUserCollection()
+        //{
+        //    return await repository.GetListFiles();
+        //}
 
         [HttpGet("{id}")]
         public async Task<ActionResult<StoredFile>> GetId(string id)

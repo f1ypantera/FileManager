@@ -43,10 +43,7 @@ namespace FileManagerAPI.Infrastructure
                     var chunkData = string.Join("", listofchunks.Select(x => x.ChunksData));
                     byte[] chunkByte = System.Text.Encoding.UTF8.GetBytes(chunkData);
                     await StoredFile(res.FileName, chunkByte);
-                }
-              
-                   
-                
+                }                                             
             }
             else
             {
@@ -61,8 +58,7 @@ namespace FileManagerAPI.Infrastructure
                     },
                     LastDownoloadTime = DateTime.Now,
                 };
-                downoloadFiles.Add(downoloadFile);    
-            
+                downoloadFiles.Add(downoloadFile);               
             }          
         }
         public async Task StoredFile(string fileName,byte[] chunkByte)
@@ -99,8 +95,7 @@ namespace FileManagerAPI.Infrastructure
                 using (ZipArchive zip = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
                 {
                     foreach (StoredFile doc in res)
-                    {
-                      //  var bytes = await context.Bucket.DownloadAsBytesAsync(new ObjectId(doc.Id));
+                    {               
                         ZipArchiveEntry zipItem = zip.CreateEntry(doc.FileName);
 
                         using (MemoryStream original = new MemoryStream(doc.ChunkData))
