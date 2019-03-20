@@ -4,6 +4,7 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver.Linq;
@@ -24,10 +25,9 @@ namespace FileManagerAPI.Infrastructure
         }
 
         public async Task InputChunks(ChunksOfFiles chunksOfFiles)
-        {
-
+        {                      
             var res = downoloadFiles.FirstOrDefault(c => c.FileId == chunksOfFiles.FileId && c.FileName == chunksOfFiles.FileName);
-
+            
             if (res != null)
             {
                 int count = res.chunks.Count;
@@ -36,13 +36,14 @@ namespace FileManagerAPI.Infrastructure
                 {
                     res.chunks.Add(chunksOfFiles);
                 }
-
                 if(count == chunksOfFiles.TotalCounts-1)
                 {
                     var listofchunks = res.chunks.OrderBy(c => c.n);
                     var chunkData = string.Join("", listofchunks.Select(x => x.ChunksData));
-                    byte[] chunkByte = System.Text.Encoding.UTF8.GetBytes(chunkData);
+                    byte[] chunkByte = System.Text.Encoding.ASCII.GetBytes(chunkData);
                     await StoredFile(res.FileName, chunkByte);
+                    downoloadFiles.Remove(res);
+                    
                 }                                             
             }
             else
@@ -88,7 +89,7 @@ namespace FileManagerAPI.Infrastructure
         public async Task<byte[]> GetFileArchive(string[] id)
         {
             byte[] fileBytesZip = null;
-            var result = await context.StoredFiles.FindAsync(c => id.Contains(c.FileName));
+            var result = await context.StoredFiles.FindAsync(c => id.Contains(c.FileId));
             var res = await result.ToListAsync();
             using (MemoryStream memoryStream = new MemoryStream())
             {
