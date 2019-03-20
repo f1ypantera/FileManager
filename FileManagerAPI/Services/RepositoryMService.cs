@@ -19,84 +19,34 @@ namespace FileManagerAPI.Services
         {
             this.context = context;
         }
-        public async Task<List<UserListComponents>> GetListComponents()
+        public async Task<List<UserListFiles>> GetListFiles()
         {
             var result = await context.collectionComponents.FindAsync(c => true);
             return await result.ToListAsync();
         }
-        public async Task<List<Component>> GetAll()
+        public async Task<List<StoredFile>> GetAll()
         {
-            var result = await context.Components.FindAsync(c => true);
+            var result = await context.StoredFiles.FindAsync(c => true);
             return await result.ToListAsync();
         }
-        public async Task<Component> GetbyId(string id)
+        public async Task<StoredFile> GetbyId(string id)
         {
-            var result = await context.Components.FindAsync(c => c.Id == id);
+            var result = await context.StoredFiles.FindAsync(c => c.FileId == id);
             return await result.FirstOrDefaultAsync();
         }
-        public async Task<List<Component>> GetbyIds(string[] id)
+        public async Task<List<StoredFile>> GetbyIds(string[] id)
         {
-            var result = await context.Components.FindAsync(c => id.Contains(c.Id));
+            var result = await context.StoredFiles.FindAsync(c => id.Contains(c.FileId));
             return await result.ToListAsync();
         }
         public async Task Remove(string id)
         {
-            await context.Components.DeleteOneAsync(c => c.Id == id);
+            await context.StoredFiles.DeleteOneAsync(c => c.FileId == id);
         }
-        public async Task Update(string id, Component component)
+        public async Task Update(string id, StoredFile component)
         {
-            await context.Components.ReplaceOneAsync(c => c.Id == id, component);
+            await context.StoredFiles.ReplaceOneAsync(c => c.FileId == id, component);
         }
-        public async Task<(byte[], string)> Getfile(string id)
-        {
-            var fileComponent = await GetbyId(id);
-            var bytes = await context.Bucket.DownloadAsBytesAsync(new ObjectId(id));
-            return (bytes, fileComponent.Name);
-        }
-        public async Task<byte[]> GetFileArchive(string[] id)
-        {
-            byte[] fileBytesZip = null;
-            var result = await context.Components.FindAsync(c => id.Contains(c.Id));
-            var res = await result.ToListAsync();
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                using (ZipArchive zip = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
-                {
-                    foreach (Component doc in res)
-                    {
-                        var bytes = await context.Bucket.DownloadAsBytesAsync(new ObjectId(doc.Id));
-                        ZipArchiveEntry zipItem = zip.CreateEntry(doc.Name);
 
-                        using (MemoryStream original = new MemoryStream(bytes))
-                        using (Stream entryStream = zipItem.Open())
-                        {
-                            await original.CopyToAsync(entryStream);
-                        }
-                    }
-                }
-                fileBytesZip = memoryStream.ToArray();
-            }
-            return fileBytesZip;
-        }
-       
-        public async Task StoreFile(Stream fileStream, string fileName)
-        {
-            ObjectId fileStoreId = await context.Bucket.UploadFromStreamAsync(fileName, fileStream);
-
-            var component = new Component()
-            {
-                Id = fileStoreId.ToString(),
-                Name = fileName,
-                Size = fileStream.Length,
-                Owner = "Admin",
-                //UserListComponents = new UserListComponents
-                //{
-                //    OwnerId = 1,
-                    
-                //},
-                fileId = fileStoreId.ToString(),
-            };
-            await context.Components.InsertOneAsync(component);
-        }
     }
 }

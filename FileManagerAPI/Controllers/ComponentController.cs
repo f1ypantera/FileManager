@@ -22,19 +22,19 @@ namespace FileManagerAPI.Controllers
             this.repository = repository;
         }
         [HttpGet]    
-        public async Task<ActionResult<List<Component>>> Get()
+        public async Task<ActionResult<List<StoredFile>>> Get()
         {
             return await repository.GetAll();
         }
         [HttpGet]
         [Route("GetAllUserCollection")]
-        public async Task<ActionResult<List<UserListComponents>>> GetAllUserCollection()
+        public async Task<ActionResult<List<UserListFiles>>> GetAllUserCollection()
         {
-            return await repository.GetListComponents();
+            return await repository.GetListFiles();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Component>> GetId(string id)
+        public async Task<ActionResult<StoredFile>> GetId(string id)
         {
             var component = await repository.GetbyId(id);
             if (component == null)
@@ -45,7 +45,7 @@ namespace FileManagerAPI.Controllers
         }
         [HttpGet]
         [Route("GetIds")]
-        public async Task<ActionResult<Component>> GetIds(string ids)
+        public async Task<ActionResult<StoredFile>> GetIds(string ids)
         {
             string[] idsList = ids.Split(',');
             var component = await repository.GetbyIds(idsList);
@@ -63,11 +63,11 @@ namespace FileManagerAPI.Controllers
             {
                 return NotFound();
             }
-            await repository.Remove(component.Id);
+            await repository.Remove(component.FileId);
             return Ok("Has been deleted");
         }
         [HttpPut("{id}")]
-        public async Task<ActionResult> Update(string id, Component component)
+        public async Task<ActionResult> Update(string id, StoredFile component)
         {
             var find = await repository.GetbyId(id);
             if (find == null)
@@ -79,26 +79,6 @@ namespace FileManagerAPI.Controllers
             return Ok("Update");
         }
 
-        [HttpPost]
-        [Route("UploadFile")]
-        public async Task<ActionResult> UploadFile(IFormFile uploadedFile)
-        {        
-            await repository.StoreFile(uploadedFile.OpenReadStream(), uploadedFile.FileName);        
-            return Ok("Ok");
-        }
-
-        [HttpGet]
-        [Route("DownoaloadFile")]
-        public async Task<ActionResult> DownoaloadFile(string ids)
-        {
-            string[] idsList = ids.Split(',');
-            if (idsList.Count() == 1)
-            {
-                var file = await repository.Getfile(ids);
-                return File(file.Item1, System.Net.Mime.MediaTypeNames.Application.Octet, file.Item2);
-            }
-            var files = await repository.GetFileArchive(idsList);
-            return File(files, "application/zip", "FIle.zip");
-        }
+        
     }
 }

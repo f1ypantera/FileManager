@@ -8,15 +8,13 @@ namespace FileManagerAPI.Interfaces
 {
     public interface IRepositoryMService
     {
-        Task<List<Component>> GetAll();
-        Task<Component> GetbyId(string id);
-        Task<List<Component>> GetbyIds(string[] id);
+        Task<List<StoredFile>> GetAll();
+        Task<StoredFile> GetbyId(string id);
+        Task<List<StoredFile>> GetbyIds(string[] id);
         Task Remove(string id);
-        Task Update(string id, Component c);
-        Task<(byte[], string)> Getfile(string id);
-        Task<byte[]> GetFileArchive(string[] id);
-        Task StoreFile(Stream fileStream, string fileName);
-        Task<List<UserListComponents>> GetListComponents();
+        Task Update(string id, StoredFile c);
+      
+        Task<List<UserListFiles>> GetListFiles();
        
     }
 }

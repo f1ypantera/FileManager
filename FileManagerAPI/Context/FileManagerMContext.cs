@@ -19,15 +19,14 @@ namespace FileManagerAPI.Context
             {
                 BucketName = "files",
                 ChunkSizeBytes = 1024, //1mb
-                
+
             };
             bucket = new GridFSBucket(mongoDatabase, gridFSBucketOptions);
         }
-        public IMongoCollection<Component> Components => mongoDatabase.GetCollection<Component>("Components");
         public IMongoCollection<ChunksOfFiles> ChunksOfFiles => mongoDatabase.GetCollection<ChunksOfFiles>("ChunksOfFiles");
         public IMongoCollection<DownoloadFile> DownoloadFile => mongoDatabase.GetCollection<DownoloadFile>("DownoloadFile");
         public IMongoCollection<StoredFile> StoredFiles => mongoDatabase.GetCollection<StoredFile>("StoredFiles");
-        public IMongoCollection<UserListComponents> collectionComponents => mongoDatabase.GetCollection<UserListComponents>("UserListComponents");
+        public IMongoCollection<UserListFiles> collectionComponents => mongoDatabase.GetCollection<UserListFiles>("UserListComponents");
 
         public IGridFSBucket Bucket => bucket;
     }

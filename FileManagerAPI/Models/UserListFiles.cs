@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace FileManagerAPI.Models
 {
-    public class UserListComponents
+    public class UserListFiles
     {
 
         public int OwnerId { get; set; }
-        public ICollection<Component> Components { get; set; }
-        public UserListComponents()
+        public ICollection<StoredFile> StoredFiles { get; set; }
+        public UserListFiles()
         {
-            Components = new List<Component>();
+            StoredFiles = new List<StoredFile>();
         }
 
     }

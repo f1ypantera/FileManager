@@ -78,23 +78,12 @@ namespace FileManagerAPI.Infrastructure
             await context.StoredFiles.InsertOneAsync(storedFile);
         }
 
-        public async Task<List<StoredFile>> GetAll()
-        {
-            var result = await context.StoredFiles.FindAsync(c=>true);
-            return await result.ToListAsync();
-        }
-
         public async Task<StoredFile> GetbyId(string id)
         {
             var result = await context.StoredFiles.FindAsync(c => c.FileId == id);
             return await result.FirstOrDefaultAsync();
         }
-        public async Task<List<StoredFile>> GetbyIds(string[] id)
-        {
-            var result = await context.StoredFiles.FindAsync(c => id.Contains(c.FileId));
-            return await result.ToListAsync();
-        }
-
+        
         public async Task<(byte[], string)> Getfile(string id)
         {
             var fileComponent = await GetbyId(id); 

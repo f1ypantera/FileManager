@@ -26,22 +26,6 @@ namespace FileManagerAPI.Controllers
             return Ok("Chunks getting");
         }
         [HttpGet]
-        public async Task<ActionResult<List<StoredFile>>> Get()
-        {
-            return await fileManager.GetAll();
-        }
-        [HttpGet("{id}")]
-        public async Task<ActionResult<StoredFile>> GetId(string id)
-        {
-            var component = await fileManager.GetbyId(id);
-            if (component == null)
-            {
-                return NotFound();
-            }
-            return Ok(component);
-        }
-
-        [HttpGet]
         [Route("DownoaloadFile")]
         public async Task<ActionResult> DownoaloadFile(string ids)
         {
