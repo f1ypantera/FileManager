@@ -25,6 +25,7 @@ namespace FileManagerAPI.Infrastructure
             this.context = context;
         }
        
+
         public async Task InputChunks(ChunksOfFiles chunksOfFiles)
         {                      
             var res = downoloadFiles.FirstOrDefault(c => c.FileId == chunksOfFiles.FileId && c.FileName == chunksOfFiles.FileName);
@@ -41,7 +42,7 @@ namespace FileManagerAPI.Infrastructure
                 {
                     var listofchunks = res.chunks.OrderBy(c => c.n);
                     var chunkData = string.Join("", listofchunks.Select(x => x.ChunksData));
-                    byte[] chunkByte = System.Convert.FromBase64String(chunkData);
+                    byte[] chunkByte = Encoding.ASCII.GetBytes(chunkData);
                     await StoredFile(res.FileName, chunkByte);
                     downoloadFiles.Remove(res);
                     
