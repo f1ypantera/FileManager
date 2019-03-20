@@ -13,7 +13,9 @@ namespace FileManagerAPI.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string FileId { get; set; }
         public string FileName { get; set; }
-        public string ChunkData { get; set; }
+        public double Size { get; set; }
+        public string Owner { get; set; }
+        public byte[] ChunkData { get; set; }
         public DateTime dateTimeSave { get; set; }
 
     }

@@ -10,6 +10,11 @@ namespace FileManagerAPI.Interfaces
     {
         Task InputChunks(ChunksOfFiles chunksOfFiles);
         Task<List<StoredFile>> GetAll();
-      
+        Task<StoredFile> GetbyId(string id);
+        Task<List<StoredFile>> GetbyIds(string[] id);
+        Task<(byte[], string)> Getfile(string id);
+        Task<byte[]> GetFileArchive(string[] id);
+
+
     }
 }
