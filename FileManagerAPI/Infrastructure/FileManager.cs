@@ -41,9 +41,6 @@ namespace FileManagerAPI.Infrastructure
                 {
                     var listofchunks = res.chunks.OrderBy(c => c.n);
                     var chunkData = string.Join("", listofchunks.Select(x => x.ChunksData));
-
-
-
                     byte[] chunkByte = System.Convert.FromBase64String(chunkData);
                     await StoredFile(res.FileName, chunkByte);
                     downoloadFiles.Remove(res);
