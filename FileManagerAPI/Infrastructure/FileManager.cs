@@ -26,7 +26,7 @@ namespace FileManagerAPI.Infrastructure
             if (res != null)
             {
                 int count = res.chunks.Count;
-                if (count <= chunksOfFiles.TotalCounts)
+                if (count < chunksOfFiles.TotalCounts)
                 {
                     res.chunks.Add(chunksOfFiles);                  
                 }
@@ -34,8 +34,8 @@ namespace FileManagerAPI.Infrastructure
                 {
                     var listofchunks = res.chunks.OrderBy(c => c.n);                   
                     var chunkData = string.Join("", listofchunks.Select(x => x.ChunksData));
-                    byte[] chunkByte = System.Text.Encoding.UTF8.GetBytes(chunkData);
-                    await StoredFile(res.FileName, chunkByte);
+                  //  byte[] chunkByte = System.Text.Encoding.UTF8.GetBytes(chunkData);
+                    await StoredFile(res.FileName, chunkData);
                 }
             }
             else
@@ -54,7 +54,7 @@ namespace FileManagerAPI.Infrastructure
                 downoloadFiles.Add(downoloadFile);              
             }          
         }
-        public async Task StoredFile(string fileName,byte[] chunkByte)
+        public async Task StoredFile(string fileName,string chunkByte)
         {
             var storedFile = new StoredFile
             {
