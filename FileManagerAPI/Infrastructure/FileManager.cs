@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver.Linq;
 using System.IO;
+using System.Text;
 using System.IO.Compression;
 
 
@@ -23,7 +24,7 @@ namespace FileManagerAPI.Infrastructure
         {
             this.context = context;
         }
-
+       
         public async Task InputChunks(ChunksOfFiles chunksOfFiles)
         {                      
             var res = downoloadFiles.FirstOrDefault(c => c.FileId == chunksOfFiles.FileId && c.FileName == chunksOfFiles.FileName);
@@ -40,7 +41,10 @@ namespace FileManagerAPI.Infrastructure
                 {
                     var listofchunks = res.chunks.OrderBy(c => c.n);
                     var chunkData = string.Join("", listofchunks.Select(x => x.ChunksData));
-                    byte[] chunkByte = System.Text.Encoding.ASCII.GetBytes(chunkData);
+
+
+
+                    byte[] chunkByte = System.Convert.FromBase64String(chunkData);
                     await StoredFile(res.FileName, chunkByte);
                     downoloadFiles.Remove(res);
                     
