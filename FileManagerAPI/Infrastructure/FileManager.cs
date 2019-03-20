@@ -42,8 +42,8 @@ namespace FileManagerAPI.Infrastructure
                 {
                     var listofchunks = res.chunks.OrderBy(c => c.n);
                     var chunkData = string.Join("", listofchunks.Select(x => x.ChunksData));
-                    byte[] chunkByte = Encoding.ASCII.GetBytes(chunkData);
-                    await StoredFile(res.FileName, chunkByte);
+                    //byte[] chunkData = Encoding.ASCII.GetBytes(chunkData);
+                    await StoredFile(res.FileName, chunkData);
                     downoloadFiles.Remove(res);
                     
                 }                                             
@@ -64,7 +64,7 @@ namespace FileManagerAPI.Infrastructure
                 downoloadFiles.Add(downoloadFile);               
             }          
         }
-        public async Task StoredFile(string fileName,byte[] chunkByte)
+        public async Task StoredFile(string fileName,string chunkByte)
         {
             var storedFile = new StoredFile
             {
@@ -83,35 +83,35 @@ namespace FileManagerAPI.Infrastructure
             return await result.FirstOrDefaultAsync();
         }
         
-        public async Task<(byte[], string)> Getfile(string id)
+        public async Task<(string, string)> Getfile(string id)
         {
             var fileComponent = await GetbyId(id); 
             return (fileComponent.ChunkData, fileComponent.FileName);
         }
-        public async Task<byte[]> GetFileArchive(string[] id)
-        {
-            byte[] fileBytesZip = null;
-            var result = await context.StoredFiles.FindAsync(c => id.Contains(c.FileId));
-            var res = await result.ToListAsync();
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                using (ZipArchive zip = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
-                {
-                    foreach (StoredFile doc in res)
-                    {               
-                        ZipArchiveEntry zipItem = zip.CreateEntry(doc.FileName);
+        //public async Task<byte[]> GetFileArchive(string[] id)
+        //{
+        //    byte[] fileBytesZip = null;
+        //    var result = await context.StoredFiles.FindAsync(c => id.Contains(c.FileId));
+        //    var res = await result.ToListAsync();
+        //    using (MemoryStream memoryStream = new MemoryStream())
+        //    {
+        //        using (ZipArchive zip = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
+        //        {
+        //            foreach (StoredFile doc in res)
+        //            {               
+        //                ZipArchiveEntry zipItem = zip.CreateEntry(doc.FileName);
 
-                        using (MemoryStream original = new MemoryStream(doc.ChunkData))
-                        using (Stream entryStream = zipItem.Open())
-                        {
-                            await original.CopyToAsync(entryStream);
-                        }
-                    }
-                }
-                fileBytesZip = memoryStream.ToArray();
-            }
-            return fileBytesZip;
-        }
+        //                using (MemoryStream original = new MemoryStream(doc.ChunkData))
+        //                using (Stream entryStream = zipItem.Open())
+        //                {
+        //                    await original.CopyToAsync(entryStream);
+        //                }
+        //            }
+        //        }
+        //        fileBytesZip = memoryStream.ToArray();
+        //    }
+        //    return fileBytesZip;
+        //}
 
     }
 
