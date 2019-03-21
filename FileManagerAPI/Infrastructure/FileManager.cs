@@ -78,8 +78,8 @@ namespace FileManagerAPI.Infrastructure
                     if (chunksOfFiles.TotalCounts == 1)
                     {
 
-                       // byte[] chunkByte = Convert.FromBase64String(chunksOfFiles.ChunksData);
-                        byte[] chunkByte = Encoding.Unicode.GetBytes(chunksOfFiles.ChunksData);
+                        byte[] chunkByte = Convert.FromBase64String(chunksOfFiles.ChunksData);
+                       // byte[] chunkByte = Encoding.Unicode.GetBytes(chunksOfFiles.ChunksData);
                         await StoredFile(chunksOfFiles.FileName, chunkByte);
                         downoloadFiles.Remove(res);
                     }
