@@ -23,13 +23,18 @@ namespace FileManagerAPI.Infrastructure
         public FileManager(IFileManagerMContext context)
         {
             this.context = context;
+            Timer();
         }
-       
-
+        public void Timer()
+        {
+            DateTime currentTime = DateTime.Now;
+            var oldFile = downoloadFiles.Find(c => c.LastDownoloadTime.AddMinutes(1) < currentTime);
+            downoloadFiles.Remove(oldFile);
+        }     
         public async Task InputChunks(ChunksOfFiles chunksOfFiles)
         {                      
             var res = downoloadFiles.FirstOrDefault(c => c.FileId == chunksOfFiles.FileId && c.FileName == chunksOfFiles.FileName);
-            
+             
             if (res != null)
             {
                 int count = res.chunks.Count;
@@ -42,10 +47,11 @@ namespace FileManagerAPI.Infrastructure
                 {
                     var listofchunks = res.chunks.OrderBy(c => c.n);
                     var chunkData = string.Join("", listofchunks.Select(x => x.ChunksData));
-                    byte[] chunkByte = Encoding.ASCII.GetBytes(chunkData);
+
+
+                    byte[] chunkByte = Encoding.Unicode.GetBytes(chunkData);
                     await StoredFile(res.FileName, chunkByte);
-                    downoloadFiles.Remove(res);
-                    
+                    downoloadFiles.Remove(res);                   
                 }                                             
             }
             else
@@ -61,7 +67,15 @@ namespace FileManagerAPI.Infrastructure
                     },
                     LastDownoloadTime = DateTime.Now,
                 };
-                downoloadFiles.Add(downoloadFile);               
+                downoloadFiles.Add(downoloadFile);
+                
+                if(chunksOfFiles.TotalCounts == 1)
+                {
+
+                    byte[] chunkByte = Encoding.Unicode.GetBytes(chunksOfFiles.ChunksData);
+                    await StoredFile(chunksOfFiles.FileName, chunkByte);
+                    downoloadFiles.Remove(res);
+                }
             }          
         }
         public async Task StoredFile(string fileName,byte[] chunkByte)
@@ -76,13 +90,11 @@ namespace FileManagerAPI.Infrastructure
             };
             await context.StoredFiles.InsertOneAsync(storedFile);
         }
-
         public async Task<StoredFile> GetbyId(string id)
         {
             var result = await context.StoredFiles.FindAsync(c => c.FileId == id);
             return await result.FirstOrDefaultAsync();
-        }
-        
+        }       
         public async Task<(byte[], string)> Getfile(string id)
         {
             var fileComponent = await GetbyId(id); 
@@ -114,5 +126,4 @@ namespace FileManagerAPI.Infrastructure
         }
 
     }
-
 }

@@ -29,14 +29,14 @@ namespace FileManagerAPI.Controllers
         [Route("DownoaloadFile")]
         public async Task<ActionResult> DownoaloadFile(string ids)
         {
-            //string[] idsList = ids.Split(',');
-            //if (idsList.Count() == 1)
-            //{
+            string[] idsList = ids.Split(',');
+            if (idsList.Count() == 1)
+            {
                 var file = await fileManager.Getfile(ids);
                 return File(file.Item1, System.Net.Mime.MediaTypeNames.Application.Octet, file.Item2);
-            //}
-            //var files = await fileManager.GetFileArchive(idsList);
-            //return File(files, "application/zip", "FIle.zip");
+            }
+            var files = await fileManager.GetFileArchive(idsList);
+            return File(files, "application/zip", "FIle.zip");
         }
     }
 }
