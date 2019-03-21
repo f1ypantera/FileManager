@@ -32,6 +32,7 @@ namespace FileManagerAPI.Services
         public async Task<StoredFile> GetbyId(string id)
         {
             var result = await context.StoredFiles.FindAsync(c => c.FileId == id);
+           
             return await result.FirstOrDefaultAsync();
         }
         public async Task<List<StoredFile>> GetbyIds(string[] id)
