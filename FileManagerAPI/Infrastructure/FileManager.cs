@@ -22,11 +22,11 @@ namespace FileManagerAPI.Infrastructure
         List<DownoloadFile> downoloadFiles = new List<DownoloadFile>();
         public FileManager(IFileManagerMContext context)
         {
-            //Timer timer = new Timer(tm,, 0, 2000);
+            Timer timer = new Timer(TimerCallBack);
             this.context = context;
             
         }
-        public void Timer()
+        public void TimerCallBack (object obj)
         {
             DateTime currentTime = DateTime.Now;
             var oldFile = downoloadFiles.Find(c => c.LastDownoloadTime.AddMinutes(1) < currentTime);
