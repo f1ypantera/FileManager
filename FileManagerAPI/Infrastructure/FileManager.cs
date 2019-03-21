@@ -33,8 +33,6 @@ namespace FileManagerAPI.Infrastructure
             downoloadFiles.Remove(oldFile);
         }
 
-       
-
         public async Task InputChunks(ChunksOfFiles chunksOfFiles)
         {                      
             var res = downoloadFiles.FirstOrDefault(c => c.FileId == chunksOfFiles.FileId && c.FileName == chunksOfFiles.FileName);
@@ -50,13 +48,22 @@ namespace FileManagerAPI.Infrastructure
                     {
                         res.chunks.Add(chunksOfFiles);
                     }
+
                     if (count == chunksOfFiles.TotalCounts - 1)
                     {
-                        var listofchunks = res.chunks.OrderBy(c => c.n);
-                        var chunkData = string.Join("", listofchunks.Select(x => x.ChunksData));
-                        // byte[] chunkByte = Convert.FromBase64String(chunkData);
-                        byte[] chunkByte = Encoding.Unicode.GetBytes(chunkData);
-                        await StoredFile(res.FileName, chunkByte);
+                        var listofChunks = res.chunks.OrderBy(c => c.n);
+                        byte[] finalChunks = null;                       
+                        using(MemoryStream memory = new MemoryStream())
+                        {
+                            foreach (var i in listofChunks)
+                            {
+                                byte[] chunks = Convert.FromBase64String(i.ChunksData);
+                                memory.Write(chunks);
+                            }
+                            finalChunks = memory.ToArray();
+                        }
+                                                                                          
+                        await StoredFile(res.FileName, finalChunks);
                         downoloadFiles.Remove(res);
                     }
                 }
@@ -77,9 +84,7 @@ namespace FileManagerAPI.Infrastructure
 
                     if (chunksOfFiles.TotalCounts == 1)
                     {
-
                         byte[] chunkByte = Convert.FromBase64String(chunksOfFiles.ChunksData);
-                       // byte[] chunkByte = Encoding.Unicode.GetBytes(chunksOfFiles.ChunksData);
                         await StoredFile(chunksOfFiles.FileName, chunkByte);
                         downoloadFiles.Remove(res);
                     }
