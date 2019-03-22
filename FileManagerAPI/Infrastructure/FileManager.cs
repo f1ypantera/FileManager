@@ -11,7 +11,7 @@ using MongoDB.Driver.Linq;
 using System.IO;
 using System.Text;
 using System.IO.Compression;
-
+using System.Timers;
 
 namespace FileManagerAPI.Infrastructure
 {
@@ -20,17 +20,23 @@ namespace FileManagerAPI.Infrastructure
         private readonly IFileManagerMContext context;
         private readonly DateTime currentTime = DateTime.Now;
         List<DownoloadFile> downoloadFiles = new List<DownoloadFile>();
-        public FileManager(IFileManagerMContext context)
-        {
-            Timer timer = new Timer(TimerCallBack);
-            this.context = context;
+        public FileManager(IFileManagerMContext context, TimerAlarm timerAlarm)
+        {           
+           this.context = context;
+           timerAlarm.StartTimerEvent();
+           
             
         }
-        public void TimerCallBack (object obj)
-        {
+        public void CheckFile(Object source, ElapsedEventArgs e)
+        {         
             DateTime currentTime = DateTime.Now;
-            var oldFile = downoloadFiles.Find(c => c.LastDownoloadTime.AddMinutes(1) < currentTime);
-            downoloadFiles.Remove(oldFile);
+            var oldFile = downoloadFiles.Where(c => c.LastDownoloadTime.AddMinutes(1) < currentTime);
+            foreach (var i in oldFile)
+            {
+                downoloadFiles.Remove(i);
+            }
+            var archiveFile = string.Join(", ", downoloadFiles.Select(x => x.FileName));
+            System.Diagnostics.Debug.WriteLine("Old file was removed.", archiveFile);
         }
 
         public async Task InputChunks(ChunksOfFiles chunksOfFiles)
@@ -38,6 +44,8 @@ namespace FileManagerAPI.Infrastructure
             var res = downoloadFiles.FirstOrDefault(c => c.FileId == chunksOfFiles.FileId && c.FileName == chunksOfFiles.FileName);
             var sameFile = await context.StoredFiles.FindAsync(c => c.FileName == chunksOfFiles.FileName);
             var file = await sameFile.FirstOrDefaultAsync();
+
+       
             if (file == null)
             {
                 if (res != null)
@@ -57,6 +65,7 @@ namespace FileManagerAPI.Infrastructure
                         {
                             foreach (var i in listofChunks)
                             {
+                                                  
                                 byte[] chunks = Convert.FromBase64String(i.ChunksData);
                                 memory.Write(chunks);
                             }
