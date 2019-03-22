@@ -20,10 +20,10 @@ namespace FileManagerAPI.Infrastructure
         private readonly IFileManagerMContext context;
         private readonly DateTime currentTime = DateTime.Now;
         List<DownoloadFile> downoloadFiles = new List<DownoloadFile>();
-        public FileManager(IFileManagerMContext context, TimerAlarm timerAlarm)
+        public FileManager(IFileManagerMContext context)
         {           
            this.context = context;
-           timerAlarm.StartTimerEvent();
+         //  timerAlarm.StartTimerEvent();
            
             
         }
