@@ -18,25 +18,28 @@ namespace FileManagerAPI.Infrastructure
     public class FileManager : IFileManager
     {
         private readonly IFileManagerMContext context;
-        private readonly DateTime currentTime = DateTime.Now;
+        private readonly ITimeAlarm timeAlarm;
+        private readonly DateTime currentTime = DateTime.Now;      
         List<DownoloadFile> downoloadFiles = new List<DownoloadFile>();
-        public FileManager(IFileManagerMContext context)
+        public FileManager(IFileManagerMContext context,ITimeAlarm timerAlarm)
         {           
            this.context = context;
-         //  timerAlarm.StartTimerEvent();
-           
-            
+           this.timeAlarm = timerAlarm;
+           timeAlarm.Callback = CheckFile;
+           timeAlarm.StartTimerEvent();
         }
-        public void CheckFile(Object source, ElapsedEventArgs e)
+        public void CheckFile()
         {         
             DateTime currentTime = DateTime.Now;
-            var oldFile = downoloadFiles.Where(c => c.LastDownoloadTime.AddMinutes(1) < currentTime);
-            foreach (var i in oldFile)
+            var oldFile = downoloadFiles.Where(c => c.LastDownoloadTime.AddSeconds(10) < currentTime).ToList();
+            for (int i = oldFile.Count()-1 ; i>=0; i--)
             {
-                downoloadFiles.Remove(i);
+                var item = oldFile[i];
+                downoloadFiles.Remove(item);
+                System.Diagnostics.Debug.WriteLine("Old file was removed. File: "+ item.FileName);
             }
             var archiveFile = string.Join(", ", downoloadFiles.Select(x => x.FileName));
-            System.Diagnostics.Debug.WriteLine("Old file was removed.", archiveFile);
+            System.Diagnostics.Debug.WriteLine("Current active files: "+ archiveFile);
         }
 
         public async Task InputChunks(ChunksOfFiles chunksOfFiles)

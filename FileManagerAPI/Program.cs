@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using System;
 
 namespace FileManagerAPI
 {
@@ -8,6 +9,7 @@ namespace FileManagerAPI
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args).Build().Run();
+            Console.WriteLine("Started");
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

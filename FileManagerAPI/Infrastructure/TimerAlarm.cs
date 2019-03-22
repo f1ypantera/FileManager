@@ -6,22 +6,19 @@ using System.Timers;
 
 namespace FileManagerAPI.Infrastructure
 {
-    public class TimerAlarm
+    
+    public class TimerAlarm:ITimeAlarm
     {
+        public Action Callback { get; set; }
         private static Timer timer;
-        private FileManager fileManager;
-        public TimerAlarm(FileManager fileManager)
-        {
-            this.fileManager = fileManager;
-        }
-
+     
    
         public void StartTimerEvent()
         {
             timer = new Timer();
             timer.Interval = 2000;
 
-            timer.Elapsed += (source, e) => fileManager.CheckFile(source, e);
+            timer.Elapsed += (source, e) => Callback();
             timer.AutoReset = true;
             timer.Enabled = true;
 

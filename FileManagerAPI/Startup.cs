@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using FileManagerAPI.Context;
 using FileManagerAPI.Infrastructure;
+using Microsoft.AspNetCore.Http;
 
 namespace FileManagerAPI
 {
@@ -45,7 +46,9 @@ namespace FileManagerAPI
             services.AddTransient<IFileManagerMContext, FileManagerMContext>();
             services.AddTransient<IRepositoryMService, RepositoryMService>();
             services.AddSingleton<IFileManager, FileManager>();
+            services.AddTransient<ITimeAlarm, TimerAlarm>();
             services.AddTransient<IRepositoryDbService<Owner>, RepositoryDbService<Owner>>();
+            services.AddTransient<TimeService>();
 
             services.AddSwaggerGen(c =>
             {
@@ -54,7 +57,7 @@ namespace FileManagerAPI
         }
 
      
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, TimeService timeService)
         {
             if (env.IsDevelopment())
             {
@@ -65,6 +68,13 @@ namespace FileManagerAPI
               
                 app.UseHsts();
             }
+
+            //app.Run(async (context) =>
+            //{
+            //    context.Response.ContentType = "text/html; charset=utf-8";
+            //    await context.Response.WriteAsync($"Текущее время: {timeService.GetTime()}");
+                        
+            //});
 
             app.UseSwagger();
 
