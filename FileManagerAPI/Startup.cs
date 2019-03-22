@@ -68,7 +68,7 @@ namespace FileManagerAPI
 
             app.UseSwagger();
 
-            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
