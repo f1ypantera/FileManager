@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 
-namespace FileManagerAPI.Models
+namespace FileManagerDBLogic.Models
 {
     public class DownoloadFile
     {

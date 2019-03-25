@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Timers;
+using FileManagerBussinessLogic.Interfaces;
 
-namespace FileManagerAPI.Infrastructure
+namespace FileManagerBussinessLogic.Infrastructure
 {
-    
-    public class TimerAlarm:ITimeAlarm
+     public class TimerAlarm:ITimerAlarm
     {
         public Action Callback { get; set; }
         private static Timer timer;
-     
-   
+
+
         public void StartTimerEvent()
         {
             timer = new Timer();

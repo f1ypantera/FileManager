@@ -1,13 +1,10 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace FileManagerAPI.Models
+namespace FileManagerDBLogic.Models
 {
-    public class StoredFile
+   public  class StoredFile
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
@@ -17,6 +14,5 @@ namespace FileManagerAPI.Models
         public string Owner { get; set; }
         public byte[] ChunkData { get; set; }
         public DateTime dateTimeSave { get; set; }
-
     }
 }

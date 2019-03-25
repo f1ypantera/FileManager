@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using FileManagerAPI.Models;
-using FileManagerAPI.Interfaces;
-using FileManagerAPI.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Linq;
+using FileManagerDBLogic.Context;
+using FileManagerDBLogic.Models;
+using FileManagerDBLogic.Interfaces;
 
 namespace FileManagerAPI.Controllers
 {
@@ -16,9 +16,9 @@ namespace FileManagerAPI.Controllers
     [ApiController]
     public class AccountController : Controller
     {
-        private readonly FileManagerDBcontext context;
-        private readonly IRepositoryDbService<Owner> repository;
-        public AccountController(FileManagerDBcontext context, IRepositoryDbService<Owner> repository)
+        private readonly MSSQLContext context;
+        private readonly IRepositoryMSSQLService<Owner> repository;
+        public AccountController(MSSQLContext context, IRepositoryMSSQLService<Owner> repository)
         {
             this.repository = repository;
             this.context = context;

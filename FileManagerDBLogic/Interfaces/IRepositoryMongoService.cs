@@ -1,20 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.IO;
-using FileManagerAPI.Models;
-using MongoDB.Driver;
+using FileManagerDBLogic.Models;
 
-namespace FileManagerAPI.Interfaces
+namespace FileManagerDBLogic.Interfaces
 {
-    public interface IRepositoryMService
+    public interface IRepositoryMongoService
     {
         Task<List<StoredFile>> GetAll();
         Task<StoredFile> GetbyId(string id);
         Task<List<StoredFile>> GetbyIds(string[] id);
         Task Remove(string id);
         Task Update(string id, StoredFile c);
-      
+
         Task<List<UserListFiles>> GetListFiles();
-       
     }
 }

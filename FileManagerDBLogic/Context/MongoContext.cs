@@ -1,17 +1,17 @@
 ﻿using MongoDB.Driver.GridFS;
 using Microsoft.Extensions.Options;
-using FileManagerAPI.Interfaces;
-using FileManagerAPI.Models;
 using MongoDB.Driver;
-using FileManagerAPI.Infrastructure;
+using FileManagerDBLogic.Interfaces;
+using FileManagerDBLogic.Models;
+using FileManagerDBLogic.ConnectionSettings;
 
-namespace FileManagerAPI.Context
+namespace FileManagerDBLogic.Context
 {
-    public class FileManagerMContext : IFileManagerMContext
+    public  class MongoContext:IMongoContext
     {
         private readonly IMongoDatabase mongoDatabase;
         private readonly IGridFSBucket bucket;
-        public FileManagerMContext(IOptions<Settings> options)
+        public MongoContext(IOptions<Settings> options)
         {
             var client = new MongoClient(options.Value.ConnectionString);
             mongoDatabase = client.GetDatabase(options.Value.Database);

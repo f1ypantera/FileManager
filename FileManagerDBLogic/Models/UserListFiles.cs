@@ -1,12 +1,7 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace FileManagerAPI.Models
+
+namespace FileManagerDBLogic.Models
 {
     public class UserListFiles
     {
@@ -17,6 +12,5 @@ namespace FileManagerAPI.Models
         {
             StoredFiles = new List<StoredFile>();
         }
-
     }
 }

@@ -2,20 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MongoDB.Bson;
 using MongoDB.Driver.Linq;
-using System.IO;
-using System.IO.Compression;
 using MongoDB.Driver;
-using FileManagerAPI.Models;
-using FileManagerAPI.Interfaces;
+using FileManagerDBLogic.Interfaces;
+using FileManagerDBLogic.Models;
 
-namespace FileManagerAPI.Services
+
+
+namespace FileManagerDBLogic.Services
 {
-    public class RepositoryMService : IRepositoryMService
+    public class RepositoryMongoService:IRepositoryMongoService
     {
-        private readonly IFileManagerMContext context;
-        public RepositoryMService(IFileManagerMContext context)
+        private readonly IMongoContext context;
+        public RepositoryMongoService(IMongoContext context)
         {
             this.context = context;
         }
@@ -32,7 +31,7 @@ namespace FileManagerAPI.Services
         public async Task<StoredFile> GetbyId(string id)
         {
             var result = await context.StoredFiles.FindAsync(c => c.FileId == id);
-           
+
             return await result.FirstOrDefaultAsync();
         }
         public async Task<List<StoredFile>> GetbyIds(string[] id)

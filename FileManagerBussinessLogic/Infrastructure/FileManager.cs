@@ -1,54 +1,51 @@
-﻿using FileManagerAPI.Interfaces;
-using FileManagerAPI.Models;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using MongoDB.Bson;
 using MongoDB.Driver.Linq;
 using System.IO;
-using System.Text;
 using System.IO.Compression;
-using System.Timers;
+using FileManagerBussinessLogic.Interfaces;
+using FileManagerDBLogic.Interfaces;
+using FileManagerDBLogic.Models;
 
-namespace FileManagerAPI.Infrastructure
+namespace FileManagerBussinessLogic.Infrastructure
 {
-    public class FileManager : IFileManager
+    public class FileManager:IFileManager
     {
-        private readonly IFileManagerMContext context;
-        private readonly ITimeAlarm timeAlarm;
-        private readonly DateTime currentTime = DateTime.Now;      
+        private readonly IMongoContext context;
+        private readonly ITimerAlarm timeAlarm;
+        private readonly DateTime currentTime = DateTime.Now;
         List<DownoloadFile> downoloadFiles = new List<DownoloadFile>();
-        public FileManager(IFileManagerMContext context,ITimeAlarm timerAlarm)
-        {           
-           this.context = context;
-           this.timeAlarm = timerAlarm;
-           timeAlarm.Callback = CheckFile;
-           timeAlarm.StartTimerEvent();
+        public FileManager(IMongoContext context, ITimerAlarm timerAlarm)
+        {
+            this.context = context;
+            this.timeAlarm = timerAlarm;
+            timeAlarm.Callback = CheckFile;
+            timeAlarm.StartTimerEvent();
         }
         public void CheckFile()
-        {         
+        {
             DateTime currentTime = DateTime.Now;
             var oldFile = downoloadFiles.Where(c => c.LastDownoloadTime.AddSeconds(10) < currentTime).ToList();
-            for (int i = oldFile.Count()-1 ; i>=0; i--)
+            for (int i = oldFile.Count() - 1; i >= 0; i--)
             {
                 var item = oldFile[i];
                 downoloadFiles.Remove(item);
-                System.Diagnostics.Debug.WriteLine("Old file was removed. File: "+ item.FileName);
+                System.Diagnostics.Debug.WriteLine("Old file was removed. File: " + item.FileName);
             }
             var archiveFile = string.Join(", ", downoloadFiles.Select(x => x.FileName));
-            System.Diagnostics.Debug.WriteLine("Current active files: "+ archiveFile);
+            System.Diagnostics.Debug.WriteLine("Current active files: " + archiveFile);
         }
 
         public async Task InputChunks(ChunksOfFiles chunksOfFiles)
-        {                      
+        {
             var res = downoloadFiles.FirstOrDefault(c => c.FileId == chunksOfFiles.FileId && c.FileName == chunksOfFiles.FileName);
             var sameFile = await context.StoredFiles.FindAsync(c => c.FileName == chunksOfFiles.FileName);
             var file = await sameFile.FirstOrDefaultAsync();
 
-       
+
             if (file == null)
             {
                 if (res != null)
@@ -63,18 +60,18 @@ namespace FileManagerAPI.Infrastructure
                     if (count == chunksOfFiles.TotalCounts - 1)
                     {
                         var listofChunks = res.chunks.OrderBy(c => c.n);
-                        byte[] finalChunks = null;                       
-                        using(MemoryStream memory = new MemoryStream())
+                        byte[] finalChunks = null;
+                        using (MemoryStream memory = new MemoryStream())
                         {
                             foreach (var i in listofChunks)
                             {
-                                                  
+
                                 byte[] chunks = Convert.FromBase64String(i.ChunksData);
                                 memory.Write(chunks);
                             }
                             finalChunks = memory.ToArray();
                         }
-                                                                                          
+
                         await StoredFile(res.FileName, finalChunks);
                         downoloadFiles.Remove(res);
                     }
@@ -101,12 +98,12 @@ namespace FileManagerAPI.Infrastructure
                         downoloadFiles.Remove(res);
                     }
                 }
-            }        
-               
-            
-           
+            }
+
+
+
         }
-        public async Task StoredFile(string fileName,byte[] chunkByte)
+        public async Task StoredFile(string fileName, byte[] chunkByte)
         {
             var storedFile = new StoredFile
             {
@@ -114,7 +111,7 @@ namespace FileManagerAPI.Infrastructure
                 ChunkData = chunkByte,
                 Size = chunkByte.Length,
                 Owner = "Admin",
-                dateTimeSave = DateTime.Now,       
+                dateTimeSave = DateTime.Now,
             };
             await context.StoredFiles.InsertOneAsync(storedFile);
         }
@@ -122,10 +119,10 @@ namespace FileManagerAPI.Infrastructure
         {
             var result = await context.StoredFiles.FindAsync(c => c.FileId == id);
             return await result.FirstOrDefaultAsync();
-        }       
+        }
         public async Task<(byte[], string)> Getfile(string id)
         {
-            var fileComponent = await GetbyId(id); 
+            var fileComponent = await GetbyId(id);
             return (fileComponent.ChunkData, fileComponent.FileName);
         }
         public async Task<byte[]> GetFileArchive(string[] id)

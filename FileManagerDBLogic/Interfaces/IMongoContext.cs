@@ -1,10 +1,10 @@
 ﻿using MongoDB.Driver.GridFS;
 using MongoDB.Driver;
-using FileManagerAPI.Models;
+using FileManagerDBLogic.Models;
 
-namespace FileManagerAPI.Interfaces
+namespace FileManagerDBLogic.Interfaces
 {
-    public interface IFileManagerMContext
+    public interface IMongoContext
     {
         IMongoCollection<UserListFiles> collectionComponents { get; }
         IMongoCollection<ChunksOfFiles> ChunksOfFiles { get; }

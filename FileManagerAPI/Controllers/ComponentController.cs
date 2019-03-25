@@ -1,12 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using FileManagerAPI.Models;
-using FileManagerAPI.Interfaces;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Authorization;
-using MongoDB.Driver;
+using FileManagerDBLogic.Interfaces;
+using FileManagerDBLogic.Models;
 
 namespace FileManagerAPI.Controllers
 {
@@ -16,8 +12,8 @@ namespace FileManagerAPI.Controllers
     
     public class ComponentController : ControllerBase
     {
-        private readonly IRepositoryMService repository;
-        public ComponentController(IRepositoryMService repository)
+        private readonly IRepositoryMongoService repository;
+        public ComponentController(IRepositoryMongoService repository)
         {
             this.repository = repository;
         }
@@ -77,8 +73,6 @@ namespace FileManagerAPI.Controllers
             await repository.Update(id, component);
 
             return Ok("Update");
-        }
-
-        
+        }        
     }
 }

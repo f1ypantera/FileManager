@@ -1,7 +1,5 @@
-﻿using MongoDB.Driver;
-using System.Collections.Generic;
-
-namespace FileManagerAPI.Models
+﻿
+namespace FileManagerDBLogic.Models
 {
     public class Owner
     {
@@ -16,7 +14,5 @@ namespace FileManagerAPI.Models
         //{
         //    Components = new List<Component>();
         //}
-
-
     }
 }

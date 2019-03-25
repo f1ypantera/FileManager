@@ -1,4 +1,6 @@
-﻿namespace FileManagerAPI.Models
+﻿
+
+namespace FileManagerDBLogic.Models
 {
     public class Role
     {

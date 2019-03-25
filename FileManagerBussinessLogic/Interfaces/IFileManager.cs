@@ -1,11 +1,8 @@
-﻿using FileManagerAPI.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Timers;
+﻿using System.Threading.Tasks;
+using FileManagerDBLogic.Interfaces;
+using FileManagerDBLogic.Models;
 
-namespace FileManagerAPI.Interfaces
+namespace FileManagerBussinessLogic.Interfaces
 {
     public interface IFileManager
     {
