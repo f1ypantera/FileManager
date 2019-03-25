@@ -72,7 +72,7 @@ namespace FileManagerAPI
 
        
             app.UseSwagger();
-
+            app.UseWebSockets();
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
 
             app.UseHttpsRedirection();
