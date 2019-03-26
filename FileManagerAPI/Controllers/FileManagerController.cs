@@ -3,6 +3,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using FileManagerDBLogic.Models;
 using FileManagerBussinessLogic.Interfaces;
+using FileManagerBussinessLogic.Infrastructure;
+using FileManagerBussinessLogic.Models;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace FileManagerAPI.Controllers
 {
@@ -11,11 +15,13 @@ namespace FileManagerAPI.Controllers
     public class FileManagerController : ControllerBase
     {
         private readonly IFileManager fileManager;
-        public FileManagerController(IFileManager fileManager)
+        private readonly FileSocketManager fileSocketManager;
+        public FileManagerController(IFileManager fileManager,FileSocketManager fileSocketManager)
         {
             this.fileManager = fileManager;
+            this.fileSocketManager = fileSocketManager;
         }
-
+   
         [HttpPost]
         [Route("InputChunksNew")]
         public async Task<ActionResult> InputChunksNew(ChunksOfFiles chunksOfFiles)

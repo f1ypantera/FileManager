@@ -17,12 +17,7 @@ namespace FileManagerDBLogic.Services
         public RepositoryMongoService(IMongoContext context)
         {
             this.context = context;
-        }
-        public async Task<List<UserListFiles>> GetListFiles()
-        {
-            var result = await context.collectionComponents.FindAsync(c => true);
-            return await result.ToListAsync();
-        }
+        }   
         public async Task<List<StoredFile>> GetAll()
         {
             var result = await context.StoredFiles.FindAsync(c => true);

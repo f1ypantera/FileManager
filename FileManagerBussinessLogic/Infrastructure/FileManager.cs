@@ -9,6 +9,8 @@ using System.IO.Compression;
 using FileManagerBussinessLogic.Interfaces;
 using FileManagerDBLogic.Interfaces;
 using FileManagerDBLogic.Models;
+using Newtonsoft.Json;
+using FileManagerBussinessLogic.Models;
 
 namespace FileManagerBussinessLogic.Infrastructure
 {
@@ -17,13 +19,15 @@ namespace FileManagerBussinessLogic.Infrastructure
         private readonly IMongoContext context;
         private readonly ITimerAlarm timeAlarm;
         private readonly DateTime currentTime = DateTime.Now;
+        private readonly FileSocketManager fileSocketManager;
         List<DownoloadFile> downoloadFiles = new List<DownoloadFile>();
-        public FileManager(IMongoContext context, ITimerAlarm timerAlarm)
+        public FileManager(IMongoContext context, ITimerAlarm timerAlarm, FileSocketManager fileSocketManager)
         {
             this.context = context;
             this.timeAlarm = timerAlarm;
             timeAlarm.Callback = CheckFile;
             timeAlarm.StartTimerEvent();
+            this.fileSocketManager = fileSocketManager;
         }
         public void CheckFile()
         {
@@ -99,9 +103,34 @@ namespace FileManagerBussinessLogic.Infrastructure
                     }
                 }
             }
+        }
 
-
-
+        public async Task Remove(string id)
+        {
+            await context.StoredFiles.DeleteOneAsync(c => c.FileId == id);
+            var removeFile = new Remove
+            {           
+                id = id
+            };
+            await fileSocketManager.SendMessageToAllAsync(JsonConvert.SerializeObject(removeFile));
+        }
+        public async Task Update(string id, StoredFile component)
+        {
+            await context.StoredFiles.ReplaceOneAsync(c => c.FileId == id, component);
+            var removeFile = new Update
+            {
+                id = id,
+                storedFiles = new List<StoredFile>
+                {
+                   component
+                },
+            };
+            await fileSocketManager.SendMessageToAllAsync(JsonConvert.SerializeObject(removeFile));
+        }   
+        public async Task<List<StoredFile>> GetbyIds(string[] id)
+        {
+            var result = await context.StoredFiles.FindAsync(c => id.Contains(c.FileId));
+            return await result.ToListAsync();
         }
         public async Task StoredFile(string fileName, byte[] chunkByte)
         {
@@ -114,6 +143,15 @@ namespace FileManagerBussinessLogic.Infrastructure
                 dateTimeSave = DateTime.Now,
             };
             await context.StoredFiles.InsertOneAsync(storedFile);
+
+            var addFile = new Add
+            {            
+                storedFiles = new List<StoredFile>
+                {
+                   storedFile
+                },
+            };
+            await fileSocketManager.SendMessageToAllAsync(JsonConvert.SerializeObject(addFile));
         }
         public async Task<StoredFile> GetbyId(string id)
         {

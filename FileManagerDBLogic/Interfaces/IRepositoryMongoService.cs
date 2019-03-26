@@ -12,6 +12,5 @@ namespace FileManagerDBLogic.Interfaces
         Task Remove(string id);
         Task Update(string id, StoredFile c);
 
-        Task<List<UserListFiles>> GetListFiles();
     }
 }

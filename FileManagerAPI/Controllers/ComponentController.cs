@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using FileManagerDBLogic.Interfaces;
 using FileManagerDBLogic.Models;
 using FileManagerBussinessLogic.Infrastructure;
+using FileManagerBussinessLogic.Models;
+using Newtonsoft.Json;
+using System;
 
 namespace FileManagerAPI.Controllers
 {
@@ -14,30 +17,17 @@ namespace FileManagerAPI.Controllers
     public class ComponentController : ControllerBase
     {
         private readonly IRepositoryMongoService repository;
-        private readonly FileSocketManager fileSocketManager;
-        public ComponentController(IRepositoryMongoService repository,FileSocketManager fileSocketManager)
+
+        public ComponentController(IRepositoryMongoService repository)
         {
             this.repository = repository;
-            this.fileSocketManager = fileSocketManager;
+
         }
         [HttpGet]    
         public async Task<ActionResult<List<StoredFile>>> Get()
-        {
+        {           
             return await repository.GetAll();
         }
-
-
-
-
-
-
-        //[HttpGet]
-        //[Route("GetAllUserCollection")]
-        //public async Task<ActionResult<List<UserListFiles>>> GetAllUserCollection()
-        //{
-        //    return await repository.GetListFiles();
-        //}
-
         [HttpGet("{id}")]
         public async Task<ActionResult<StoredFile>> GetId(string id)
         {

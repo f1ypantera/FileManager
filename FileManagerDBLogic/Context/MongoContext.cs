@@ -26,8 +26,6 @@ namespace FileManagerDBLogic.Context
         public IMongoCollection<ChunksOfFiles> ChunksOfFiles => mongoDatabase.GetCollection<ChunksOfFiles>("ChunksOfFiles");
         public IMongoCollection<DownoloadFile> DownoloadFile => mongoDatabase.GetCollection<DownoloadFile>("DownoloadFile");
         public IMongoCollection<StoredFile> StoredFiles => mongoDatabase.GetCollection<StoredFile>("StoredFiles");
-        public IMongoCollection<UserListFiles> collectionComponents => mongoDatabase.GetCollection<UserListFiles>("UserListComponents");
-
         public IGridFSBucket Bucket => bucket;
     }
 }
