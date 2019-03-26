@@ -20,8 +20,7 @@ namespace FileManagerAPI.Controllers
         {
             this.fileManager = fileManager;
             this.fileSocketManager = fileSocketManager;
-        }
-   
+        }    
         [HttpPost]
         [Route("InputChunksNew")]
         public async Task<ActionResult> InputChunksNew(ChunksOfFiles chunksOfFiles)

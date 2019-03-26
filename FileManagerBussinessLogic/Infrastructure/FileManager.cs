@@ -42,7 +42,11 @@ namespace FileManagerBussinessLogic.Infrastructure
             var archiveFile = string.Join(", ", downoloadFiles.Select(x => x.FileName));
             System.Diagnostics.Debug.WriteLine("Current active files: " + archiveFile);
         }
-
+        public async Task<List<StoredFile>> GetAll()
+        {
+            var result = await context.StoredFiles.FindAsync(c => true);
+            return await result.ToListAsync();
+        }
         public async Task InputChunks(ChunksOfFiles chunksOfFiles)
         {
             var res = downoloadFiles.FirstOrDefault(c => c.FileId == chunksOfFiles.FileId && c.FileName == chunksOfFiles.FileName);

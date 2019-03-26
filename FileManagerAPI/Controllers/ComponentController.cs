@@ -7,6 +7,7 @@ using FileManagerBussinessLogic.Infrastructure;
 using FileManagerBussinessLogic.Models;
 using Newtonsoft.Json;
 using System;
+using FileManagerBussinessLogic.Interfaces;
 
 namespace FileManagerAPI.Controllers
 {
@@ -16,9 +17,9 @@ namespace FileManagerAPI.Controllers
     
     public class ComponentController : ControllerBase
     {
-        private readonly IRepositoryMongoService repository;
+        private readonly IFileManager repository;
 
-        public ComponentController(IRepositoryMongoService repository)
+        public ComponentController(IFileManager repository)
         {
             this.repository = repository;
 
