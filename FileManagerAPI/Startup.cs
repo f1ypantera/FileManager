@@ -47,6 +47,7 @@ namespace FileManagerAPI
             services.AddTransient<IMongoContext, MongoContext>();
             services.AddTransient<IRepositoryMongoService, RepositoryMongoService>();
             services.AddSingleton<IFileManager, FileManager>();
+            services.AddSingleton<FileSocketManager>();
             services.AddTransient<ITimerAlarm, TimerAlarm>();
             services.AddTransient<IRepositoryMSSQLService<Owner>, RepositoryMSSQLService<Owner>>();
 
@@ -69,10 +70,11 @@ namespace FileManagerAPI
               
                 app.UseHsts();
             }
-
-       
+      
             app.UseSwagger();
             app.UseWebSockets();
+            app.UseMiddleware<FileManagerSocketMiddleware>();
+
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
 
             app.UseHttpsRedirection();
