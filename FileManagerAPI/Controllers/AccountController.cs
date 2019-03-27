@@ -9,6 +9,7 @@ using System.Linq;
 using FileManagerDBLogic.Context;
 using FileManagerDBLogic.Models;
 using FileManagerDBLogic.Interfaces;
+using MongoDB.Driver;
 
 namespace FileManagerAPI.Controllers
 {
@@ -33,7 +34,13 @@ namespace FileManagerAPI.Controllers
             var owner = repository.GetAll().Include(n => n.Role);
             return Ok(owner);
         }
-
+        [HttpGet]
+        [Route("OwnersMongo")]
+        public ActionResult GetAllOwnersMongo()
+        {
+            var owner = mongoContext.Owners.FindAsync(c => true);
+            return Ok(owner);
+        }
         [HttpPost]
         [Route("Register")]
         public async Task<ActionResult> Register(RegisterModel registerModel)

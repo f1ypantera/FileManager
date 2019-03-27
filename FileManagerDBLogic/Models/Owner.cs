@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace FileManagerDBLogic.Models
 {
     public class Owner
@@ -9,10 +11,10 @@ namespace FileManagerDBLogic.Models
         public string Password { get; set; }
         public int RoleId { get; set; }
         public Role Role { get; set; }
-        //public ICollection<Component> Components { get; set; }
-        //public Owner()
-        //{
-        //    Components = new List<Component>();
-        //}
+        public ICollection<StoredFile> StoreFiles { get; set; }
+        public Owner()
+        {
+            StoreFiles = new List<StoredFile>();
+        }
     }
 }
