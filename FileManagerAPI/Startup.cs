@@ -45,10 +45,12 @@ namespace FileManagerAPI
               });
 
             services.AddTransient<IMongoContext, MongoContext>();
+            services.AddTransient<IAccountMongoService, AccountMongoService>();
             services.AddSingleton<IFileManager, FileManager>();
             services.AddSingleton<FileSocketManager>();
             services.AddTransient<ITimerAlarm, TimerAlarm>();
             services.AddTransient<IRepositoryMSSQLService<Owner>, RepositoryMSSQLService<Owner>>();
+       
 
 
             services.AddSwaggerGen(c =>
