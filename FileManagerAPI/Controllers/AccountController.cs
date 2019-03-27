@@ -17,11 +17,13 @@ namespace FileManagerAPI.Controllers
     public class AccountController : Controller
     {
         private readonly MSSQLContext context;
+        private readonly IMongoContext mongoContext;
         private readonly IRepositoryMSSQLService<Owner> repository;
-        public AccountController(MSSQLContext context, IRepositoryMSSQLService<Owner> repository)
+        public AccountController(MSSQLContext context, IRepositoryMSSQLService<Owner> repository, IMongoContext mongoContext)
         {
             this.repository = repository;
             this.context = context;
+            this.mongoContext = mongoContext;
         }
 
         [HttpGet]
@@ -44,6 +46,7 @@ namespace FileManagerAPI.Controllers
                 if (clinetRole != null)
                     owner.Role = clinetRole;
                 await context.Owners.AddAsync(owner);
+                await mongoContext.Owners.InsertOneAsync(owner);
                 await context.SaveChangesAsync();
             }
             return Ok("Has been registered");

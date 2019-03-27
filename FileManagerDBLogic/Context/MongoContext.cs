@@ -22,10 +22,14 @@ namespace FileManagerDBLogic.Context
 
             };
             bucket = new GridFSBucket(mongoDatabase, gridFSBucketOptions);
+
+         
         }
         public IMongoCollection<ChunksOfFiles> ChunksOfFiles => mongoDatabase.GetCollection<ChunksOfFiles>("ChunksOfFiles");
         public IMongoCollection<DownoloadFile> DownoloadFile => mongoDatabase.GetCollection<DownoloadFile>("DownoloadFile");
         public IMongoCollection<StoredFile> StoredFiles => mongoDatabase.GetCollection<StoredFile>("StoredFiles");
         public IGridFSBucket Bucket => bucket;
+        public IMongoCollection<Owner> Owners => mongoDatabase.GetCollection<Owner>("Owners");
+
     }
 }
