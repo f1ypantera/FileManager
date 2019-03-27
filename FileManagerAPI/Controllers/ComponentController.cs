@@ -51,15 +51,12 @@ namespace FileManagerAPI.Controllers
             }
             return Ok(component);
         }
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(string id)
+        [HttpDelete]
+        [Route("Delete")]
+        public async Task<ActionResult> Delete(string ids)
         {
-            var component = await repository.GetbyId(id);
-            if (component == null)
-            {
-                return NotFound();
-            }
-            await repository.Remove(component.FileId);
+            string[] idsList = ids.Split(',');         
+            await repository.Remove(idsList);
             return Ok("Has been deleted");
         }
         [HttpPut("{id}")]

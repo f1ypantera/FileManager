@@ -109,14 +109,14 @@ namespace FileManagerBussinessLogic.Infrastructure
             }
         }
 
-        public async Task Remove(string id)
+        public async Task Remove(string[] id)
         {
-            await context.StoredFiles.DeleteOneAsync(c => c.FileId == id);
-            var removeFile = new Remove
-            {           
-                id = id
-            };
-            await fileSocketManager.SendMessageToAllAsync(JsonConvert.SerializeObject(removeFile));
+            await context.StoredFiles.DeleteManyAsync(c=>id.Contains(c.FileId));
+            //var removeFile = new Remove
+            //{
+            //    id = 
+            //};
+            //await fileSocketManager.SendMessageToAllAsync(JsonConvert.SerializeObject(removeFile));
         }
         public async Task Update(string id, StoredFile component)
         {

@@ -13,7 +13,7 @@ namespace FileManagerBussinessLogic.Interfaces
         Task<List<StoredFile>> GetAll();
         Task<StoredFile> GetbyId(string id);
         Task<List<StoredFile>> GetbyIds(string[] id);   
-        Task Remove(string id);
+        Task Remove(string[] id);
         Task Update(string id, StoredFile component);
 
     }
