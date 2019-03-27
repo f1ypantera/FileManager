@@ -30,6 +30,8 @@ namespace FileManagerDBLogic.Context
         public IMongoCollection<StoredFile> StoredFiles => mongoDatabase.GetCollection<StoredFile>("StoredFiles");
         public IGridFSBucket Bucket => bucket;
         public IMongoCollection<Owner> Owners => mongoDatabase.GetCollection<Owner>("Owners");
+        public IMongoCollection<User> Users => mongoDatabase.GetCollection<User>("Users");
+        public IMongoCollection<ProvidedRole> ProvidedRoles => mongoDatabase.GetCollection<ProvidedRole>("Roles");
 
     }
 }
