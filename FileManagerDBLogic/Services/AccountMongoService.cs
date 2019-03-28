@@ -31,15 +31,18 @@ namespace FileManagerDBLogic.Services
         public async Task<List<User>> GetAllUser()
         {
             var result = await context.Users.FindAsync(c => true);
+
+            
             return await result.ToListAsync();
         }
         public async Task RegisterUser(RegisterModel registerModel)
         {
             var user = await context.Users.FindAsync(r => r.Email == registerModel.Email);
+            string[] name = registerModel.Email.Split('@');
             var isExist = await user.FirstOrDefaultAsync();
             if (isExist == null)
             {
-                User newUser = new User { Email = registerModel.Email, Password = registerModel.Password };
+                User newUser = new User { Email = registerModel.Email, Password = registerModel.Password ,Name = name[0]};
                 var role = await context.ProvidedRoles.FindAsync(r => r.RoleName == "User");
                 var isRole = role.FirstOrDefaultAsync();
                 if (isRole != null)
