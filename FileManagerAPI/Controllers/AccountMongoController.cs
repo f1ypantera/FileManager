@@ -54,27 +54,40 @@ namespace FileManagerAPI.Controllers
         [Route("Login")]
         public async Task<ActionResult> Login(LoginModel loginModel)
         {
-            await accountMongoService.Login(loginModel);                             
-            return Ok("Ok");
-        }
-        //private async Task Authenticate(User user)
-        //{
-        //    var claims = new List<Claim>
-        //    {
-        //        new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
-        //        new Claim(ClaimsIdentity.DefaultRoleClaimType, user.ProvidedRole?.RoleName)
-        //    };
-        //    ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,
-        //        ClaimsIdentity.DefaultRoleClaimType);
+            if (ModelState.IsValid)
+            {
+                var user = await mongoContext.Users.FindAsync(u => u.Email == loginModel.Email && u.Password == loginModel.Password);
+                var isExist = await user.FirstOrDefaultAsync();
 
-        //    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
-        //}
-        //[HttpPost]
-        //[Route("Logout")]
-        //public async Task<ActionResult> Logout()
-        //{
-        //    await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        //    return Ok("Logout");
-        //}
+                if (isExist == null)
+                {
+                    return Unauthorized();
+                }
+                else
+                {
+                    await Authenticate(isExist);
+                }
+            }
+            return Ok("Login sucess ");
+        }
+        private async Task Authenticate(User user)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.ProvidedRole?.RoleName)
+            };
+            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,
+                ClaimsIdentity.DefaultRoleClaimType);
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+        }
+        [HttpPost]
+        [Route("Logout")]
+        public async Task<ActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return Ok("Logout");
+        }
     }
 }

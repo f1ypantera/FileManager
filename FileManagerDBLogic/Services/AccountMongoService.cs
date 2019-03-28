@@ -36,14 +36,16 @@ namespace FileManagerDBLogic.Services
             var isExist = await user.FirstOrDefaultAsync();
             if (isExist == null)
             {
-                User newUser = new User { Email = registerModel.Email, Password = registerModel.Password };              
-                await context.Users.InsertOneAsync(newUser);
+                User newUser = new User { Email = registerModel.Email, Password = registerModel.Password };
+                var role = await context.ProvidedRoles.FindAsync(r => r.RoleName == "User");
+                var isRole = role.FirstOrDefaultAsync();
+                if(isRole!=null)
+                {
+                    newUser.ProvidedRole = await isRole;
+                    await context.Users.InsertOneAsync(newUser);
+                }                           
             }
         }
-        public async Task Login(LoginModel loginModel)
-        {
-            var success = await context.Users.FindAsync(u => u.Email == loginModel.Email && u.Password == loginModel.Password);
-        
-        }
+    
     }
 }
