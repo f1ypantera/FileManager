@@ -138,12 +138,14 @@ namespace FileManagerBussinessLogic.Infrastructure
         }
         public async Task StoredFile(string fileName, byte[] chunkByte)
         {
+            var asyncCursor = await context.Users.FindAsync(c => c.Name == "Admin");
+            var user = await asyncCursor.FirstOrDefaultAsync();
             var storedFile = new StoredFile
             {
                 FileName = fileName,
                 ChunkData = chunkByte,
                 Size = chunkByte.Length,
-                id = 1,               
+                User = user,          
                 dateTimeSave = DateTime.Now,
             };
             await context.StoredFiles.InsertOneAsync(storedFile);

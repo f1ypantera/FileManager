@@ -13,7 +13,6 @@ namespace FileManagerDBLogic.Models
         public double Size { get; set; }
         public byte[] ChunkData { get; set; }
         public DateTime dateTimeSave { get; set; }
-        public int id { get; set; }
-        public User user { get; set; }
+        public User User { get; set; }
     }
 }
