@@ -18,7 +18,6 @@ namespace FileManagerAPI.Controllers
     public class AccountMongoController : ControllerBase
     {
         private readonly IAccountMongoService accountMongoService;
-        private readonly IMongoContext mongoContext;
         public AccountMongoController(IAccountMongoService accountMongoService)
         {
             this.accountMongoService = accountMongoService;
