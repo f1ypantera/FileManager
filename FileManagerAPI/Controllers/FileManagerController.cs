@@ -4,9 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using FileManagerDBLogic.Models;
 using FileManagerBussinessLogic.Interfaces;
 using FileManagerBussinessLogic.Infrastructure;
-using FileManagerBussinessLogic.Models;
-using System.Collections.Generic;
-using Newtonsoft.Json;
+
 
 namespace FileManagerAPI.Controllers
 {

@@ -1,12 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using FileManagerDBLogic.Interfaces;
 using FileManagerDBLogic.Models;
-using FileManagerBussinessLogic.Infrastructure;
-using FileManagerBussinessLogic.Models;
-using Newtonsoft.Json;
-using System;
 using FileManagerBussinessLogic.Interfaces;
 
 namespace FileManagerAPI.Controllers

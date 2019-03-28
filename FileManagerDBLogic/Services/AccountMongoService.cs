@@ -4,13 +4,8 @@ using System.Text;
 using System.Threading.Tasks;
 using FileManagerDBLogic.Interfaces;
 using FileManagerDBLogic.Models;
-using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
-using System.Linq;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Http;
+
 
 
 
