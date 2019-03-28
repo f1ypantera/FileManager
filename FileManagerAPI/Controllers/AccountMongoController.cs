@@ -56,8 +56,8 @@ namespace FileManagerAPI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await mongoContext.Users.FindAsync(u => u.Email == loginModel.Email && u.Password == loginModel.Password);
-                var isExist = await user.FirstOrDefaultAsync();
+                var isExist  = await accountMongoService.Login(loginModel);
+                //var isExist = await asyncCursor.FirstOrDefaultAsync();
 
                 if (isExist == null)
                 {
