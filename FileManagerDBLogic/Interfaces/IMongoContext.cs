@@ -7,7 +7,6 @@ namespace FileManagerDBLogic.Interfaces
     public interface IMongoContext
     {      
         IMongoCollection<ChunksOfFiles> ChunksOfFiles { get; }
-        IMongoCollection<Owner> Owners { get; }
         IMongoCollection<User> Users { get; }
         IMongoCollection<ProvidedRole> ProvidedRoles { get; }
         IMongoCollection<StoredFile> StoredFiles { get; }

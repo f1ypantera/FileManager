@@ -33,8 +33,7 @@ namespace FileManagerAPI
                 options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            string con = "Data Source=KBP1-LHP-F76802\\SQLEXPRESS;Initial Catalog=FileManager_API;MultipleActiveResultSets=true;User Id=Admin;Password = Admin";
-            services.AddDbContext<MSSQLContext>(options => options.UseSqlServer(con));
+           
 
 
             services.Configure<Settings>(
@@ -49,7 +48,7 @@ namespace FileManagerAPI
             services.AddSingleton<IFileManager, FileManager>();
             services.AddSingleton<FileSocketManager>();
             services.AddTransient<ITimerAlarm, TimerAlarm>();
-            services.AddTransient<IRepositoryMSSQLService<Owner>, RepositoryMSSQLService<Owner>>();
+
        
 
 

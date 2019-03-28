@@ -44,7 +44,7 @@ namespace FileManagerDBLogic.Services
             var isExist = await user.FirstOrDefaultAsync();
             if (isExist == null)
             {
-                User newUser = new User { Email = registerModel.Email, Password = registerModel.Password };
+                User newUser = new User { Email = registerModel.Email, Password = registerModel.Password , Name = "Default"};
                 var role = await context.ProvidedRoles.FindAsync(r => r.RoleName == "User");
                 var isRole = role.FirstOrDefaultAsync();
                 if (isRole != null)

@@ -14,6 +14,6 @@ namespace FileManagerDBLogic.Models
         public byte[] ChunkData { get; set; }
         public DateTime dateTimeSave { get; set; }
         public int id { get; set; }
-        public Owner Owner { get; set; }
+        public User user { get; set; }
     }
 }
