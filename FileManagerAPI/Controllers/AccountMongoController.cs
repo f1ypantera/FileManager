@@ -56,8 +56,6 @@ namespace FileManagerAPI.Controllers
             if (ModelState.IsValid)
             {
                 var isExist  = await accountMongoService.Login(loginModel);
-                //var isExist = await asyncCursor.FirstOrDefaultAsync();
-
                 if (isExist == null)
                 {
                     return Unauthorized();
