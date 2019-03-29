@@ -112,6 +112,13 @@ namespace FileManagerBussinessLogic.Infrastructure
         public async Task Remove(string[] id)
         {
             await context.StoredFiles.DeleteManyAsync(c=>id.Contains(c.FileId));
+
+
+
+          
+        
+            
+         
             //var removeFile = new Remove
             //{
             //    id = 

@@ -11,8 +11,8 @@ namespace FileManagerAPI.ModelsDTO
     {
         public DomainProfile()
         {
-            CreateMap<User, UserDTO>().ReverseMap();
-            CreateMap<StoredFile, StoredFileDTO>().ReverseMap();
+            CreateMap<User, UserDTO>().ReverseMap().ForMember(c=>c.StoreFilesId,opt =>opt.MapFrom(x=>x.StoreFiles));
+            CreateMap<StoredFile, StoredFileDTO>().ReverseMap().ForMember(c => c.User, opt => opt.MapFrom(x => x.FileName)); 
         }
     }
 }
