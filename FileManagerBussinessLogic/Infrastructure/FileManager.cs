@@ -32,7 +32,7 @@ namespace FileManagerBussinessLogic.Infrastructure
         public void CheckFile()
         {
             DateTime currentTime = DateTime.Now;
-            var oldFile = downoloadFiles.Where(c => c.LastDownoloadTime.AddSeconds(40) < currentTime).ToList();
+            var oldFile = downoloadFiles.Where(c => c.LastDownoloadTime.AddMinutes(10) < currentTime).ToList();
             for (int i = oldFile.Count() - 1; i >= 0; i--)
             {
                 var item = oldFile[i];
