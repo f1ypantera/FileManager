@@ -149,6 +149,9 @@ namespace FileManagerBussinessLogic.Infrastructure
                 dateTimeSave = DateTime.Now,
             };
             await context.StoredFiles.InsertOneAsync(storedFile);
+            var filter = Builders<User>.Filter.Eq(s => s.Name, "Admin");
+            var update = Builders<User>.Update.AddToSet(s => s.StoreFiles, storedFile);
+            var result = await context.Users.UpdateOneAsync(filter, update);
 
             var addFile = new Add
             {            
