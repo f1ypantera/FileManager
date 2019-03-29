@@ -21,4 +21,8 @@
     <ProjectReference Include="..\FileManagerDBLogic\FileManagerDBLogic.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ModelsDTO\" />
+  </ItemGroup>
+
 </Project>

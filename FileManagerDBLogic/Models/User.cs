@@ -13,10 +13,10 @@ namespace FileManagerDBLogic.Models
         public string Email { get; set; }
         public string Password { get; set; }
         public ProvidedRole ProvidedRole { get; set; }
-        public ICollection<StoredFile> StoreFiles { get; set; }
+        public ICollection<string> StoreFilesId { get; set; }
         public User()
         {
-            StoreFiles = new List<StoredFile>();
+            StoreFilesId = new List<string>();
         }
     }
 }
