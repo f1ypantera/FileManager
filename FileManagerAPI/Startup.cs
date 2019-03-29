@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using FileManagerDBLogic.Context;
 using FileManagerDBLogic.ConnectionSettings;
@@ -12,7 +11,9 @@ using FileManagerDBLogic.Interfaces;
 using FileManagerDBLogic.Services;
 using FileManagerBussinessLogic.Interfaces;
 using FileManagerBussinessLogic.Infrastructure;
-using FileManagerDBLogic.Models;
+using AutoMapper;
+
+
 
 namespace FileManagerAPI
 {
@@ -32,10 +33,7 @@ namespace FileManagerAPI
                 {
                 options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
             });
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-           
-
-
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);         
             services.Configure<Settings>(
               options =>
               {
@@ -48,8 +46,9 @@ namespace FileManagerAPI
             services.AddSingleton<IFileManager, FileManager>();
             services.AddSingleton<FileSocketManager>();
             services.AddTransient<ITimerAlarm, TimerAlarm>();
+            services.AddAutoMapper();
+           
 
-       
 
 
             services.AddSwaggerGen(c =>
