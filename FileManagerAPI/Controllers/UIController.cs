@@ -39,7 +39,7 @@ namespace FileManagerAPI.Controllers
         [Route("Files")]
         public ActionResult<List<StoredFile>> GetFile()
         {
-            var result = mapper.Map<StoredFileDTO>(fileManager());
+            var result = mapper.Map<StoredFileDTO>(fileManager.GetAll());
             return Ok(result);
 
         }
