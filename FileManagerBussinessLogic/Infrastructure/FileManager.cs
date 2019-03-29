@@ -136,14 +136,10 @@ namespace FileManagerBussinessLogic.Infrastructure
             var result = await context.StoredFiles.FindAsync(c => id.Contains(c.FileId));
             return await result.ToListAsync();
         }
-
-
-      
         public async Task StoredFile(string fileName, byte[] chunkByte)
         {
             var asyncCursor = await context.Users.FindAsync(c => c.Name == "Admin");
             var user = await asyncCursor.FirstOrDefaultAsync();
-              
             var storedFile = new StoredFile
             {
                 FileName = fileName,
@@ -153,10 +149,6 @@ namespace FileManagerBussinessLogic.Infrastructure
                 dateTimeSave = DateTime.Now,
             };
             await context.StoredFiles.InsertOneAsync(storedFile);
-
-            var filter = Builders<User>.Filter.Eq(s => s.Name, "Admin");
-            var update = Builders<User>.Update.AddToSet(s => s.StoreFiles, storedFile);
-            var result = await context.Users.UpdateOneAsync(filter, update);
 
             var addFile = new Add
             {            
