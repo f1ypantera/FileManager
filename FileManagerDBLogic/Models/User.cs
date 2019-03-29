@@ -14,6 +14,9 @@ namespace FileManagerDBLogic.Models
         public string Password { get; set; }
         public ProvidedRole ProvidedRole { get; set; }
         public ICollection<StoredFile> StoreFiles { get; set; }
-      
+        public User()
+        {
+            StoreFiles = new List<StoredFile>();
+        }
     }
 }
