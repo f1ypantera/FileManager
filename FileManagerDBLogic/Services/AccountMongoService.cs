@@ -34,6 +34,11 @@ namespace FileManagerDBLogic.Services
             var result = context.Users.Find(c => true);
             return result.ToList();
         }
+        public async Task<List<User>> GetAllUser()
+        {
+            var result = await context.Users.FindAsync(c => true);
+            return await result.ToListAsync();
+        }
 
         public async Task RegisterUser(RegisterModel registerModel)
         {

@@ -47,6 +47,11 @@ namespace FileManagerBussinessLogic.Infrastructure
             var result =  context.StoredFiles.Find(c => true);
             return result.ToList();
         }
+        public async Task<List<StoredFile>> GetAllFile()
+        {
+            var result = await context.StoredFiles.FindAsync(c => true);
+            return await result.ToListAsync();
+        }
         public async Task InputChunks(ChunksOfFiles chunksOfFiles)
         {
             var res = downoloadFiles.FirstOrDefault(c => c.FileId == chunksOfFiles.FileId && c.FileName == chunksOfFiles.FileName);

@@ -10,8 +10,7 @@ namespace FileManagerDBLogic.Interfaces
         Task<List<ProvidedRole>> GetAllRole();
         Task RegisterUser(RegisterModel registerModel);
         Task<User> Login(LoginModel loginModel);
+        Task<List<User>> GetAllUser();
         IEnumerable<User> GetAll();
-
-
     }
 }

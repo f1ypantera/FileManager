@@ -27,12 +27,12 @@ namespace FileManagerAPI.Controllers
         {
             return await accountMongoService.GetAllRole();
         }
-        //[HttpGet]
-        //[Route("Users")]
-        //public async Task<ActionResult<List<User>>> GetUser()
-        //{
-        //    return await accountMongoService.GetAllUser();
-        //}
+        [HttpGet]
+        [Route("Users")]
+        public async Task<ActionResult<List<User>>> GetUser()
+        {
+            return await accountMongoService.GetAllUser();
+        }
         [HttpPost]
         [Route("CreateRole")]
         public async Task<ActionResult> CreateRole(ProvidedRole providedRole)

@@ -11,6 +11,7 @@ namespace FileManagerBussinessLogic.Interfaces
         Task<(byte[], string)> Getfile(string id);
         Task<byte[]> GetFileArchive(string[] id);
         IEnumerable<StoredFile> GetAll();
+        Task<List<StoredFile>> GetAllFile();
         Task<StoredFile> GetbyId(string id);
         Task<List<StoredFile>> GetbyIds(string[] id);   
         Task Remove(string[] id);
