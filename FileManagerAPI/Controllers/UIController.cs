@@ -26,14 +26,12 @@ namespace FileManagerAPI.Controllers
             this.fileManager = fileManager;
             this.mapper = mapper;
         }
-
         [HttpGet]
         [Route("Users")]
         public ActionResult GetAllUser()
         {
             var result = mapper.Map<IEnumerable<User>, List<UserDTO>>(accountMongoService.GetAll());
             return Ok(result);
-
         }
         [HttpGet]
         [Route("StoredFile")]
@@ -41,9 +39,6 @@ namespace FileManagerAPI.Controllers
         {
             var result = mapper.Map<IEnumerable<StoredFile>, List<StoredFileDTO>>(fileManager.GetAll());
             return Ok(result);
-
         }
-
-
     }
 }

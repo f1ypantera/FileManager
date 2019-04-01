@@ -36,7 +36,20 @@ namespace FileManagerDBLogic.Services
         }
         public async Task<List<User>> GetAllUser()
         {
-            var result = await context.Users.FindAsync(c => true);
+              var result = await context.Users.FindAsync(c => true);
+
+
+            
+
+            //var result = await context.Users.Aggregate().Lookup(
+            //    foreignCollection:context.StoredFiles,
+            //    localField: 
+            //    foreignField: 
+
+
+            //    )
+
+              
             return await result.ToListAsync();
         }
 
