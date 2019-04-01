@@ -20,10 +20,10 @@ namespace FileManagerDBLogic.Services
         {
             await context.TestDB.InsertOneAsync(testDB);
         }
-        public async Task<List<TestDB>> GetTest()
+        public IEnumerable<TestDB> GetAll()
         {
-            var result = await context.TestDB.FindAsync(c => true);
-            return await result.ToListAsync();
+            var result =  context.TestDB.Find(c => true);
+            return  result.ToList();
         }
     }
 }

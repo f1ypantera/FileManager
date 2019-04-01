@@ -29,20 +29,21 @@ namespace FileManagerAPI.Controllers
 
         [HttpGet]
         [Route("Users")]
-        public ActionResult<List<UserDTO>> GetUser()
+        public ActionResult GetAllUser()
         {
-            var result = mapper.Map<UserDTO>(accountMongoService.GetAllUser());
+            var result = mapper.Map<IEnumerable<User>, List<UserDTO>>(accountMongoService.GetAll());
             return Ok(result);
 
         }
         [HttpGet]
-        [Route("Files")]
-        public ActionResult<List<StoredFile>> GetFile()
+        [Route("StoredFile")]
+        public ActionResult GetAllFile()
         {
-            var result = mapper.Map<StoredFileDTO>(fileManager.GetAll());
+            var result = mapper.Map<IEnumerable<StoredFile>, List<StoredFileDTO>>(fileManager.GetAll());
             return Ok(result);
 
         }
+
 
     }
 }

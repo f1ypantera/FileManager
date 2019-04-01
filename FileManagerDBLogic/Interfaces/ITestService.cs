@@ -10,6 +10,7 @@ namespace FileManagerDBLogic.Interfaces
     public interface ITestService
     {
         Task CreateTest(TestDB testDB);
-        Task<List<TestDB>> GetTest();
+        IEnumerable<TestDB> GetAll();
     }
+        
 }

@@ -33,10 +33,10 @@ namespace FileManagerAPI.Controllers
             return Ok("Has been Added");
         }
         [HttpGet]
-        [Route("GetTestDb")]
-        public ActionResult<List<TestDB>> GetFile()
-        {
-            var result = mapper.Map<IList<TestDBDTO>>(testService.GetTest());
+        [Route("Test")]
+        public ActionResult GetTest()
+        {        
+            var result =  mapper.Map<IEnumerable<TestDB>, List<TestDBDTO>>(testService.GetAll());
             return Ok(result);
 
         }

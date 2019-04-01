@@ -19,11 +19,11 @@ namespace FileManagerAPI.Controllers
             this.repository = repository;
 
         }
-        [HttpGet]    
-        public async Task<ActionResult<List<StoredFile>>> Get()
-        {           
-            return await repository.GetAll();
-        }
+        //[HttpGet]    
+        //public async Task<ActionResult<List<StoredFile>>> Get()
+        //{           
+        //    return await repository.GetAll();
+        //}
         [HttpGet("{id}")]
         public async Task<ActionResult<StoredFile>> GetId(string id)
         {

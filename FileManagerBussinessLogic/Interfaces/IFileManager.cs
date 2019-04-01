@@ -10,7 +10,7 @@ namespace FileManagerBussinessLogic.Interfaces
         Task InputChunks(ChunksOfFiles chunksOfFiles);
         Task<(byte[], string)> Getfile(string id);
         Task<byte[]> GetFileArchive(string[] id);
-        Task<List<StoredFile>> GetAll();
+        IEnumerable<StoredFile> GetAll();
         Task<StoredFile> GetbyId(string id);
         Task<List<StoredFile>> GetbyIds(string[] id);   
         Task Remove(string[] id);
