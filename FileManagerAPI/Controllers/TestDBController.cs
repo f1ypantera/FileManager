@@ -32,6 +32,14 @@ namespace FileManagerAPI.Controllers
             await testService.CreateTest(test);          
             return Ok("Has been Added");
         }
+        [HttpGet]
+        [Route("GetTestDb")]
+        public ActionResult<List<TestDB>> GetFile()
+        {
+            var result = mapper.Map<IList<TestDBDTO>>(testService.GetTest());
+            return Ok(result);
+
+        }
 
     }
 }
