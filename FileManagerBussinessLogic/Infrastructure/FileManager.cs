@@ -114,17 +114,12 @@ namespace FileManagerBussinessLogic.Infrastructure
             }
         }
 
-        public async Task Remove(string id)
-        {
-          
-           // await context.StoredFiles.DeleteManyAsync(c=>id.Contains(c.FileId));
-
+        public async Task Remove(string[] id)
+        {        
+            await context.StoredFiles.DeleteManyAsync(c=>id.Contains(c.FileId));
             var filter = Builders<User>.Filter.Eq(s => s.Name, "Admin");
-
-            var update = Builders<User>.Update.Pull("StoreFilesId",id);
+            var update = Builders<User>.Update.PullAll("StoreFilesId",id);
             var res  = await context.Users.UpdateManyAsync(filter, update);
-
-
 
 
             //var removeFile = new Remove
