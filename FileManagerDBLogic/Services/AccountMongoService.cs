@@ -34,11 +34,12 @@ namespace FileManagerDBLogic.Services
         public List<User> GetAllUserForUI()
         {
             var res = context.Users.Aggregate().Lookup(
-               foreignCollection: context.StoredFiles,
+              foreignCollection: context.StoredFiles,
                localField: e => e.StoreFilesId,
-               foreignField: e => e.FileId,
+               foreignField: c => c.FileId,
                @as: (User eo) => eo.StoreFilesId
                );
+
             return  res.ToList();
         }
 
