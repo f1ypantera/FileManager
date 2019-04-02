@@ -40,5 +40,17 @@ namespace FileManagerAPI.Controllers
             var result = mapper.Map<IEnumerable<StoredFile>, List<StoredFileDTO>>(fileManager.GetAll());
             return Ok(result);
         }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<StoredFile>> GetId(string id)
+        {
+            var component = await fileManager.GetbyId(id);
+            var result = mapper.Map<StoredFileDTO>(component);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
+      
     }
 }
