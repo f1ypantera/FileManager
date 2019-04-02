@@ -5,10 +5,6 @@ using System.Threading.Tasks;
 using FileManagerDBLogic.Interfaces;
 using FileManagerDBLogic.Models;
 using MongoDB.Driver;
-
-
-
-
 namespace FileManagerDBLogic.Services
 {
     public class AccountMongoService : IAccountMongoService
@@ -34,22 +30,21 @@ namespace FileManagerDBLogic.Services
             var result = context.Users.Find(c => true);
             return result.ToList();
         }
+
+        public List<User> GetAllUserForUI()
+        {
+            var res = context.Users.Aggregate().Lookup(
+               foreignCollection: context.StoredFiles,
+               localField: e => e.StoreFilesId,
+               foreignField: e => e.FileId,
+               @as: (User eo) => eo.StoreFilesId
+               );
+            return  res.ToList();
+        }
+
         public async Task<List<User>> GetAllUser()
         {
-              var result = await context.Users.FindAsync(c => true);
-
-
-            
-
-            //var result = await context.Users.Aggregate().Lookup(
-            //    foreignCollection:context.StoredFiles,
-            //    localField: 
-            //    foreignField: 
-
-
-            //    )
-
-              
+            var result = await context.Users.FindAsync(c => true);                
             return await result.ToListAsync();
         }
 
