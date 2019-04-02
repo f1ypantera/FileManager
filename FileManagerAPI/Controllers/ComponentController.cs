@@ -50,8 +50,8 @@ namespace FileManagerAPI.Controllers
         [Route("Delete")]
         public async Task<ActionResult> Delete(string ids)
         {
-            string[] idsList = ids.Split(',');         
-            await repository.Remove(idsList);
+          //  string[] idsList = ids.Split(',');         
+            await repository.Remove(ids);
             return Ok("Has been deleted");
         }
         [HttpPut("{id}")]
