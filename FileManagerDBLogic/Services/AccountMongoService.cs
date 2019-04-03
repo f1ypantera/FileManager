@@ -25,20 +25,10 @@ namespace FileManagerDBLogic.Services
             return await result.ToListAsync();
         }
 
-        public IEnumerable<User> GetAll()
-        {
-            var result = context.Users.Find(c => true);
-            return result.ToList();
-        }
-
+   
         public List<User> GetAllUserForUI()
         {
-            var res = context.Users.Aggregate().Lookup(
-              foreignCollection: context.StoredFiles,
-               localField: e => e.StoreFilesId,
-               foreignField: c => c.FileId,
-               @as: (User eo) => eo.StoreFilesId
-               );
+            var res = context.Users.Find(c => true);
 
             return  res.ToList();
         }

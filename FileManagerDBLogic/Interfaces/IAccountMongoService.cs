@@ -11,7 +11,6 @@ namespace FileManagerDBLogic.Interfaces
         Task RegisterUser(RegisterModel registerModel);
         Task<User> Login(LoginModel loginModel);
         Task<List<User>> GetAllUser();
-        IEnumerable<User> GetAll();
         List<User> GetAllUserForUI();
     }
 }
