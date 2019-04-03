@@ -11,6 +11,7 @@ using FileManagerDBLogic.Interfaces;
 using FileManagerDBLogic.Models;
 using Newtonsoft.Json;
 using FileManagerBussinessLogic.Models;
+using MongoDB.Bson;
 
 namespace FileManagerBussinessLogic.Infrastructure
 {
@@ -162,11 +163,11 @@ namespace FileManagerBussinessLogic.Infrastructure
            
 
             var cursor = await context.StoredFiles.FindAsync(c => c.FileName == storedFile.FileName);
-            var file = await cursor.FirstOrDefaultAsync();
+            var  file = await cursor.FirstOrDefaultAsync();
             string id = file.FileId;
 
             var filter = Builders<User>.Filter.Eq(s => s.Name, "Admin");
-            var update = Builders<User>.Update.AddToSet(s => s.StoreFilesId, id);
+            var update = Builders<User>.Update.AddToSet(s=>s.StoreFilesId , ObjectId.Parse(id));
             var result = await context.Users.UpdateOneAsync(filter, update);
 
             var addFile = new Add
