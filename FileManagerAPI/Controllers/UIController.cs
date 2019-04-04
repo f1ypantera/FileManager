@@ -32,6 +32,10 @@ namespace FileManagerAPI.Controllers
         public ActionResult GetAllUser()
         {         
             var result =  accountMongoService.GetAllUserForUI();
+            if (result == null)
+            {
+                return NotFound();
+            }
             return Ok(result);
         }
         [HttpGet]
@@ -39,6 +43,10 @@ namespace FileManagerAPI.Controllers
         public ActionResult GetAllFile()
         {
             var result = mapper.Map<IEnumerable<StoredFile>, List<StoredFileDTO>>(fileManager.GetAll());
+            if (result == null)
+            {
+                return NotFound();
+            }
             return Ok(result);
         }
         [HttpGet("{id}")]
