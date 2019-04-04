@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using FileManagerDBLogic.Interfaces;
 using FileManagerDBLogic.Models;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 namespace FileManagerDBLogic.Services
 {
@@ -27,19 +28,18 @@ namespace FileManagerDBLogic.Services
         }
 
 
-        public List<User> GetAllUserForUI()
+        public List<BsonDocument> GetAllUserForUI()
         {
 
-            
-         
-            //var result = context.Users.Aggregate().Unwind<User, User>(c => c.StoreFilesId).Lookup(
-            //     foreignCollection: context.StoredFiles,
-            //     localField: c => c.StoreFilesId,
-            //     foreignField: e => e.FileId,
-            //     @as: (User eu) => eu.StoreFilesId).
-            //      Unwind(c => c.StoreFilesId).
-            //      Group( );
-            return result.ToList();
+            var group = new BsonDocument { { "_id", "$Name" }, { "Files", new BsonDocument("$push", "$StoreFilesId.FileName") } };
+
+
+            var result = context.Users.Aggregate().Unwind<User, User>(c => c.StoreFilesId).Lookup(
+                 foreignCollection: context.StoredFiles,
+                 localField: c => c.StoreFilesId,
+                 foreignField: e => e.FileId,
+                 @as: (User eu) => eu.StoreFilesId).Unwind(c=>c.StoreFilesId).Group(group).ToList();
+            return result;
         }
 
         public async Task<List<User>> GetAllUser()
