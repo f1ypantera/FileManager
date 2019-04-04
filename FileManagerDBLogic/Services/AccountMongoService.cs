@@ -28,14 +28,14 @@ namespace FileManagerDBLogic.Services
         }
 
 
-        public List<BsonDocument> GetAllUserForUI()
+        public List<UserDTO> GetAllUserForUI()
         {
-            var group = new BsonDocument { { "_id", "$Name" }, { "Files", new BsonDocument("$push", "$StoreFilesId.FileName") } };
+            var group = new BsonDocument { { "_id", "$_id" },{ "Name", new BsonDocument("$first", "$Name") }, { "StoreFilesId", new BsonDocument("$push", "$StoreFilesId.FileName") } };
             var result = context.Users.Aggregate().Unwind<User, UserDTO>(c => c.StoreFilesId).Lookup(
                  foreignCollection: context.StoredFiles,
                  localField: c => c.StoreFilesId,
                  foreignField: e => e.FileId,
-                 @as: (UserDTO eu) => eu.StoreFilesId).Unwind(c=>c.StoreFilesId).Group(group).ToList();
+                 @as: (UserDTO eu) => eu.StoreFilesId).Unwind(c=>c.StoreFilesId).Group<UserDTO>(group).ToList();
             return result;
         }
 

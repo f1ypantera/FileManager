@@ -10,6 +10,7 @@ using FileManagerDBLogic.Interfaces;
 using FileManagerBussinessLogic.Interfaces;
 using FileManagerDBLogic.Models;
 using FileManagerAPI.ModelsDTO;
+using MongoDB.Bson;
 
 namespace FileManagerAPI.Controllers
 {
