@@ -124,16 +124,13 @@ namespace FileManagerBussinessLogic.Infrastructure
                 var filter = Builders<User>.Filter.Eq(s => s.Name, "Admin");
                 var update = Builders<User>.Update.Pull("StoreFilesId", ObjectId.Parse(id[i]));
                 var res = await context.Users.UpdateOneAsync(filter, update);
-            }
 
-         
-
-
-            //var removeFile = new Remove
-            //{
-            //    id = 
-            //};
-            //await fileSocketManager.SendMessageToAllAsync(JsonConvert.SerializeObject(removeFile));
+                var removeFile = new Remove
+                {
+                    id = id[i]
+                };
+                await fileSocketManager.SendMessageToAllAsync(JsonConvert.SerializeObject(removeFile));
+            }        
         }
         public async Task Update(string id, StoredFile component)
         {
