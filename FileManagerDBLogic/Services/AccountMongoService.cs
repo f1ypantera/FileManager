@@ -34,11 +34,11 @@ namespace FileManagerDBLogic.Services
             var group = new BsonDocument { { "_id", "$Name" }, { "Files", new BsonDocument("$push", "$StoreFilesId.FileName") } };
 
 
-            var result = context.Users.Aggregate().Unwind<User, User>(c => c.StoreFilesId).Lookup(
+            var result = context.Users.Aggregate().Unwind<User, UserDTO>(c => c.StoreFilesId).Lookup(
                  foreignCollection: context.StoredFiles,
                  localField: c => c.StoreFilesId,
                  foreignField: e => e.FileId,
-                 @as: (User eu) => eu.StoreFilesId).Unwind(c=>c.StoreFilesId).Group(group).ToList();
+                 @as: (UserDTO eu) => eu.StoreFilesId).Unwind(c=>c.StoreFilesId).Group(group).ToList();
             return result;
         }
 
