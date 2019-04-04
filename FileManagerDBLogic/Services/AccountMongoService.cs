@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FileManagerDBLogic.Interfaces;
 using FileManagerDBLogic.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 namespace FileManagerDBLogic.Services
 {
@@ -28,34 +29,51 @@ namespace FileManagerDBLogic.Services
    
         public List<User> GetAllUserForUI()
         {
-            var res = context.Users.Find(c => true);
+            //  var res = context.Users.Find(c => true);
+            var doc = new BsonDocument();
+            context.Users.Aggregate().Match(doc);
 
-            return  res.ToList();
+            var res = context.Users.Aggregate().Unwind<User, User>(c => c.StoreFilesId).Lookup(
+                 foreignCollection: context.StoredFiles,
+                 localField: c => c.StoreFilesId,
+                 foreignField: e => e.FileId,
+                 @as: (User eu) => eu.StoreFilesId);
+            var rez = res.ToBsonDocument();
+            return null;
         }
 
         public async Task<List<User>> GetAllUser()
         {
-            var result = await context.Users.FindAsync(c => true);                
+            var result = await context.Users.FindAsync(c => true);        
+
+            //var result = context.Users.Aggregate().Unwind<User,User>(c=>c.StoreFilesId).Lookup(
+            //    foreignCollection: context.StoredFiles,
+            //    localField: c => c.StoreFilesId,
+            //    foreignField: e => e.FileId,
+            //    @as: (User eu) => eu.StoreFilesId);
+
             return await result.ToListAsync();
         }
 
-        public async Task RegisterUser(RegisterModel registerModel)
+        public async Task<User> RegisterUser(RegisterModel registerModel)
         {
-            var user = await context.Users.FindAsync(r => r.Email == registerModel.Email);
-            string[] name = registerModel.Email.Split('@');
+            var user = await context.Users.FindAsync(r => r.Email == registerModel.Email);                    
             var isExist = await user.FirstOrDefaultAsync();
             if (isExist == null)
             {
-                User newUser = new User { Email = registerModel.Email, Password = registerModel.Password ,Name = name[0]};
+                string[] name = registerModel.Email.Split('@');
+                User newUser = new User { Email = registerModel.Email, Password = registerModel.Password, Name = name[0] };
                 var role = await context.ProvidedRoles.FindAsync(r => r.RoleName == "Admin");
                 var isRole = role.FirstOrDefaultAsync();
                 if (isRole != null)
                 {
                     newUser.ProvidedRole = await isRole;
                     await context.Users.InsertOneAsync(newUser);
-                }
-            }
+                }               
+            }       
+            return isExist;       
         }
+
         public async Task<User> Login(LoginModel loginModel)
         {
             var asyncCursor = await context.Users.FindAsync(u => u.Email == loginModel.Email && u.Password == loginModel.Password);

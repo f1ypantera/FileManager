@@ -44,8 +44,14 @@ namespace FileManagerAPI.Controllers
         [Route("Register")]
         public async Task<ActionResult> Register(RegisterModel registerModel)
         {
-            await accountMongoService.RegisterUser(registerModel);
+          
+           var isExist = await accountMongoService.RegisterUser(registerModel);
+           if (isExist != null)
+           {
+                return Ok("Пользователь с таким уже существует ");
+           }                 
             return Ok("Has been registered");
+                                                
         }
         [HttpPost]
         [Route("Login")]
