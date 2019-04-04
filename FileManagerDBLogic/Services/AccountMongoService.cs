@@ -30,10 +30,7 @@ namespace FileManagerDBLogic.Services
 
         public List<BsonDocument> GetAllUserForUI()
         {
-
             var group = new BsonDocument { { "_id", "$Name" }, { "Files", new BsonDocument("$push", "$StoreFilesId.FileName") } };
-
-
             var result = context.Users.Aggregate().Unwind<User, UserDTO>(c => c.StoreFilesId).Lookup(
                  foreignCollection: context.StoredFiles,
                  localField: c => c.StoreFilesId,
