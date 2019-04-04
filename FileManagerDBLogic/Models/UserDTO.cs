@@ -12,10 +12,10 @@ namespace FileManagerDBLogic.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
         public string Name { get; set; }
-        public ICollection<StoredFile> StoreFiles { get; set; }
+        public ICollection<ObjectId> StoreFilesId { get; set; }
         public UserDTO()
         {
-            StoreFiles = new List<StoredFile>();
+            StoreFilesId = new List<ObjectId>();
         }
     }
 }

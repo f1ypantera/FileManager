@@ -31,6 +31,8 @@ namespace FileManagerAPI.Controllers
         public ActionResult GetAllUser()
         {
             var result = mapper.Map<IEnumerable<User>, List<UserDTO>>(accountMongoService.GetAllUserForUI());
+
+            //var result =  accountMongoService.GetAllUserForUI();
             return Ok(result);
         }
         [HttpGet]

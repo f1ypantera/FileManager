@@ -28,30 +28,20 @@ namespace FileManagerDBLogic.Services
 
    
         public List<User> GetAllUserForUI()
-        {
-            //  var res = context.Users.Find(c => true);
-            var doc = new BsonDocument();
-            context.Users.Aggregate().Match(doc);
+        {               
+            //var result =  context.Users.Aggregate().Unwind<User, User>(c => c.StoreFilesId).Lookup(
+            //     foreignCollection: context.StoredFiles,
+            //     localField: c => c.StoreFilesId,
+            //     foreignField: e => e.FileId,
+            //     @as: (User eu) => eu.StoreFilesId);
 
-            var res = context.Users.Aggregate().Unwind<User, User>(c => c.StoreFilesId).Lookup(
-                 foreignCollection: context.StoredFiles,
-                 localField: c => c.StoreFilesId,
-                 foreignField: e => e.FileId,
-                 @as: (User eu) => eu.StoreFilesId);
-            var rez = res.ToBsonDocument();
-            return null;
+            var result = context.Users.Find(c => true);
+            return result.ToList();
         }
 
         public async Task<List<User>> GetAllUser()
         {
-            var result = await context.Users.FindAsync(c => true);        
-
-            //var result = context.Users.Aggregate().Unwind<User,User>(c=>c.StoreFilesId).Lookup(
-            //    foreignCollection: context.StoredFiles,
-            //    localField: c => c.StoreFilesId,
-            //    foreignField: e => e.FileId,
-            //    @as: (User eu) => eu.StoreFilesId);
-
+          var result = await context.Users.FindAsync(c => true);        
             return await result.ToListAsync();
         }
 
@@ -71,9 +61,9 @@ namespace FileManagerDBLogic.Services
                     await context.Users.InsertOneAsync(newUser);
                 }               
             }       
-            return isExist;       
+            return isExist;
+       
         }
-
         public async Task<User> Login(LoginModel loginModel)
         {
             var asyncCursor = await context.Users.FindAsync(u => u.Email == loginModel.Email && u.Password == loginModel.Password);
