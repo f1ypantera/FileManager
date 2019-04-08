@@ -10,11 +10,13 @@ namespace FileManagerDBLogic.Context
     public  class MongoContext:IMongoContext
     {
         private readonly IMongoDatabase mongoDatabase;
+      
         private readonly IGridFSBucket bucket;
         public MongoContext(IOptions<Settings> options)
         {
             var client = new MongoClient(options.Value.ConnectionString);
             mongoDatabase = client.GetDatabase(options.Value.Database);
+           
             var gridFSBucketOptions = new GridFSBucketOptions()
             {
                 BucketName = "files",
