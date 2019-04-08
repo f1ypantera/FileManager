@@ -5,9 +5,11 @@ VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileManagerAPI", "FileManagerAPI\FileManagerAPI.csproj", "{CC8866CD-F621-4849-9ECB-69F813BE911C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileManagerBussinessLogic", "FileManagerBussinessLogic\FileManagerBussinessLogic.csproj", "{0DC6176A-87DB-4D65-AA09-5F44E80EB1B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileManagerBussinessLogic", "FileManagerBussinessLogic\FileManagerBussinessLogic.csproj", "{0DC6176A-87DB-4D65-AA09-5F44E80EB1B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileManagerDBLogic", "FileManagerDBLogic\FileManagerDBLogic.csproj", "{6BD39D47-AFFA-41C5-B5EB-B8BDF9B3228F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileManagerDBLogic", "FileManagerDBLogic\FileManagerDBLogic.csproj", "{6BD39D47-AFFA-41C5-B5EB-B8BDF9B3228F}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{B8D3DFEC-BD4A-4C1B-B9B3-33A18F169258}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{6BD39D47-AFFA-41C5-B5EB-B8BDF9B3228F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BD39D47-AFFA-41C5-B5EB-B8BDF9B3228F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BD39D47-AFFA-41C5-B5EB-B8BDF9B3228F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8D3DFEC-BD4A-4C1B-B9B3-33A18F169258}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8D3DFEC-BD4A-4C1B-B9B3-33A18F169258}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8D3DFEC-BD4A-4C1B-B9B3-33A18F169258}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8D3DFEC-BD4A-4C1B-B9B3-33A18F169258}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
