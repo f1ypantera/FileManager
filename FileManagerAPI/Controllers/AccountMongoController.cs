@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using FileManagerDBLogic.Interfaces;
@@ -16,9 +18,11 @@ namespace FileManagerAPI.Controllers
     public class AccountMongoController : ControllerBase
     {
         private readonly IAccountMongoService accountMongoService;
+
         public AccountMongoController(IAccountMongoService accountMongoService)
         {
             this.accountMongoService = accountMongoService;
+
         }
 
         [HttpGet]
@@ -40,6 +44,8 @@ namespace FileManagerAPI.Controllers
             await accountMongoService.CreateRole(providedRole);
             return Ok(providedRole);
         }
+
+  
         [HttpPost]
         [Route("Register")]
         public async Task<ActionResult> Register(RegisterModel registerModel)
@@ -48,8 +54,8 @@ namespace FileManagerAPI.Controllers
            var isExist = await accountMongoService.RegisterUser(registerModel);
            if (isExist != null)
            {
-                return Ok("User have already been registered before");
-           }                 
+                return NotFound();
+            }                 
             return Ok("Has been registered");
                                                 
         }

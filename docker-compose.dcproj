@@ -3,7 +3,7 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Windows</DockerTargetOS>
-    <ProjectGuid>e2dcfb1f-a894-45cc-9993-b06ae8d8abba</ProjectGuid>
+    <ProjectGuid>d5f2cbfe-b6b9-4712-948c-aa469b166cf7</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://{ServiceIPAddress}{ServicePort}/swagger/index.html</DockerServiceUrl>
     <DockerServiceName>filemanagerapi</DockerServiceName>
