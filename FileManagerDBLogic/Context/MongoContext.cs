@@ -16,7 +16,6 @@ namespace FileManagerDBLogic.Context
         {
             var client = new MongoClient(options.Value.ConnectionString);
             mongoDatabase = client.GetDatabase(options.Value.Database);
-           
             var gridFSBucketOptions = new GridFSBucketOptions()
             {
                 BucketName = "files",

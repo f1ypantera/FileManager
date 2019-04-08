@@ -48,7 +48,7 @@ namespace FileManagerAPI.Controllers
            var isExist = await accountMongoService.RegisterUser(registerModel);
            if (isExist != null)
            {
-                return Ok("Пользователь с таким уже существует ");
+                return Ok("User have already been registered before");
            }                 
             return Ok("Has been registered");
                                                 
