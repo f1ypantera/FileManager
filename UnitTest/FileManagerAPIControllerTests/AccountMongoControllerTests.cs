@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using FileManagerDBLogic.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace UnitTest.FileManagerAPIControllerTests
 {
@@ -53,6 +54,19 @@ namespace UnitTest.FileManagerAPIControllerTests
             //assert
             mock.Verify(c => c.GetAllUser());
             Assert.NotEmpty(users);
+        }
+        [Fact]
+        public async void UserViewIsNotFoundTest()
+        {
+            //arrange
+            var mock = new Mock<IAccountMongoService>();
+            var user = new AccountMongoController(mock.Object);
+            //act
+            var result = await user.GetUser();
+          
+            //assert
+            Assert.IsNotType<BadRequestResult>(result);
+
         }
     }
 }
