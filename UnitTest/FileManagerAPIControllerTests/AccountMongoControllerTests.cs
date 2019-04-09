@@ -14,6 +14,20 @@ namespace UnitTest.FileManagerAPIControllerTests
     public class AccountMongoControllerTests
     {
         [Fact]
+        public async Task Can_User_Login()
+        {
+            //arrange
+            var mock = new Mock<IAccountMongoService>();
+            var userService = new AccountMongoController(mock.Object);
+            var user = new LoginModel { Email = "Admin@ukr.net", Password = "123456" };
+            //act 
+            await userService.Login(user);
+            //assert 
+            mock.Verify(c => c.Login(It.Is<LoginModel>(s => s.Email == "Admin@ukr.net")), Times.Once());
+            Assert.Equal("Admin@ukr.net", user.Email);
+        }
+
+        [Fact]
         public async Task Can_Register_User()
         {
             //arrange
