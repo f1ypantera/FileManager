@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileManagerBussinessLogic",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileManagerDBLogic", "FileManagerDBLogic\FileManagerDBLogic.csproj", "{6BD39D47-AFFA-41C5-B5EB-B8BDF9B3228F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTest", "..\XUnitTest\XUnitTest.csproj", "{9045759A-9335-44DE-A7E5-D8A1EFAF2AE2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{DB420561-9C91-40B9-9FA9-C965D8D18E4F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{6BD39D47-AFFA-41C5-B5EB-B8BDF9B3228F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BD39D47-AFFA-41C5-B5EB-B8BDF9B3228F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BD39D47-AFFA-41C5-B5EB-B8BDF9B3228F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9045759A-9335-44DE-A7E5-D8A1EFAF2AE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9045759A-9335-44DE-A7E5-D8A1EFAF2AE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9045759A-9335-44DE-A7E5-D8A1EFAF2AE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9045759A-9335-44DE-A7E5-D8A1EFAF2AE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB420561-9C91-40B9-9FA9-C965D8D18E4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB420561-9C91-40B9-9FA9-C965D8D18E4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB420561-9C91-40B9-9FA9-C965D8D18E4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB420561-9C91-40B9-9FA9-C965D8D18E4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
