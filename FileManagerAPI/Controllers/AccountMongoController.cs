@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace FileManagerAPI.Controllers
 {
@@ -50,14 +50,14 @@ namespace FileManagerAPI.Controllers
         [Route("Register")]
         public async Task<ActionResult> Register(RegisterModel registerModel)
         {
-          
-           var isExist = await accountMongoService.RegisterUser(registerModel);
-           if (isExist != null)
-           {
-                return NotFound();
-            }                 
+
+            var isExist = await accountMongoService.RegisterUser(registerModel);
+            if (isExist != null)
+            {
+                return Unauthorized();
+            }
             return Ok("Has been registered");
-                                                
+
         }
         [HttpPost]
         [Route("Login")]
