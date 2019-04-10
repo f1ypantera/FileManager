@@ -14,6 +14,7 @@ namespace UnitTest.FileManagerAPIControllerTests
 {
     public class AccountMongoControllerTests
     {
+     
         [Fact]
         public async Task Can_User_Login()
         {
@@ -41,6 +42,7 @@ namespace UnitTest.FileManagerAPIControllerTests
             mock.Verify(c => c.RegisterUser(It.Is<RegisterModel>(s => s.Email == "example@ukr.net")), Times.Once());
             Assert.Equal("example@ukr.net", user.Email);
         }
+       
 
         [Fact]
         public async void UserViewTest()
@@ -50,10 +52,12 @@ namespace UnitTest.FileManagerAPIControllerTests
             var users = new List<User> { new User { Email = "example@ukr.net", Name = "example" } };
             var userService = new AccountMongoController(mock.Object);
             //act
-            await userService.GetUser();
+            var result = await userService.GetUser();
             //assert
             mock.Verify(c => c.GetAllUser());
             Assert.NotEmpty(users);
+
+
         }
         [Fact]
         public async void UserViewIsNotFoundTest()
