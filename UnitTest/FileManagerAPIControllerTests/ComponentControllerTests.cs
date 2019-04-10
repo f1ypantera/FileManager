@@ -15,6 +15,8 @@ namespace UnitTest.FileManagerAPIControllerTests
 {
     public class ComponentControllerTests
     {
+
+
         [Fact]
         public async void ComponentView()
         {
@@ -27,34 +29,42 @@ namespace UnitTest.FileManagerAPIControllerTests
             //assert
             mock.Verify(c => c.GetAllFile());
             Assert.NotEmpty(components);
-
-
         }
         [Fact]
-        public async void Test ()
+        public async void ComponentViewIsNotFound()
         {
+            //arrange
             var mock = new Mock<IFileManager>();
-            mock.Setup(repo => repo.GetAll()).Returns(GetTestComponents());
-            var controller = new ComponentController(mock.Object);
+            var component = new ComponentController(mock.Object);
+            //act
+            var result = await component.Get();
 
-            var result = await controller.Get();
-
-            var actionResult = Assert.IsType<ActionResult<List<StoredFile>>>(result);
-            var model = Assert.IsAssignableFrom<List<StoredFile>>(actionResult);
-            Assert.Equal(GetTestComponents().Count, model.Count());
+            //assert
+            Assert.IsNotType<BadRequestResult>(result);
 
         }
 
-        private List<StoredFile> GetTestComponents()
+        [Fact]
+        public async void Task_GetPostById_Return_OkResult()
+        {
+            //arrange
+            var mock = new Mock<IFileManager>();
+            var componentService = new ComponentController(mock.Object);
+            var fileId = "2";
+            var component = await componentService.GetId(fileId);
+            Assert.IsNotType<ObjectResult>(component);
+        }
+        [Fact]
+        public async void Task_GetPostById_Return_NotFoundResult()
         {
 
-            var files = new List<StoredFile>
-            {
-                new StoredFile { FileId = "1", FileName = "example", Size = 123},
-        
-            };
-            return files;
+            var mock = new Mock<IFileManager>();
+            var componentService = new ComponentController(mock.Object);
+            var fileId = "2";
+            var component = await componentService.GetId(fileId);
+            Assert.IsNotType<NotFoundResult>(component);
         }
     }
-
 }
+
+   
