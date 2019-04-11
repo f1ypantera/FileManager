@@ -26,15 +26,15 @@ namespace FileManagerAPI.Controllers
         }
         [HttpPost]
         [Route("AddTest")]
-        public async Task<ActionResult> AddTest([FromBody] TestDBDTO testDTO)
+        public  IActionResult AddTest([FromBody] TestDBDTO testDTO)
         {      
             var test = mapper.Map<TestDB>(testDTO);
-            await testService.CreateTest(test);          
+            testService.CreateTest(test);          
             return Ok("Has been Added");
         }
         [HttpGet]
         [Route("Test")]
-        public ActionResult GetTest()
+        public IActionResult GetTest()
         {        
             var result =  mapper.Map<IEnumerable<TestDB>, List<TestDBDTO>>(testService.GetAll());
             return Ok(result);

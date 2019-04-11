@@ -16,26 +16,7 @@ namespace UnitTest.FileManagerAPIControllerTests
 {  
     public class AccountMongoControllerTests
     {
-       
-     
-        [Fact]
-        public void Add_InvalidObjectPassed_ReturnsBadRequest()
-        {
-            var mock = new Mock<IAccountMongoService>();
-            var controller = new AccountMongoController(mock.Object);
-            var nameMissingItem = new ProvidedRole()
-            {
-                
-            };
-            controller.ModelState.AddModelError("Name", "Required");
-            ProvidedRole newRole = new ProvidedRole();
-
-            // Act
-            var badResposne = controller.CreateRole(nameMissingItem);
-
-            // Assert
-            Assert.IsType<BadRequestObjectResult>(badResposne);
-        }
+      
         [Fact]
         public async Task Can_User_Login()
         {

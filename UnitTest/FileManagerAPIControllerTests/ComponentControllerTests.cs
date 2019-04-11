@@ -16,7 +16,6 @@ namespace UnitTest.FileManagerAPIControllerTests
     public class ComponentControllerTests
     {
 
-
         [Fact]
         public async void ComponentView()
         {

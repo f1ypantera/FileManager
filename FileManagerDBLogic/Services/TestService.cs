@@ -16,9 +16,9 @@ namespace FileManagerDBLogic.Services
         {
             this.context = context;
         }
-        public async Task CreateTest(TestDB testDB)
+        public void CreateTest(TestDB testDB)
         {
-            await context.TestDB.InsertOneAsync(testDB);
+             context.TestDB.InsertOne(testDB);
         }
         public IEnumerable<TestDB> GetAll()
         {
