@@ -32,7 +32,18 @@ namespace UnitTest.FileManagerAPIControllerTests
             Assert.Equal(GetTestDBDTOs().Count, model.Count());
 
         }
+        [Fact]
+        public void Get_WhenCalled_ReturnsOkResult()
+        {
+            var mock = new Mock<ITestService>();
+            mock.Setup(repo => repo.GetAll()).Returns(GetTestDBDTOs());
+            var controller = new TestDBController(mock.Object, mapper);
+            
+            var result = controller.GetResult();
+      
+            Assert.IsType<OkObjectResult>(result);
 
+        }
         public List<TestDB> GetTestDBDTOs()
         {
             var tests = new List<TestDB>
