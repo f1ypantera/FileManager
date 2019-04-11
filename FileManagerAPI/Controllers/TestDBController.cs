@@ -34,13 +34,14 @@ namespace FileManagerAPI.Controllers
         }
         [HttpGet]
         [Route("Test")]
-        public ActionResult GetTest()
+        public IActionResult GetTest()
         {        
             var result =  mapper.Map<IEnumerable<TestDB>, List<TestDBDTO>>(testService.GetAll());
             return Ok(result);
 
         }
 
+   
         [HttpGet]
         [Route("AllTest")]
         public IEnumerable<TestDB> GetAllTest()
@@ -49,21 +50,24 @@ namespace FileManagerAPI.Controllers
             return result;
 
         }
-        [HttpGet]
-        public ActionResult GetResult()
-        {
-            var result = testService.GetAll();
-            return Ok(result);
-
-        }
+    
         [HttpPost]
         [Route("AddTestNotMap")]
         public IActionResult AddTestNotMap([FromBody] TestDB testDB)
         {
       
             testService.CreateTest(testDB);
-            return Ok("Has been Added");
+            return Ok(testDB);
         }
-
+        [HttpGet("{id}")]
+        public IActionResult GetId(string id)
+        {
+            var component = testService.GetbyId(id);
+            if (component == null)
+            {
+                return NotFound();
+            }
+            return Ok(component);
+        }
     }
 }

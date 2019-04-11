@@ -33,17 +33,46 @@ namespace UnitTest.FileManagerAPIControllerTests
 
         }
         [Fact]
-        public void Get_WhenCalled_ReturnsOkResult()
+        public void AddPhoneReturnsViewResultWithPhoneModel()
         {
             var mock = new Mock<ITestService>();
-            mock.Setup(repo => repo.GetAll()).Returns(GetTestDBDTOs());
             var controller = new TestDBController(mock.Object, mapper);
-            
-            var result = controller.GetResult();
-      
-            Assert.IsType<OkObjectResult>(result);
+            controller.ModelState.AddModelError("Name", "Required");
+
+            TestDB testDB = new TestDB();
+
+            var result = controller.AddTestNotMap(testDB);
+
+            var view = Assert.IsType<OkObjectResult>(result);
+            Assert.Equal(testDB, view.Value);
+        }
+
+        [Fact]
+        public void AddTestReturnsARedirectAndAddsTest()
+        {
+            var mock = new Mock<ITestService>();
+            var controller = new TestDBController(mock.Object, mapper);
+
+
+            var newTest = new TestDB()
+            {
+                Name = "Lena",
+                Surname = "Tselikina",
+                Age = 42
+            };
+
+            var result = controller.AddTestNotMap(newTest);   
+            mock.Verify(r => r.CreateTest(It.Is<TestDB>(s=>s.Name == "Lena")),Times.Once());        
+            Assert.Equal("Lena", newTest.Name);
 
         }
+
+
+
+
+
+
+
         public List<TestDB> GetTestDBDTOs()
         {
             var tests = new List<TestDB>

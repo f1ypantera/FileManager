@@ -11,6 +11,7 @@ namespace FileManagerDBLogic.Interfaces
     {
         void CreateTest(TestDB testDB);
         IEnumerable<TestDB> GetAll();
+        TestDB GetbyId(string id);
     }
         
 }
