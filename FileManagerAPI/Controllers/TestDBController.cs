@@ -41,5 +41,14 @@ namespace FileManagerAPI.Controllers
 
         }
 
+        [HttpGet]
+        [Route("AllTest")]
+        public List<TestDB> GetAllTest()
+        {
+            var result = testService.GetAll().ToList();
+            return result;
+
+        }
+
     }
 }
