@@ -22,14 +22,14 @@ namespace UnitTest.FileManagerAPIControllerTests
         public void IndexReturnsAViewResultWithAListofPeople()
         {
             var mock = new Mock<ITestService>();
-            mock.Setup(repo => repo.GetAll()).Returns(GetTestDBDTOs());
+            mock.Setup(repo => repo.GetAll()).Returns(GetTest());
             var controller = new TestDBController(mock.Object, mapper);
 
             var result = controller.GetAllTest();
 
             var view = Assert.IsType<List<TestDB>>(result);
             var model = Assert.IsAssignableFrom<IEnumerable<TestDB>>(view);
-            Assert.Equal(GetTestDBDTOs().Count, model.Count());
+            Assert.Equal(GetTest().Count, model.Count());
 
         }
         [Fact]
@@ -78,7 +78,7 @@ namespace UnitTest.FileManagerAPIControllerTests
         [Fact]
         public void GetTestReturnsNotFoundResultWhenTestNotFound()
         {
-            string testId = "1";
+            string testId = "5caeff79e1d244a0eccce920";
             var mock = new Mock<ITestService>();
             mock.Setup(repo => repo.GetbyId(testId)).Returns(null as TestDB);
             var controller = new TestDBController(mock.Object, mapper);
@@ -88,15 +88,32 @@ namespace UnitTest.FileManagerAPIControllerTests
             Assert.IsType<NotFoundResult>(result);
         }
 
+        [Fact]
+        public void GetTestReturnsViewResultWithTest()
+        {
+            string testId = "5caeff79e1d244a0eccce920";
+            var mock = new Mock<ITestService>();
+            mock.Setup(repo => repo.GetbyId(testId))
+                .Returns(GetTest().FirstOrDefault(p => p.Id == testId));
+            var controller = new TestDBController(mock.Object, mapper);
 
+            var result = controller.GetId(testId);          
+            var viewResult = Assert.IsType<OkObjectResult>(result);
+            var model = Assert.IsType<TestDB>(viewResult.Value);
 
-        public List<TestDB> GetTestDBDTOs()
+            Assert.Equal("Vadym", model.Name);
+            Assert.Equal("Tselikin", model.Surname);
+            Assert.Equal(24, model.Age);       
+            Assert.Equal(testId, model.Id);
+        }
+
+            public List<TestDB> GetTest()
         {
             var tests = new List<TestDB>
             {
-                new TestDB { Id = "1",Name="Vadym",Surname = "Tselikin", Age = 24 },
-                new TestDB { Id = "2",Name="Ira",Surname = "Repnikova", Age = 22 },
-                new TestDB { Id = "3",Name="Vitaliy",Surname = "Tselikin", Age = 44 },
+                new TestDB { Id = "5caeff79e1d244a0eccce920",Name="Vadym",Surname = "Tselikin", Age = 24 },
+                new TestDB { Id = "5caf2397c300476870e7fb15",Name="Ira",Surname = "Repnikova", Age = 22 },
+                new TestDB { Id = "5caf2397c300476870e7fb14",Name="Vitaliy",Surname = "Tselikin", Age = 44 },
             };
             return tests;
         }
