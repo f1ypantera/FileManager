@@ -38,7 +38,6 @@ namespace UnitTest.FileManagerAPIControllerTests
             var mock = new Mock<ITestService>();
             var controller = new TestDBController(mock.Object, mapper);
             controller.ModelState.AddModelError("Name", "Required");
-
             TestDB testDB = new TestDB();
 
             var result = controller.AddTestNotMap(testDB);
@@ -64,12 +63,30 @@ namespace UnitTest.FileManagerAPIControllerTests
             var result = controller.AddTestNotMap(newTest);   
             mock.Verify(r => r.CreateTest(It.Is<TestDB>(s=>s.Name == "Lena")),Times.Once());        
             Assert.Equal("Lena", newTest.Name);
-
+        }
+        [Fact]
+        public void GetPhoneReturnsBadRequestResultWhenIdIsNull()
+        {
+            var mock = new Mock<ITestService>();
+            var controller = new TestDBController(mock.Object, mapper); 
+    
+            var result = controller.GetId(null);
+         
+            Assert.IsType<NotFoundResult>(result);
         }
 
+        [Fact]
+        public void GetTestReturnsNotFoundResultWhenTestNotFound()
+        {
+            string testId = "1";
+            var mock = new Mock<ITestService>();
+            mock.Setup(repo => repo.GetbyId(testId)).Returns(null as TestDB);
+            var controller = new TestDBController(mock.Object, mapper);
 
+            var result = controller.GetId(testId);
 
-
+            Assert.IsType<NotFoundResult>(result);
+        }
 
 
 
