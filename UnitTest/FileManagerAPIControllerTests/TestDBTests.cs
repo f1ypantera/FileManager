@@ -19,7 +19,7 @@ namespace UnitTest.FileManagerAPIControllerTests
         private IMapper mapper;
         
         [Fact]
-        public void IndexReturnsAViewResultWithAListofPeople()
+        public void Test_View()
         {
             var mock = new Mock<ITestService>();
             mock.Setup(repo => repo.GetAll()).Returns(GetTest());
@@ -33,7 +33,7 @@ namespace UnitTest.FileManagerAPIControllerTests
 
         }
         [Fact]
-        public void AddPhoneReturnsViewResultWithPhoneModel()
+        public void Test_Redirect_Model_IsNotValid()
         {
             var mock = new Mock<ITestService>();
             var controller = new TestDBController(mock.Object, mapper);
@@ -47,7 +47,7 @@ namespace UnitTest.FileManagerAPIControllerTests
         }
 
         [Fact]
-        public void AddTestReturnsARedirectAndAddsTest()
+        public void Test_Can_AddModel()
         {
             var mock = new Mock<ITestService>();
             var controller = new TestDBController(mock.Object, mapper);
@@ -65,7 +65,7 @@ namespace UnitTest.FileManagerAPIControllerTests
             Assert.Equal("Lena", newTest.Name);
         }
         [Fact]
-        public void TrueNotFoundResult()
+        public void Test_Return_NotFoundResult()
         {
             var mock = new Mock<ITestService>();
             var controller = new TestDBController(mock.Object, mapper); 
@@ -76,7 +76,7 @@ namespace UnitTest.FileManagerAPIControllerTests
         }
 
         [Fact]
-        public void GetTestReturnsNotFoundResultWhenTestNotFound()
+        public void Test_Return_NotFoundResult_When_NotFound()
         {
             string testId = "5caeff79e1d244a0eccce920";
             var mock = new Mock<ITestService>();
@@ -89,7 +89,7 @@ namespace UnitTest.FileManagerAPIControllerTests
         }
 
         [Fact]
-        public void GetTestReturnsViewResultWithTest()
+        public void Test_Check_Model_List()
         {
             string testId = "5caeff79e1d244a0eccce920";
             var mock = new Mock<ITestService>();

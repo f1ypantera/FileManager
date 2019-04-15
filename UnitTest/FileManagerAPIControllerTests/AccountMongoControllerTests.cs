@@ -15,9 +15,8 @@ using FileManagerBussinessLogic.Interfaces;
 namespace UnitTest.FileManagerAPIControllerTests
 {  
     public class AccountMongoControllerTests
-    {
-      
-        [Fact]
+    {     
+       [Fact]
         public async Task Can_User_Login()
         {
             //arrange
@@ -47,7 +46,7 @@ namespace UnitTest.FileManagerAPIControllerTests
        
 
         [Fact]
-        public async void UserViewTest()
+        public async void UserTest_View()
         {
             //arrange
             var mock = new Mock<IAccountMongoService>();
@@ -62,7 +61,7 @@ namespace UnitTest.FileManagerAPIControllerTests
 
         }
         [Fact]
-        public async void UserViewIsNotFoundTest()
+        public async void UserTest_IsNotFound()
         {
             //arrange
             var mock = new Mock<IAccountMongoService>();

@@ -16,9 +16,8 @@ namespace UnitTest.FileManagerAPIControllerTests
 {
     public class ComponentControllerTests
     {
-
         [Fact]
-        public async void ComponentView()
+        public async void ComponentTest_View()
         {
             //arrange
             var mock = new Mock<IFileManager>();
@@ -30,7 +29,7 @@ namespace UnitTest.FileManagerAPIControllerTests
             Assert.NotEmpty(GetTestComponent());
         }
         [Fact]
-        public async void ComponentViewIsNotFound()
+        public async void ComponentTest_Return_NotFoundResult()
         {
             //arrange
             var mock = new Mock<IFileManager>();
@@ -42,7 +41,7 @@ namespace UnitTest.FileManagerAPIControllerTests
         }
      
         [Fact]
-        public async void Task_GetPostById_Return_OkResult()
+        public async void ComponentTest_Return_OkResult()
         {
             // не работает ? не знаю почему
             string fileId = "5cb45392fedbf916603e0fd5";        
@@ -51,17 +50,9 @@ namespace UnitTest.FileManagerAPIControllerTests
             var component = await componentService.GetId(fileId);
             Assert.IsType<OkObjectResult>(component);
         }
+   
         [Fact]
-        public async void Task_GetPostById_Return_NotFoundResult()
-        {
-            string fileId = "2";
-            var mock = new Mock<IFileManager>();                 
-            var componentService = new ComponentController(mock.Object);           
-            var component = await componentService.GetId(fileId);
-            Assert.IsType<NotFoundResult>(component);
-        }
-        [Fact]
-        public void Get_Component_Returns_Result_With_Component()
+        public void ComponentTest_Check_Components_list()
         {
             string fileId = "5cb45392fedbf916603e0fd5";
             var mock = new Mock<IFileManager>();
@@ -79,7 +70,7 @@ namespace UnitTest.FileManagerAPIControllerTests
         }
 
         [Fact]
-        public void Returns_Result_With_A_List_Of_Components()
+        public void ComponentTest_Return_ViewResult_List_Of_Components()
         {
             // Arrange
             var mock = new Mock<IFileManager>();
