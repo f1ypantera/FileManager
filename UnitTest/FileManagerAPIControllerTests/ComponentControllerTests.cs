@@ -28,6 +28,17 @@ namespace UnitTest.FileManagerAPIControllerTests
             mock.Verify(c => c.GetAllFile());
             Assert.NotEmpty(GetTestComponent());
         }
+
+        [Fact]
+        public  void ComponentTest_Return_GetAll_View()
+        {
+            var mock = new Mock<IFileManager>();
+            var componentService = new ComponentController(mock.Object);
+
+            var test = componentService.GetAllComponent();
+
+            Assert.IsType<List<StoredFile>>(test);
+        }
         [Fact]
         public async void ComponentTest_Return_NotFoundResult()
         {
@@ -48,11 +59,12 @@ namespace UnitTest.FileManagerAPIControllerTests
             var componentService = new ComponentController(mock.Object);
             
             var component = await componentService.GetId(fileId);
+            
 
             Assert.IsType<OkObjectResult>(component);
         }   
         [Fact]
-        public async void ComponentTest_Check_Components_list()
+        public async void ComponentTest_Match_Result()
         {
             string fileId = "5cb45392fedbf916603e0fd5";
             var mock = new Mock<IFileManager>();

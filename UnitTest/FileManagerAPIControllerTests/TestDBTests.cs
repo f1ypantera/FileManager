@@ -16,8 +16,8 @@ namespace UnitTest.FileManagerAPIControllerTests
 {
     public class TestDBTests
     {
-        private IMapper mapper;
-        
+        private readonly IMapper mapper;
+   
         [Fact]
         public void Test_View()
         {
@@ -33,16 +33,28 @@ namespace UnitTest.FileManagerAPIControllerTests
 
         }
         [Fact]
-        public  void Test_Return_OkResult()
+        public  void Test_Return_GetAll_View()
         {
-            // не работает ? не знаю почему
-            string testId = "5cb45392fedbf916603e0fd5";
             var mock = new Mock<ITestService>();
             var controller = new TestDBController(mock.Object, mapper);
 
-            var test = controller.GetId(testId); 
+            var test =  controller.GetAllTest();
 
-            Assert.IsType<OkObjectResult>(test);
+            Assert.IsType<List<TestDB>>(test);
+        }
+
+
+
+        [Fact]
+        public void Test_Return_By_Id_OkResult()
+        {
+            // не работает ? не знаю почему
+            string testId = "5cb489bfa2e6bd3c6497afc0";
+            var mock = new Mock<ITestService>();
+            var controller = new TestDBController(mock.Object, mapper);
+
+            var test = controller.GetId(testId);          
+             Assert.IsType<OkObjectResult>(test);
         }
         [Fact]
         public void Test_Redirect_Model_IsNotValid()
@@ -100,9 +112,9 @@ namespace UnitTest.FileManagerAPIControllerTests
         }
 
         [Fact]
-        public void Test_Check_Model_List()
+        public void Test_Match_Result()
         {
-            string testId = "5caeff79e1d244a0eccce920";
+            string testId = "5cb489bfa2e6bd3c6497afc0";
             var mock = new Mock<ITestService>();
             mock.Setup(repo => repo.GetbyId(testId))
                 .Returns(GetTest().FirstOrDefault(p => p.Id == testId));
@@ -114,7 +126,7 @@ namespace UnitTest.FileManagerAPIControllerTests
 
             Assert.Equal("Vadym", model.Name);
             Assert.Equal("Tselikin", model.Surname);
-            Assert.Equal(24, model.Age);       
+            Assert.Equal(23, model.Age);       
             Assert.Equal(testId, model.Id);
         }
 
@@ -122,9 +134,7 @@ namespace UnitTest.FileManagerAPIControllerTests
         {
             var tests = new List<TestDB>
             {
-                new TestDB { Id = "5caeff79e1d244a0eccce920",Name="Vadym",Surname = "Tselikin", Age = 24 },
-                new TestDB { Id = "5caf2397c300476870e7fb15",Name="Ira",Surname = "Repnikova", Age = 22 },
-                new TestDB { Id = "5caf2397c300476870e7fb14",Name="Vitaliy",Surname = "Tselikin", Age = 44 },
+                new TestDB { Id = "5cb489bfa2e6bd3c6497afc0",Name="Vadym",Surname = "Tselikin", Age = 23 },        
             };
             return tests;
         }

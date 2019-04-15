@@ -15,8 +15,8 @@ using FileManagerBussinessLogic.Interfaces;
 namespace UnitTest.FileManagerAPIControllerTests
 {  
     public class AccountMongoControllerTests
-    {     
-       [Fact]
+    { 
+        [Fact]
         public async Task Can_User_Login()
         {
             //arrange
@@ -43,8 +43,16 @@ namespace UnitTest.FileManagerAPIControllerTests
             mock.Verify(c => c.RegisterUser(It.Is<RegisterModel>(s => s.Email == "example@ukr.net")), Times.Once());
             Assert.Equal("example@ukr.net", user.Email);
         }
-       
+        [Fact]
+        public void UserTest_Return_GetAll_View()
+        {
+            var mock = new Mock<IAccountMongoService>();
+            var userService = new AccountMongoController(mock.Object);
 
+            var test =  userService.GetAllUser();
+
+             Assert.IsType<List<User>>(test);
+        }
         [Fact]
         public async void UserTest_View()
         {
@@ -57,7 +65,6 @@ namespace UnitTest.FileManagerAPIControllerTests
             //assert
             mock.Verify(c => c.GetAllUser());
             Assert.NotEmpty(users);
-
 
         }
         [Fact]

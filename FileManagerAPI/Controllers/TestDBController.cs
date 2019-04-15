@@ -40,7 +40,6 @@ namespace FileManagerAPI.Controllers
             return Ok(result);
 
         }
-
    
         [HttpGet]
         [Route("AllTest")]

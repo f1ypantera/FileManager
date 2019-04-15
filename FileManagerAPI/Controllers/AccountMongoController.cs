@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
@@ -27,16 +28,24 @@ namespace FileManagerAPI.Controllers
 
         [HttpGet]
         [Route("Roles")]
-        public async Task<ActionResult<List<ProvidedRole>>> GetRoles()
+        public async Task<List<ProvidedRole>> GetRoles()
         {
             return await accountMongoService.GetAllRole();
         }
         [HttpGet]
         [Route("Users")]
-        public async Task<ActionResult<List<User>>> GetUser()
+        public async Task<List<User>> GetUser()
         {
             return await accountMongoService.GetAllUser();
         }
+        [HttpGet]
+        [Route("AllUsers")]
+        public IEnumerable<User> GetAllUser()
+        {
+            var result = accountMongoService.GetAllUserNotAsync().ToList();
+            return result;
+        }
+
         [HttpPost]
         [Route("CreateRole")]
         public async Task<IActionResult> CreateRole(ProvidedRole providedRole)

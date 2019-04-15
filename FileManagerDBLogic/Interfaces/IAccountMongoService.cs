@@ -8,6 +8,7 @@ namespace FileManagerDBLogic.Interfaces
     public interface IAccountMongoService
     {
         Task CreateRole(ProvidedRole providedRole);
+        IEnumerable<User> GetAllUserNotAsync();
         Task<List<ProvidedRole>> GetAllRole();
         Task<User> RegisterUser(RegisterModel registerModel);
         Task<User> Login(LoginModel loginModel);

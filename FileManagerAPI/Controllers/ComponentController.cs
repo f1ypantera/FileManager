@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using FileManagerDBLogic.Models;
 using FileManagerBussinessLogic.Interfaces;
+using System.Linq;
 
 namespace FileManagerAPI.Controllers
 {
@@ -28,7 +29,7 @@ namespace FileManagerAPI.Controllers
         [Route("AllComponents")]
         public IEnumerable<StoredFile> GetAllComponent()
         {
-            var result = repository.GetAll();
+            var result = repository.GetAll().ToList();
             return result;
 
         }
