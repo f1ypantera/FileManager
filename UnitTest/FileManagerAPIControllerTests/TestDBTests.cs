@@ -15,15 +15,13 @@ using System.Linq;
 namespace UnitTest.FileManagerAPIControllerTests
 {
     public class TestDBTests
-    {
-        private readonly IMapper mapper;
-   
+    {   
         [Fact]
         public void Test_View()
         {
             var mock = new Mock<ITestService>();
             mock.Setup(repo => repo.GetAll()).Returns(GetTest());
-            var controller = new TestDBController(mock.Object, mapper);
+            var controller = new TestDBController(mock.Object, null);
 
             var result = controller.GetAllTest();
 
@@ -36,31 +34,29 @@ namespace UnitTest.FileManagerAPIControllerTests
         public  void Test_Return_GetAll_View()
         {
             var mock = new Mock<ITestService>();
-            var controller = new TestDBController(mock.Object, mapper);
+            var controller = new TestDBController(mock.Object, null);
 
             var test =  controller.GetAllTest();
 
             Assert.IsType<List<TestDB>>(test);
         }
-
-
-
         [Fact]
         public void Test_Return_By_Id_OkResult()
         {
             // не работает ? не знаю почему
             string testId = "5cb489bfa2e6bd3c6497afc0";
             var mock = new Mock<ITestService>();
-            var controller = new TestDBController(mock.Object, mapper);
+      
+            var controller = new TestDBController(mock.Object, null);
 
             var test = controller.GetId(testId);          
-             Assert.IsType<OkObjectResult>(test);
+            Assert.IsType<OkObjectResult>(test);
         }
         [Fact]
         public void Test_Redirect_Model_IsNotValid()
         {
             var mock = new Mock<ITestService>();
-            var controller = new TestDBController(mock.Object, mapper);
+            var controller = new TestDBController(mock.Object, null);
             controller.ModelState.AddModelError("Name", "Required");
             TestDB testDB = new TestDB();
 
@@ -69,12 +65,11 @@ namespace UnitTest.FileManagerAPIControllerTests
             var view = Assert.IsType<OkObjectResult>(result);
             Assert.Equal(testDB, view.Value);
         }
-
         [Fact]
         public void Test_Can_AddModel()
         {
             var mock = new Mock<ITestService>();
-            var controller = new TestDBController(mock.Object, mapper);
+            var controller = new TestDBController(mock.Object, null);
             var newTest = new TestDB()
             {
                 Name = "Lena",
@@ -91,7 +86,7 @@ namespace UnitTest.FileManagerAPIControllerTests
         public void Test_Return_NotFoundResult()
         {
             var mock = new Mock<ITestService>();
-            var controller = new TestDBController(mock.Object, mapper); 
+            var controller = new TestDBController(mock.Object, null); 
     
             var result = controller.GetId(null);
          
@@ -104,7 +99,7 @@ namespace UnitTest.FileManagerAPIControllerTests
             string testId = "5caeff79e1d244a0eccce920";
             var mock = new Mock<ITestService>();
             mock.Setup(repo => repo.GetbyId(testId)).Returns(null as TestDB);
-            var controller = new TestDBController(mock.Object, mapper);
+            var controller = new TestDBController(mock.Object, null);
 
             var result = controller.GetId(testId);
 
@@ -118,7 +113,7 @@ namespace UnitTest.FileManagerAPIControllerTests
             var mock = new Mock<ITestService>();
             mock.Setup(repo => repo.GetbyId(testId))
                 .Returns(GetTest().FirstOrDefault(p => p.Id == testId));
-            var controller = new TestDBController(mock.Object, mapper);
+            var controller = new TestDBController(mock.Object, null);
 
             var result = controller.GetId(testId);          
             var viewResult = Assert.IsType<OkObjectResult>(result);

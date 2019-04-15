@@ -28,7 +28,7 @@ namespace FileManagerDBLogic.Services
         public TestDB GetbyId(string id)
         {
             var result =  context.TestDB.Find(c => c.Id == id);        
-            return result.FirstOrDefault();
+            return result.First();
         }
     }
 }

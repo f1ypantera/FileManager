@@ -51,7 +51,7 @@ namespace UnitTest.FileManagerAPIControllerTests
             Assert.IsType<NotFoundResult>(result);
         } 
         [Fact]
-        public async void ComponentTest_Return_OkResult()
+        public async void ComponentTest_Return_By_Id_OkResult()
         {
             // не работает ? не знаю почему
             string fileId = "5cb45392fedbf916603e0fd5";        
