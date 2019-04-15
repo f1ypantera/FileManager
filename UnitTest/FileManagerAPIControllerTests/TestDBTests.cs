@@ -33,6 +33,18 @@ namespace UnitTest.FileManagerAPIControllerTests
 
         }
         [Fact]
+        public  void Test_Return_OkResult()
+        {
+            // не работает ? не знаю почему
+            string testId = "5cb45392fedbf916603e0fd5";
+            var mock = new Mock<ITestService>();
+            var controller = new TestDBController(mock.Object, mapper);
+
+            var test = controller.GetId(testId); 
+
+            Assert.IsType<OkObjectResult>(test);
+        }
+        [Fact]
         public void Test_Redirect_Model_IsNotValid()
         {
             var mock = new Mock<ITestService>();
@@ -51,8 +63,6 @@ namespace UnitTest.FileManagerAPIControllerTests
         {
             var mock = new Mock<ITestService>();
             var controller = new TestDBController(mock.Object, mapper);
-
-
             var newTest = new TestDB()
             {
                 Name = "Lena",
@@ -61,6 +71,7 @@ namespace UnitTest.FileManagerAPIControllerTests
             };
 
             var result = controller.AddTestNotMap(newTest);   
+
             mock.Verify(r => r.CreateTest(It.Is<TestDB>(s=>s.Name == "Lena")),Times.Once());        
             Assert.Equal("Lena", newTest.Name);
         }
@@ -107,7 +118,7 @@ namespace UnitTest.FileManagerAPIControllerTests
             Assert.Equal(testId, model.Id);
         }
 
-            public List<TestDB> GetTest()
+        public List<TestDB> GetTest()
         {
             var tests = new List<TestDB>
             {

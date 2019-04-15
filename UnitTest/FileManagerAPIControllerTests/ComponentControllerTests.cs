@@ -19,48 +19,48 @@ namespace UnitTest.FileManagerAPIControllerTests
         [Fact]
         public async void ComponentTest_View()
         {
-            //arrange
+      
             var mock = new Mock<IFileManager>();
             var componentService = new ComponentController(mock.Object);
-            //act
+        
             var result = await componentService.Get();
-            //assert
+       
             mock.Verify(c => c.GetAllFile());
             Assert.NotEmpty(GetTestComponent());
         }
         [Fact]
         public async void ComponentTest_Return_NotFoundResult()
         {
-            //arrange
+         
             var mock = new Mock<IFileManager>();
             var component = new ComponentController(mock.Object);
-            //act
+         
             var result = await component.GetId(null);
-            //assert
+        
             Assert.IsType<NotFoundResult>(result);
-        }
-     
+        } 
         [Fact]
         public async void ComponentTest_Return_OkResult()
         {
             // не работает ? не знаю почему
             string fileId = "5cb45392fedbf916603e0fd5";        
             var mock = new Mock<IFileManager>();
-            var componentService = new ComponentController(mock.Object);          
+            var componentService = new ComponentController(mock.Object);
+            
             var component = await componentService.GetId(fileId);
+
             Assert.IsType<OkObjectResult>(component);
-        }
-   
+        }   
         [Fact]
-        public void ComponentTest_Check_Components_list()
+        public async void ComponentTest_Check_Components_list()
         {
             string fileId = "5cb45392fedbf916603e0fd5";
             var mock = new Mock<IFileManager>();
-           // mock.Setup(repo => repo.GetbyId(fileId)).Returns(GetTestComponent().FirstOrDefault(p => p.FileId == fileId));
+            mock.Setup(repo => repo.GetbyId(fileId)).ReturnsAsync(GetTestComponent().FirstOrDefault(p => p.FileId == fileId));
             var componentService = new ComponentController(mock.Object);
-            var result = componentService.GetId(fileId);
 
-            var viewResult = Assert.IsType<OkObjectResult>(result);
+            var result = await componentService.GetId(fileId);        
+            var viewResult =  Assert.IsType<OkObjectResult>(result);
             var model = Assert.IsType<StoredFile>(viewResult.Value);
 
             Assert.Equal("Promise.txt", model.FileName);
@@ -71,16 +71,15 @@ namespace UnitTest.FileManagerAPIControllerTests
 
         [Fact]
         public void ComponentTest_Return_ViewResult_List_Of_Components()
-        {
-            // Arrange
+        {         
             var mock = new Mock<IFileManager>();
             mock.Setup(repo => repo.GetAll()).Returns(GetTestComponent());
             var componentService = new ComponentController(mock.Object);
-            // Act
-            var result = componentService.GetAllComponent();
-            // Assert
+          
+            var result =  componentService.GetAllComponent();        
             var view = Assert.IsType<List<StoredFile>>(result);
             var model = Assert.IsAssignableFrom<IEnumerable<StoredFile>>(view);
+
             Assert.Equal(GetTestComponent().Count, model.Count());
         }
 
