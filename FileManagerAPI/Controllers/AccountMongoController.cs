@@ -39,7 +39,7 @@ namespace FileManagerAPI.Controllers
         }
         [HttpPost]
         [Route("CreateRole")]
-        public async Task<ActionResult> CreateRole(ProvidedRole providedRole)
+        public async Task<IActionResult> CreateRole(ProvidedRole providedRole)
         {
             await accountMongoService.CreateRole(providedRole);
             return Ok(providedRole);
@@ -48,7 +48,7 @@ namespace FileManagerAPI.Controllers
   
         [HttpPost]
         [Route("Register")]
-        public async Task<ActionResult> Register(RegisterModel registerModel)
+        public async Task<IActionResult> Register(RegisterModel registerModel)
         {
 
             var isExist = await accountMongoService.RegisterUser(registerModel);
@@ -61,7 +61,7 @@ namespace FileManagerAPI.Controllers
         }
         [HttpPost]
         [Route("Login")]
-        public async Task<ActionResult> Login(LoginModel loginModel)
+        public async Task<IActionResult> Login(LoginModel loginModel)
         {
             if (ModelState.IsValid)
             {
@@ -92,7 +92,7 @@ namespace FileManagerAPI.Controllers
         }
         [HttpPost]
         [Route("Logout")]
-        public async Task<ActionResult> Logout()
+        public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return Ok("Logout");

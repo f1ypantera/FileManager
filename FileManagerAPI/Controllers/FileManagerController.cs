@@ -21,14 +21,14 @@ namespace FileManagerAPI.Controllers
         }    
         [HttpPost]
         [Route("InputChunksNew")]
-        public async Task<ActionResult> InputChunksNew(ChunksOfFiles chunksOfFiles)
+        public async Task<IActionResult> InputChunksNew(ChunksOfFiles chunksOfFiles)
         {
             await fileManager.InputChunks(chunksOfFiles);
             return Ok("Chunks getting");
         }
         [HttpGet]
         [Route("DownoaloadFile")]
-        public async Task<ActionResult> DownoaloadFile(string ids)
+        public async Task<IActionResult> DownoaloadFile(string ids)
         {
             string[] idsList = ids.Split(',');
             if (idsList.Count() == 1)

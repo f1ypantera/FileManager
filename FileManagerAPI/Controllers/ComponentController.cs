@@ -20,9 +20,17 @@ namespace FileManagerAPI.Controllers
 
         }
         [HttpGet]
-        public async Task<ActionResult<List<StoredFile>>> Get()
+        public async Task<IEnumerable<StoredFile>> Get()
         {
             return await repository.GetAllFile();
+        }
+        [HttpGet]
+        [Route("AllComponents")]
+        public IEnumerable<StoredFile> GetAllComponent()
+        {
+            var result = repository.GetAll();
+            return result;
+
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetId(string id)
@@ -48,14 +56,14 @@ namespace FileManagerAPI.Controllers
         }
         [HttpDelete]
         [Route("Delete")]
-        public async Task<ActionResult> Delete(string ids)
+        public async Task<IActionResult> Delete(string ids)
         {
             string[] idsList = ids.Split(',');         
             await repository.Remove(idsList);
             return Ok("Has been deleted");
         }
         [HttpPut("{id}")]
-        public async Task<ActionResult> Update(string id, StoredFile component)
+        public async Task<IActionResult> Update(string id, StoredFile component)
         {
             var find = await repository.GetbyId(id);
             if (find == null)
