@@ -36,22 +36,20 @@ namespace UnitTest.FileManagerAPIControllerTests
             var mock = new Mock<IFileManager>();
             var component = new ComponentController(mock.Object);
             //act
-            var result = await component.Get();
-
+            var result = await component.GetId(null);
             //assert
-            Assert.IsNotType<BadRequestResult>(result);
+            Assert.IsType<NotFoundResult>(result);
 
         }
 
         [Fact]
         public async void Task_GetPostById_Return_OkResult()
         {
-            //arrange
+            string fileId = "5cb45392fedbf916603e0fd5";        
             var mock = new Mock<IFileManager>();
-            var componentService = new ComponentController(mock.Object);
-            var fileId = "2";
+            var componentService = new ComponentController(mock.Object);          
             var component = await componentService.GetId(fileId);
-            Assert.IsNotType<ObjectResult>(component);
+            Assert.IsType<OkObjectResult>(component);
         }
         [Fact]
         public async void Task_GetPostById_Return_NotFoundResult()
@@ -59,9 +57,19 @@ namespace UnitTest.FileManagerAPIControllerTests
 
             var mock = new Mock<IFileManager>();
             var componentService = new ComponentController(mock.Object);
-            var fileId = "2";
+            string fileId = "2";
             var component = await componentService.GetId(fileId);
-            Assert.IsNotType<NotFoundResult>(component);
+            Assert.IsType<NotFoundResult>(component);
+        }
+
+        public List<StoredFile> GetTestComponent()
+        {
+            var tests = new List<StoredFile>
+            {
+                new StoredFile { FileId = "5cb45392fedbf916603e0fd5",FileName="Promise.txt",Size = 671 },
+                new StoredFile { FileId = "5cb45392fedbf916603e0fd7",FileName="121212.txt",Size = 6306 },          
+            };
+            return tests;
         }
     }
 }

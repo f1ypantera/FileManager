@@ -65,7 +65,7 @@ namespace UnitTest.FileManagerAPIControllerTests
             Assert.Equal("Lena", newTest.Name);
         }
         [Fact]
-        public void GetPhoneReturnsBadRequestResultWhenIdIsNull()
+        public void TrueNotFoundResult()
         {
             var mock = new Mock<ITestService>();
             var controller = new TestDBController(mock.Object, mapper); 

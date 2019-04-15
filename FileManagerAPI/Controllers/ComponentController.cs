@@ -25,7 +25,7 @@ namespace FileManagerAPI.Controllers
             return await repository.GetAllFile();
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult<StoredFile>> GetId(string id)
+        public async Task<IActionResult> GetId(string id)
         {
             var component = await repository.GetbyId(id);
             if (component == null)
@@ -36,7 +36,7 @@ namespace FileManagerAPI.Controllers
         }
         [HttpGet]
         [Route("GetIds")]
-        public async Task<ActionResult<StoredFile>> GetIds(string ids)
+        public async Task<IActionResult> GetIds(string ids)
         {
             string[] idsList = ids.Split(',');
             var component = await repository.GetbyIds(idsList);
