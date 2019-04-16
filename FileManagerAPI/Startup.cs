@@ -15,9 +15,11 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using FileManagerBussinessLogic.Sockets;
 using System.Reflection;
+using System;
 
 namespace FileManagerAPI
 {
+
     public  class Startup
     {
         public Startup(IConfiguration configuration)
@@ -33,7 +35,8 @@ namespace FileManagerAPI
                 {
                 options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
             });
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);         
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddWebSocketManager();
             services.Configure<Settings>(
               options =>
               {
@@ -56,28 +59,8 @@ namespace FileManagerAPI
             });
         }
 
-        //public static IApplicationBuilder MapWebSocketManager(this IApplicationBuilder app,
-        //                                                    PathString path,
-        //                                                    WebSocketHandler handler)
-        //{
-        //    return app.Map(path, (_app) => _app.UseMiddleware<WebSocketManagerMiddleware>(handler));
-        //}
-
-        //public static IServiceCollection AddWebSocketManager(this IServiceCollection services)
-        //{
-        //    services.AddTransient<WebSocketManagerMiddleware>();
-
-        //    foreach (var type in Assembly.GetEntryAssembly().ExportedTypes)
-        //    {
-        //        if (type.GetTypeInfo().BaseType == typeof(WebSocketHandler))
-        //        {
-        //            services.AddSingleton(type);
-        //        }
-        //    }
-
-        //    return services;
-        //}
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+     
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -91,7 +74,11 @@ namespace FileManagerAPI
       
             app.UseSwagger();
             app.UseWebSockets();
-         
+
+            app.MapWebSocketManager("/ws", serviceProvider.GetService<ChatMessageHandler>());
+
+            app.UseStaticFiles();
+
 
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
 
@@ -107,5 +94,28 @@ namespace FileManagerAPI
 
             app.UseMvc();
         }
+
     }
+    //public static IApplicationBuilder MapWebSocketManager(this IApplicationBuilder app,
+    //                                                    PathString path,
+    //                                                    WebSocketHandler handler)
+    //{
+    //    return app.Map(path, (_app) => _app.UseMiddleware<WebSocketManagerMiddleware>(handler));
+    //}
+
+    //public static IServiceCollection AddWebSocketManager(this IServiceCollection services)
+    //{
+    //    services.AddTransient<WebSocketManagerMiddleware>();
+
+    //    foreach (var type in Assembly.GetEntryAssembly().ExportedTypes)
+    //    {
+    //        if (type.GetTypeInfo().BaseType == typeof(WebSocketHandler))
+    //        {
+    //            services.AddSingleton(type);
+    //        }
+    //    }
+
+    //    return services;
+    //}
 }
+

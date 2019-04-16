@@ -11,14 +11,14 @@ namespace FileManagerBussinessLogic.Sockets
     {
         protected WebSocketConnectionManager WebSocketConnectionManager { get; set; }
 
-        public WebSocketHandler(WebSocketConnectionManager WebSocketConnectionManager)
+        public WebSocketHandler(WebSocketConnectionManager webSocketConnectionManager)
         {
-            WebSocketConnectionManager = WebSocketConnectionManager;
+            WebSocketConnectionManager = webSocketConnectionManager;
         }
 
         public virtual async Task OnConnected(WebSocket socket)
         {
-              WebSocketConnectionManager.AddSocket(socket);
+            WebSocketConnectionManager.AddSocket(socket);
         }
 
         public virtual async Task OnDisconnected(WebSocket socket)
@@ -53,6 +53,6 @@ namespace FileManagerBussinessLogic.Sockets
             }
         }
 
-        public abstract  Task  ReceiveAsync(WebSocket socket, WebSocketReceiveResult result, byte[] buffer);
+        public abstract Task ReceiveAsync(WebSocket socket, WebSocketReceiveResult result, byte[] buffer);
     }
 }
