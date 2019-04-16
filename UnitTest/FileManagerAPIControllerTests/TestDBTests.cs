@@ -46,6 +46,7 @@ namespace UnitTest.FileManagerAPIControllerTests
             // не работает ? не знаю почему
             string testId = "5cb489bfa2e6bd3c6497afc0";
             var mock = new Mock<ITestService>();
+         
       
             var controller = new TestDBController(mock.Object, null);
 
@@ -76,6 +77,8 @@ namespace UnitTest.FileManagerAPIControllerTests
                 Surname = "Tselikina",
                 Age = 42
             };
+
+    
 
             var result = controller.AddTestNotMap(newTest);   
 

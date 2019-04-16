@@ -13,11 +13,9 @@ namespace FileManagerAPI.Controllers
     public class FileManagerController : ControllerBase
     {
         private readonly IFileManager fileManager;
-        private readonly FileSocketManager fileSocketManager;
-        public FileManagerController(IFileManager fileManager,FileSocketManager fileSocketManager)
+        public FileManagerController(IFileManager fileManager)
         {
             this.fileManager = fileManager;
-            this.fileSocketManager = fileSocketManager;
         }    
         [HttpPost]
         [Route("InputChunksNew")]

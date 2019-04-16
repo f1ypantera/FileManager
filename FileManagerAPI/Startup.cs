@@ -12,20 +12,20 @@ using FileManagerDBLogic.Services;
 using FileManagerBussinessLogic.Interfaces;
 using FileManagerBussinessLogic.Infrastructure;
 using AutoMapper;
-
-
+using Microsoft.AspNetCore.Http;
+using FileManagerBussinessLogic.Sockets;
+using System.Reflection;
 
 namespace FileManagerAPI
 {
-    public class Startup
+    public  class Startup
     {
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
         public IConfiguration Configuration { get; }
-
-        
+       
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -46,21 +46,37 @@ namespace FileManagerAPI
             services.AddTransient<IMongoContext, MongoContext>();
             services.AddTransient<IAccountMongoService, AccountMongoService>();
             services.AddSingleton<IFileManager, FileManager>();
-            services.AddSingleton<FileSocketManager>();
             services.AddTransient<ITimerAlarm, TimerAlarm>();
             services.AddTransient<ITestService, TestService>();
             services.AddAutoMapper();
            
-
-
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
             });
         }
 
-     
+        //public static IApplicationBuilder MapWebSocketManager(this IApplicationBuilder app,
+        //                                                    PathString path,
+        //                                                    WebSocketHandler handler)
+        //{
+        //    return app.Map(path, (_app) => _app.UseMiddleware<WebSocketManagerMiddleware>(handler));
+        //}
+
+        //public static IServiceCollection AddWebSocketManager(this IServiceCollection services)
+        //{
+        //    services.AddTransient<WebSocketManagerMiddleware>();
+
+        //    foreach (var type in Assembly.GetEntryAssembly().ExportedTypes)
+        //    {
+        //        if (type.GetTypeInfo().BaseType == typeof(WebSocketHandler))
+        //        {
+        //            services.AddSingleton(type);
+        //        }
+        //    }
+
+        //    return services;
+        //}
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -75,7 +91,7 @@ namespace FileManagerAPI
       
             app.UseSwagger();
             app.UseWebSockets();
-            app.UseMiddleware<FileManagerSocketMiddleware>();
+         
 
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
 
