@@ -12,6 +12,7 @@ using FileManagerDBLogic.Models;
 using Newtonsoft.Json;
 using FileManagerBussinessLogic.Models;
 using MongoDB.Bson;
+using FileManagerBussinessLogic.Sockets;
 
 namespace FileManagerBussinessLogic.Infrastructure
 {
@@ -20,9 +21,9 @@ namespace FileManagerBussinessLogic.Infrastructure
         private readonly IMongoContext context;
         private readonly ITimerAlarm timeAlarm;
         private readonly DateTime currentTime = DateTime.Now;
-        private readonly FileSocketManager fileSocketManager;
+        private readonly WebSocketHandler fileSocketManager;
         List<DownoloadFile> downoloadFiles = new List<DownoloadFile>();
-        public FileManager(IMongoContext context, ITimerAlarm timerAlarm, FileSocketManager fileSocketManager)
+        public FileManager(IMongoContext context, ITimerAlarm timerAlarm, WebSocketHandler fileSocketManager)
         {
             this.context = context;
             this.timeAlarm = timerAlarm;

@@ -10,12 +10,6 @@ namespace FileManagerBussinessLogic.Sockets
 {
     public static class ExtensionSocketClass
     {
-        public static IApplicationBuilder MapWebSocketManager(this IApplicationBuilder app,
-                                                             PathString path,
-                                                             WebSocketHandler handler)
-        {
-            return app.Map(path, (_app) => _app.UseMiddleware<WebSocketManagerMiddleware>(handler));
-        }
         public static IServiceCollection AddWebSocketManager(this IServiceCollection services)
         {
             services.AddTransient<WebSocketConnectionManager>();
@@ -29,6 +23,13 @@ namespace FileManagerBussinessLogic.Sockets
             }
 
             return services;
+        }
+
+        public static IApplicationBuilder MapWebSocketManager(this IApplicationBuilder app,
+                                                              PathString path,
+                                                              WebSocketHandler handler)
+        {
+            return app.Map(path, (_app) => _app.UseMiddleware<WebSocketManagerMiddleware>(handler));
         }
     }
 }

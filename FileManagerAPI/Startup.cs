@@ -52,6 +52,7 @@ namespace FileManagerAPI
             services.AddTransient<ITimerAlarm, TimerAlarm>();
             services.AddTransient<ITestService, TestService>();
             services.AddAutoMapper();
+
            
             services.AddSwaggerGen(c =>
             {
@@ -78,7 +79,7 @@ namespace FileManagerAPI
             app.MapWebSocketManager("/ws", serviceProvider.GetService<ChatMessageHandler>());
 
             app.UseStaticFiles();
-
+            app.UseMiddleware<WebSocketManagerMiddleware>();
 
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
 
