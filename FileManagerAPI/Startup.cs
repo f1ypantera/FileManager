@@ -54,7 +54,7 @@ namespace FileManagerAPI
             services.AddScoped<WebSocketHandler>();
             services.AddAutoMapper();
             
-
+            
            
             services.AddSwaggerGen(c =>
             {
@@ -81,7 +81,6 @@ namespace FileManagerAPI
             app.MapWebSocketManager("/ws", serviceProvider.GetService<ChatMessageHandler>());
 
             app.UseStaticFiles();
-            app.UseMiddleware<WebSocketManagerMiddleware>();
 
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
 
@@ -99,26 +98,5 @@ namespace FileManagerAPI
         }
 
     }
-    //public static IApplicationBuilder MapWebSocketManager(this IApplicationBuilder app,
-    //                                                    PathString path,
-    //                                                    WebSocketHandler handler)
-    //{
-    //    return app.Map(path, (_app) => _app.UseMiddleware<WebSocketManagerMiddleware>(handler));
-    //}
-
-    //public static IServiceCollection AddWebSocketManager(this IServiceCollection services)
-    //{
-    //    services.AddTransient<WebSocketManagerMiddleware>();
-
-    //    foreach (var type in Assembly.GetEntryAssembly().ExportedTypes)
-    //    {
-    //        if (type.GetTypeInfo().BaseType == typeof(WebSocketHandler))
-    //        {
-    //            services.AddSingleton(type);
-    //        }
-    //    }
-
-    //    return services;
-    //}
 }
 
