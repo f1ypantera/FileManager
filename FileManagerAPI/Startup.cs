@@ -51,7 +51,9 @@ namespace FileManagerAPI
             services.AddSingleton<IFileManager, FileManager>();
             services.AddTransient<ITimerAlarm, TimerAlarm>();
             services.AddTransient<ITestService, TestService>();
+            services.AddScoped<WebSocketHandler>();
             services.AddAutoMapper();
+            
 
            
             services.AddSwaggerGen(c =>

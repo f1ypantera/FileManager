@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "swagger/index.html",
+      "launchUrl": "real-time.html",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -20,7 +20,7 @@
     "FileManagerAPI": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "swagger/index.html",
+      "launchUrl": "real-time.html",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
