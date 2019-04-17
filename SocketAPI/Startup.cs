@@ -23,23 +23,28 @@ namespace SocketAPI
 
         public IConfiguration Configuration { get; }
 
-
+        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddWebSocketManager();
+            services.AddMvc();
         }
 
-     
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-           
+            var wsOptions = new WebSocketOptions()
+            {
+                KeepAliveInterval = TimeSpan.FromSeconds(60),
+                ReceiveBufferSize = 4 * 1024
+            };
 
-            app.UseHttpsRedirection();
+            app.UseWebSockets(wsOptions);
+            app.MapWebSocketManager("/chat", serviceProvider.GetService<ChatRoomHandler>());
             app.UseMvc();
         }
     }
