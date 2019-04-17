@@ -10,12 +10,10 @@ namespace FileManagerSocket.SocketManager
     public class WebSocketConnectionManager
     {
         private ConcurrentDictionary<string, WebSocket> _sockets = new ConcurrentDictionary<string, WebSocket>();
-
         public WebSocket GetSocketById(string id)
         {
             return _sockets.FirstOrDefault(p => p.Key == id).Value;
         }
-
         public ConcurrentDictionary<string, WebSocket> GetAll()
         {
             return _sockets;
@@ -27,19 +25,33 @@ namespace FileManagerSocket.SocketManager
         }
         public void AddSocket(WebSocket socket)
         {
-            _sockets.TryAdd(CreateConnectionId(), socket);
+            string sId = CreateConnectionId();
+            while (!_sockets.TryAdd(sId, socket))
+            {
+                sId = CreateConnectionId();
+            }
+
         }
 
         public async Task RemoveSocket(string id)
         {
-            WebSocket socket;
-            _sockets.TryRemove(id, out socket);
+            try
+            {
+                WebSocket socket;
 
-            await socket.CloseAsync(closeStatus: WebSocketCloseStatus.NormalClosure,
-                                    statusDescription: "Closed by the WebSocketManager",
-                                    cancellationToken: CancellationToken.None);
+                _sockets.TryRemove(id, out socket);
+
+
+                await socket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, null, CancellationToken.None);
+
+
+            }
+            catch (Exception)
+            {
+
+            }
+
         }
-
         private string CreateConnectionId()
         {
             return Guid.NewGuid().ToString();

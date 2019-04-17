@@ -7,13 +7,18 @@ namespace FileManagerSocket.SocketManager
 {
     public static class WebSocketManagerExtensions
     {
-        public static IServiceCollection AddWebSocketManager(this IServiceCollection services, Assembly assembly = null)
+        public static IApplicationBuilder MapWebSocketManager(this IApplicationBuilder app,
+                                                            PathString path,
+                                                            WebSocketHandler handler)
+        {
+            return app.Map(path, (_app) => _app.UseMiddleware<WebSocketManagerMiddleware>(handler));
+        }
+
+        public static IServiceCollection AddWebSocketManager(this IServiceCollection services)
         {
             services.AddTransient<WebSocketConnectionManager>();
 
-            Assembly ass = assembly ?? Assembly.GetEntryAssembly();
-
-            foreach (var type in ass.ExportedTypes)
+            foreach (var type in Assembly.GetEntryAssembly().ExportedTypes)
             {
                 if (type.GetTypeInfo().BaseType == typeof(WebSocketHandler))
                 {
@@ -22,13 +27,6 @@ namespace FileManagerSocket.SocketManager
             }
 
             return services;
-        }
-
-        public static IApplicationBuilder MapWebSocketManager(this IApplicationBuilder app,
-                                                              PathString path,
-                                                              WebSocketHandler handler)
-        {
-            return app.Map(path, (_app) => _app.UseMiddleware<WebSocketManagerMiddleware>(handler));
         }
     }
 }

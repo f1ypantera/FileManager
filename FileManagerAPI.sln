@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTest", "UnitTest\UnitTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileManagerSocket", "FileManagerSocket\FileManagerSocket.csproj", "{9AAC7D15-5DEE-4332-B9E8-AC3312670569}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocketManagerAPI", "SocketManagerAPI\SocketManagerAPI.csproj", "{101CBD2A-B1C1-477D-847D-6D33F22B1E17}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{9AAC7D15-5DEE-4332-B9E8-AC3312670569}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AAC7D15-5DEE-4332-B9E8-AC3312670569}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AAC7D15-5DEE-4332-B9E8-AC3312670569}.Release|Any CPU.Build.0 = Release|Any CPU
+		{101CBD2A-B1C1-477D-847D-6D33F22B1E17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{101CBD2A-B1C1-477D-847D-6D33F22B1E17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{101CBD2A-B1C1-477D-847D-6D33F22B1E17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{101CBD2A-B1C1-477D-847D-6D33F22B1E17}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
