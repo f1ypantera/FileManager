@@ -36,7 +36,6 @@ namespace FileManagerAPI
                 options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddWebSocketManager();
             services.Configure<Settings>(
               options =>
               {
