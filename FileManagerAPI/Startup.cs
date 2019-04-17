@@ -51,7 +51,6 @@ namespace FileManagerAPI
             services.AddSingleton<IFileManager, FileManager>();
             services.AddTransient<ITimerAlarm, TimerAlarm>();
             services.AddTransient<ITestService, TestService>();
-            services.AddScoped<WebSocketHandler>();
             services.AddAutoMapper();
             
             
@@ -76,11 +75,7 @@ namespace FileManagerAPI
             }
       
             app.UseSwagger();
-            app.UseWebSockets();
-
-            app.MapWebSocketManager("/ws", serviceProvider.GetService<ChatMessageHandler>());
-
-            app.UseStaticFiles();
+  
 
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
 
