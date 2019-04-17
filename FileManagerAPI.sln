@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileManagerBussinessLogic",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileManagerDBLogic", "FileManagerDBLogic\FileManagerDBLogic.csproj", "{6BD39D47-AFFA-41C5-B5EB-B8BDF9B3228F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{DB420561-9C91-40B9-9FA9-C965D8D18E4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTest", "UnitTest\UnitTest.csproj", "{DB420561-9C91-40B9-9FA9-C965D8D18E4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileManagerSocket", "FileManagerSocket\FileManagerSocket.csproj", "{9AAC7D15-5DEE-4332-B9E8-AC3312670569}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{DB420561-9C91-40B9-9FA9-C965D8D18E4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB420561-9C91-40B9-9FA9-C965D8D18E4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB420561-9C91-40B9-9FA9-C965D8D18E4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AAC7D15-5DEE-4332-B9E8-AC3312670569}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AAC7D15-5DEE-4332-B9E8-AC3312670569}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AAC7D15-5DEE-4332-B9E8-AC3312670569}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AAC7D15-5DEE-4332-B9E8-AC3312670569}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

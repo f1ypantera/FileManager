@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FileManagerDBLogic\FileManagerDBLogic.csproj" />
+    <ProjectReference Include="..\FileManagerSocket\FileManagerSocket.csproj" />
   </ItemGroup>
 
 </Project>
