@@ -12,7 +12,7 @@ using FileManagerDBLogic.Models;
 using Newtonsoft.Json;
 using FileManagerBussinessLogic.Models;
 using MongoDB.Bson;
-using FileManagerSocket.SocketManager;
+using SocketManagerAPI.WebSockets;
 
 namespace FileManagerBussinessLogic.Infrastructure
 {

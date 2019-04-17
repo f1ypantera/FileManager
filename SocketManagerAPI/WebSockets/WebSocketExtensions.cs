@@ -1,15 +1,19 @@
-﻿using System.Reflection;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
 
-namespace FileManagerSocket.SocketManager
+namespace SocketManagerAPI.WebSockets
 {
-    public static class WebSocketManagerExtensions
+    public static class WebSocketExtensions
     {
         public static IApplicationBuilder MapWebSocketManager(this IApplicationBuilder app,
-                                                            PathString path,
-                                                            WebSocketHandler handler)
+                                                              PathString path,
+                                                              WebSocketHandler handler)
         {
             return app.Map(path, (_app) => _app.UseMiddleware<WebSocketManagerMiddleware>(handler));
         }

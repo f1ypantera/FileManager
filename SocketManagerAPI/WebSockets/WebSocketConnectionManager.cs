@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace FileManagerSocket.SocketManager
+namespace SocketManagerAPI.WebSockets
 {
     public class WebSocketConnectionManager
     {
@@ -14,6 +15,7 @@ namespace FileManagerSocket.SocketManager
         {
             return _sockets.FirstOrDefault(p => p.Key == id).Value;
         }
+
         public ConcurrentDictionary<string, WebSocket> GetAll()
         {
             return _sockets;
@@ -30,6 +32,8 @@ namespace FileManagerSocket.SocketManager
             {
                 sId = CreateConnectionId();
             }
+            
+
 
         }
 
@@ -38,9 +42,9 @@ namespace FileManagerSocket.SocketManager
             try
             {
                 WebSocket socket;
-
+                
                 _sockets.TryRemove(id, out socket);
-
+                
 
                 await socket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, null, CancellationToken.None);
 
@@ -52,6 +56,7 @@ namespace FileManagerSocket.SocketManager
             }
 
         }
+        
         private string CreateConnectionId()
         {
             return Guid.NewGuid().ToString();

@@ -1,10 +1,13 @@
-﻿using System.Net.WebSockets;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileManagerSocket.SocketManager
+namespace SocketManagerAPI.WebSockets
 {
-    public class ChatRoomHandler: WebSocketHandler
+    public class ChatRoomHandler : WebSocketHandler
     {
         public ChatRoomHandler(WebSocketConnectionManager webSocketConnectionManager) : base(webSocketConnectionManager)
         {

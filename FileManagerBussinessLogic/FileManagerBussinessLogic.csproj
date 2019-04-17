@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FileManagerDBLogic\FileManagerDBLogic.csproj" />
-    <ProjectReference Include="..\FileManagerSocket\FileManagerSocket.csproj" />
+    <ProjectReference Include="..\SocketManagerAPI\SocketManagerAPI.csproj" />
   </ItemGroup>
 
 </Project>

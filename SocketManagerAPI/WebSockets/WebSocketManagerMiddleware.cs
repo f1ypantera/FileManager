@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
-
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace FileManagerSocket.SocketManager
+namespace SocketManagerAPI.WebSockets
 {
     public class WebSocketManagerMiddleware
     {
@@ -25,7 +26,7 @@ namespace FileManagerSocket.SocketManager
                 return;
 
             var socket = await context.WebSockets.AcceptWebSocketAsync();
-
+            
             await _webSocketHandler.OnConnected(socket);
 
             await Receive(socket, async (result, buffer) =>

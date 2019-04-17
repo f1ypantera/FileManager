@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-namespace FileManagerSocket.SocketManager
+
+namespace SocketManagerAPI.WebSockets
 {
     public abstract class WebSocketHandler
     {
-        protected WebSocketConnectionManager WebSocketConnectionManager { get; set; }
+        public WebSocketConnectionManager WebSocketConnectionManager { get; set; }
 
         public WebSocketHandler(WebSocketConnectionManager webSocketConnectionManager)
         {
@@ -39,7 +42,15 @@ namespace FileManagerSocket.SocketManager
 
         public async Task SendMessageAsync(string socketId, string message)
         {
-            await SendMessageAsync(WebSocketConnectionManager.GetSocketById(socketId), message);
+            try
+            {
+                await SendMessageAsync(WebSocketConnectionManager.GetSocketById(socketId), message);
+            }
+            catch (Exception)
+            {
+
+            }
+
         }
 
         public async Task SendMessageToAllAsync(string message)
