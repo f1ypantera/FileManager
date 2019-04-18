@@ -13,8 +13,8 @@ namespace UnitTest.FileManagerAPIControllerTests
         [Fact]
         public void FileManagerTest_For_Getting_Chunks()
         {
-            var mock = new Mock<IFileManager>();
-            var fileManagerService = new FileManagerController(mock.Object);
+            //var mock = new Mock<IFileManager>();
+            //var fileManagerService = new FileManagerController(mock.Object);
 
         }
         [Fact]

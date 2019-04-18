@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using FileManagerDBLogic.Models;
+﻿using Newtonsoft.Json;
 using FileManagerBussinessLogic.Interfaces;
+using FileManagerBussinessLogic.Models;
+using FileManagerDBLogic.Models;
+using Microsoft.AspNetCore.Mvc;
+using SocketManagerAPI.WebSockets;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace FileManagerAPI.Controllers
 {
@@ -14,6 +17,7 @@ namespace FileManagerAPI.Controllers
     public class ComponentController : ControllerBase
     {
         private readonly IFileManager repository;
+
 
         public ComponentController(IFileManager repository)
         {
@@ -61,6 +65,9 @@ namespace FileManagerAPI.Controllers
         {
             string[] idsList = ids.Split(',');         
             await repository.Remove(idsList);
+
+         
+
             return Ok("Has been deleted");
         }
         [HttpPut("{id}")]
