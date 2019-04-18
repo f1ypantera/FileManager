@@ -21,15 +21,15 @@ namespace FileManagerBussinessLogic.Infrastructure
         private readonly IMongoContext context;
         private readonly ITimerAlarm timeAlarm;
         private readonly DateTime currentTime = DateTime.Now;
-       // private readonly WebSocketHandler fileSocketManager;
+        private readonly WebSocketHandler fileSocketManager;
         List<DownoloadFile> downoloadFiles = new List<DownoloadFile>();
-        public FileManager(IMongoContext context, ITimerAlarm timerAlarm /*WebSocketHandler fileSocketManager*/)
+        public FileManager(IMongoContext context, ITimerAlarm timerAlarm ,WebSocketHandler fileSocketManager)
         {
             this.context = context;
             this.timeAlarm = timerAlarm;
             timeAlarm.Callback = CheckFile;
             timeAlarm.StartTimerEvent();
-         //   this.fileSocketManager = fileSocketManager;
+          this.fileSocketManager = fileSocketManager;
         }
         public void CheckFile()
         {
@@ -126,25 +126,25 @@ namespace FileManagerBussinessLogic.Infrastructure
                 var update = Builders<User>.Update.Pull("StoreFilesId", ObjectId.Parse(id[i]));
                 var res = await context.Users.UpdateOneAsync(filter, update);
 
-                //var removeFile = new Remove
-                //{
-                //    id = id[i]
-                //};
-                //await fileSocketManager.SendMessageToAllAsync(JsonConvert.SerializeObject(removeFile));
+                var removeFile = new Remove
+                {
+                    id = id[i]
+                };
+                await fileSocketManager.SendMessageToAllAsync(JsonConvert.SerializeObject(removeFile));
             }        
         }
         public async Task Update(string id, StoredFile component)
         {
             await context.StoredFiles.ReplaceOneAsync(c => c.FileId == id, component);
-            //var removeFile = new Update
-            //{
-            //    id = id,
-            //    storedFiles = new List<StoredFile>
-            //    {
-            //       component
-            //    },
-            //};
-            //await fileSocketManager.SendMessageToAllAsync(JsonConvert.SerializeObject(removeFile));
+            var removeFile = new Update
+            {
+                id = id,
+                storedFiles = new List<StoredFile>
+                {
+                   component
+                },
+            };
+            await fileSocketManager.SendMessageToAllAsync(JsonConvert.SerializeObject(removeFile));
         }   
         public async Task<List<StoredFile>> GetbyIds(string[] id)
         {
@@ -174,14 +174,14 @@ namespace FileManagerBussinessLogic.Infrastructure
             var update = Builders<User>.Update.AddToSet(s=>s.StoreFilesId , ObjectId.Parse(id));
             var result = await context.Users.UpdateOneAsync(filter, update);
 
-            //var addFile = new Add
-            //{            
-            //    storedFiles = new List<StoredFile>
-            //    {
-            //       storedFile
-            //    },
-            //};
-            //await fileSocketManager.SendMessageToAllAsync(JsonConvert.SerializeObject(addFile));
+            var addFile = new Add
+            {
+                storedFiles = new List<StoredFile>
+                {
+                   storedFile
+                },
+            };
+            await fileSocketManager.SendMessageToAllAsync(JsonConvert.SerializeObject(addFile));
         }
         public async Task<StoredFile> GetbyId(string id)
         {
