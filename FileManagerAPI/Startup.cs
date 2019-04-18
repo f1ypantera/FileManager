@@ -15,7 +15,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using System.Reflection;
 using System;
-
+using FileManagerBussinessLogic.Socket;
 
 namespace FileManagerAPI
 {
@@ -50,7 +50,10 @@ namespace FileManagerAPI
             services.AddSingleton<IFileManager, FileManager>();
             services.AddTransient<ITimerAlarm, TimerAlarm>();
             services.AddTransient<ITestService, TestService>();
+            services.AddSingleton<FileSocketManager>();
             services.AddAutoMapper();
+
+
             
             
            
@@ -79,6 +82,9 @@ namespace FileManagerAPI
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
 
             app.UseHttpsRedirection();
+
+            app.UseWebSockets();
+            app.UseMiddleware<SocketMiddleware>();
             app.UseStaticFiles();
 
             app.UseAuthentication();
