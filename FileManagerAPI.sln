@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileManagerDBLogic", "FileM
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTest", "UnitTest\UnitTest.csproj", "{DB420561-9C91-40B9-9FA9-C965D8D18E4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocketManagerAPI", "SocketManagerAPI\SocketManagerAPI.csproj", "{52C97E09-7722-42C8-BCCF-7E34F6C7044E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocketManagerAPI", "SocketManagerAPI\SocketManagerAPI.csproj", "{52C97E09-7722-42C8-BCCF-7E34F6C7044E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileSocketManager", "FileSocketManager\FileSocketManager.csproj", "{F119763B-D9A0-498A-A391-865BB6CFB1A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{52C97E09-7722-42C8-BCCF-7E34F6C7044E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52C97E09-7722-42C8-BCCF-7E34F6C7044E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52C97E09-7722-42C8-BCCF-7E34F6C7044E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F119763B-D9A0-498A-A391-865BB6CFB1A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F119763B-D9A0-498A-A391-865BB6CFB1A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F119763B-D9A0-498A-A391-865BB6CFB1A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F119763B-D9A0-498A-A391-865BB6CFB1A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
