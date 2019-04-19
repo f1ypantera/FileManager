@@ -14,6 +14,7 @@ using FileManagerBussinessLogic.Models;
 using MongoDB.Bson;
 using SocketManagerAPI.WebSockets;
 using FileManagerBussinessLogic.Socket;
+using Newtonsoft.Json.Serialization;
 
 namespace FileManagerBussinessLogic.Infrastructure
 {
@@ -178,15 +179,18 @@ namespace FileManagerBussinessLogic.Infrastructure
             var update = Builders<User>.Update.AddToSet(s=>s.StoreFilesId , ObjectId.Parse(id));
             var result = await context.Users.UpdateOneAsync(filter, update);
 
-            //var addFile = new Add
-            //{
-            //    storedFiles = new List<StoredFile>
-            //    {
-            //        storedFile
-            //    },
+            var addFile = new Add
+            {
+                storedFiles = new List<StoredFile>
+                {
+                    storedFile
+                },
 
-            //};
-            await socketManager.SendMessageToAllAsync(JsonConvert.SerializeObject(storedFile));
+            };
+
+            JsonSerializerSettings settings = new JsonSerializerSettings();
+            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            await socketManager.SendMessageToAllAsync(JsonConvert.SerializeObject(addFile, settings));
         }
         public async Task<StoredFile> GetbyId(string id)
         {
