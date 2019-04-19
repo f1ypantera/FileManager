@@ -162,7 +162,7 @@ namespace FileManagerBussinessLogic.Infrastructure
                 FileName = fileName,
               //  ChunkData = chunkByte,
                 Size = chunkByte.Length,
-                User = user,          
+               // User = user,          
                 dateTimeSave = DateTime.Now,
             };
             await context.StoredFiles.InsertOneAsync(storedFile);
