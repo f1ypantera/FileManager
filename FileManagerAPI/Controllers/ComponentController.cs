@@ -7,6 +7,7 @@ using SocketManagerAPI.WebSockets;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MongoDB.Driver;
 
 namespace FileManagerAPI.Controllers
 {
@@ -64,9 +65,12 @@ namespace FileManagerAPI.Controllers
         public async Task<IActionResult> Delete(string ids)
         {
             string[] idsList = ids.Split(',');         
-            await repository.Remove(idsList);
-
-         
+            DeleteResult result = await repository.Remove(idsList);
+            if(result.DeletedCount == 0)
+            {
+                return NotFound();
+            }
+            
 
             return Ok("Has been deleted");
         }

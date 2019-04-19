@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using FileManagerDBLogic.Interfaces;
 using FileManagerDBLogic.Models;
+using MongoDB.Driver;
 
 namespace FileManagerBussinessLogic.Interfaces
 {
@@ -14,7 +15,7 @@ namespace FileManagerBussinessLogic.Interfaces
         Task<List<StoredFile>> GetAllFile();
         Task<StoredFile> GetbyId(string id);
         Task<List<StoredFile>> GetbyIds(string[] id);   
-        Task Remove(string[] id);
+        Task<DeleteResult>  Remove(string[] id);
         Task Update(string id, StoredFile component);
 
     }

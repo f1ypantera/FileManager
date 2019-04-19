@@ -117,9 +117,9 @@ namespace FileManagerBussinessLogic.Infrastructure
             }
         }
 
-        public async Task Remove(string[] id)
+        public async Task<DeleteResult> Remove(string[] id)
         {        
-            await context.StoredFiles.DeleteManyAsync(c=>id.Contains(c.FileId));
+            var result = await context.StoredFiles.DeleteManyAsync(c=>id.Contains(c.FileId));
 
             for(int i=0;i<id.Length; i++)
             {
@@ -132,7 +132,8 @@ namespace FileManagerBussinessLogic.Infrastructure
                     id = id[i]
                 };
                 await socketManager.SendMessageToAllAsync(JsonConvert.SerializeObject(removeFile));
-            }        
+            }
+            return result;
         }
         public async Task Update(string id, StoredFile component)
         {
@@ -159,7 +160,7 @@ namespace FileManagerBussinessLogic.Infrastructure
             var storedFile = new StoredFile
             {
                 FileName = fileName,
-                ChunkData = chunkByte,
+              //  ChunkData = chunkByte,
                 Size = chunkByte.Length,
                 User = user,          
                 dateTimeSave = DateTime.Now,
@@ -179,8 +180,9 @@ namespace FileManagerBussinessLogic.Infrastructure
             {
                 storedFiles = new List<StoredFile>
                 {
-                   storedFile
+                    storedFile
                 },
+
             };
             await socketManager.SendMessageToAllAsync(JsonConvert.SerializeObject(addFile));
         }
