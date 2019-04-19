@@ -159,13 +159,15 @@ namespace FileManagerBussinessLogic.Infrastructure
             var user = await asyncCursor.FirstOrDefaultAsync();
             var storedFile = new StoredFile
             {
+      
                 FileName = fileName,
-              //  ChunkData = chunkByte,
+                ChunkData = chunkByte,
                 Size = chunkByte.Length,
-               // User = user,          
+                User = user,          
                 dateTimeSave = DateTime.Now,
             };
             await context.StoredFiles.InsertOneAsync(storedFile);
+            
            
 
             var cursor = await context.StoredFiles.FindAsync(c => c.FileName == storedFile.FileName);
@@ -176,15 +178,15 @@ namespace FileManagerBussinessLogic.Infrastructure
             var update = Builders<User>.Update.AddToSet(s=>s.StoreFilesId , ObjectId.Parse(id));
             var result = await context.Users.UpdateOneAsync(filter, update);
 
-            var addFile = new Add
-            {
-                storedFiles = new List<StoredFile>
-                {
-                    storedFile
-                },
+            //var addFile = new Add
+            //{
+            //    storedFiles = new List<StoredFile>
+            //    {
+            //        storedFile
+            //    },
 
-            };
-            await socketManager.SendMessageToAllAsync(JsonConvert.SerializeObject(addFile));
+            //};
+            await socketManager.SendMessageToAllAsync(JsonConvert.SerializeObject(storedFile));
         }
         public async Task<StoredFile> GetbyId(string id)
         {
