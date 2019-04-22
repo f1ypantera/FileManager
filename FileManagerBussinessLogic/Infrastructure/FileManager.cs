@@ -188,7 +188,7 @@ namespace FileManagerBussinessLogic.Infrastructure
 
             };
 
-            JsonSerializerSettings settings = new JsonSerializerSettings();
+            JsonSerializerSettings settings = new JsonSerializerSettings();          
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             await socketManager.SendMessageToAllAsync(JsonConvert.SerializeObject(addFile, settings));
         }
