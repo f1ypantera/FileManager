@@ -4,7 +4,7 @@ namespace FileManagerBussinessLogic.Models
 {
     public class Remove
     {
-       public string Action { get; } = "Remove";
+       public string action { get; } = "Remove";
        public string id { get; set; }
 
     }

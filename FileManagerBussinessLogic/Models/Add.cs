@@ -6,7 +6,7 @@ namespace FileManagerBussinessLogic.Models
 {
     public class Add
     {
-        public string Action { get; } = "ADD";
+        public string action { get; } = "ADD";
         public List<StoredFile> storedFiles { get; set; }
         
        
